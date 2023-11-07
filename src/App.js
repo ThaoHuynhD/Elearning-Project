@@ -11,6 +11,7 @@ import AllCoursePage from "./Page/User/AllCoursePage/AllCoursePage";
 import NotFoundPage from "./Page/NotFoundPage/NotFoundPage";
 import AdminHomePage from "./Page/Admin/AdminHomePage";
 import { localServices } from "./Services/localServices";
+import CourseDetailPage from "./Page/User/CourseDetailPage/CourseDetailPage";
 
 function App() {
   let info = localServices.get();
@@ -62,6 +63,14 @@ function App() {
           <AllCoursePage />
         </Layout>
       ),
+    },
+    {
+      path: "/courseDetail/:courseId",
+      element: (
+        <Layout>
+          <CourseDetailPage/>
+        </Layout>
+      )
     },
     { path: "/*", element: <NotFoundPage /> },
   ];
