@@ -1,0 +1,83 @@
+.courseList {
+    background-color: #f8f8f8;
+    padding: 110px 0 130px;
+
+    .overlay {
+        position: relative;
+        z-index: 1;
+
+        .courselist__Item {
+            .nameCourse {
+                padding: 5px 15px;
+                position: absolute;
+                bottom: -15px;
+                left: 20px;
+                font-size: 15px;
+                transition: all 0.5s;
+                border-radius: 25px;
+                color: white;
+                display: inline-block;
+            }
+
+            .nameCourse_bg1 {
+                background: #f24080;
+            }
+
+            .nameCourse_bg2 {
+                background: #41246d;
+            }
+
+            .info__item {
+                padding: 40px 30px 15px;
+                background: white;
+            }
+        }
+
+        .courseList_bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .bg-oval {
+            background-image: url("../../../../../public/image/aboutUs/about_3.png");
+            background-position: 100% 10%;
+            background-repeat: no-repeat;
+            opacity: 0.4;
+        }
+
+        .pattern-overlay {
+            background-image: url("../../../../../public/image/courseList/courseList_1.png");
+            background-position: bottom left;
+            background-repeat: no-repeat;
+            background-size: 12% auto;
+        }
+
+        .btnViewAllCourse {
+            padding: 16px 28px;
+            color: white;
+            background: #41246d;
+            font-weight: 600;
+            line-height: 1.1;
+            border-radius: 25px;
+            transition: all 0.5s;
+
+            &:hover {
+                background-color: #961040;
+            }
+        }
+    }
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+    color: #f24080 !important;
+
+    &::after {
+        font-size: 30px !important;
+        font-weight: 800;
+    }
+}

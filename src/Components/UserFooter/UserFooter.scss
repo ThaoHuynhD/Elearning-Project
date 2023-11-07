@@ -1,0 +1,41 @@
+.footer {
+    color: #d9d9d9;
+    background-color: #41246d;
+    .item_icon {
+        height: 30px;
+        width: 30px;
+        line-height: 30px;
+        background-color: #41246d;
+        border-radius: 50%;
+        border: 1px solid #ccc;
+        text-align: center;
+        color: white;
+        font-size: 14px;
+        opacity: 0.8;
+        transition: all 0.5s;
+        &:hover {
+            background-color: #961040;
+            opacity: 1;
+        }
+    }
+    h3 {
+        color: white;
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+    li {
+        margin-bottom: 15px;
+        transition: all 0.5s;
+        &:hover {
+            color: #f24080;
+        }
+    }
+    span {
+        padding: 0 16px;
+        &:nth-child(1),
+        &:nth-child(2) {
+            border-right: 1px solid #a7a7a73b;
+        }
+    }
+}

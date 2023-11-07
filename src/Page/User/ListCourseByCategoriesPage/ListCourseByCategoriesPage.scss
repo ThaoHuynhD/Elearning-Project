@@ -1,0 +1,26 @@
+.listCourseByCateGories {
+    .nameCourse {
+        padding: 5px 15px;
+        position: absolute;
+        bottom: -15px;
+        left: 20px;
+        font-size: 15px;
+        transition: all 0.5s;
+        border-radius: 25px;
+        color: white;
+        display: inline-block;
+    }
+    .nameCourse_bg1 {
+        background: #f24080;
+    }
+    .nameCourse_bg2 {
+        background: #41246d;
+    }
+    .info__item {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 40px 30px 15px;
+        background: white;
+    }
+}

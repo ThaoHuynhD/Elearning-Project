@@ -1,0 +1,42 @@
+.banner {
+    position: relative;
+    background-color: #41246d;
+    min-height: 720px;
+    color: white;
+    z-index: 1;
+    .left__banner {
+        position: relative;
+        z-index: 1;
+        h1 {
+            font-size: 60px;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+        .overlay1 {
+            background: url("../../../../../public/image/banner/bannerLeft.png") top right/contain no-repeat;
+            opacity: 0.1;
+            height: 50%;
+            top: -20%;
+        }
+    }
+    .right__banner {
+        position: relative;
+        z-index: 1;
+        img {
+            height: auto;
+            max-width: 100%;
+        }
+        .overlay2 {
+            background: url("../../../../../public/image/banner/overlay_bannerRight.png") center/contain no-repeat;
+            opacity: 0.65;
+            height: 100%;
+            top: 0;
+        }
+    }
+}
+.img_overlayOval {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    z-index: -1;
+}

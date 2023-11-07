@@ -1,0 +1,24 @@
+html {
+    font-family: "Open Sans", sans-serif;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.btnGlobal {
+    padding: 8px 20px;
+    font-size: 15px;
+    background: #f24080;
+    color: white;
+    border-radius: 25px;
+    transition: all 0.5s;
+
+    &:hover {
+        background-color: #961040;
+    }
+}
