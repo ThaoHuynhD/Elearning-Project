@@ -1,3 +1,11 @@
+$primary-color: #f24080;
+$secondary-color: #44255b;
+$text-color: #333;
+$font-stack: 'Open Sans', sans-serif;
+$hover-color: #961040;
+$font-stack: "Open Sans", sans-serif;
+
+// Base styles
 html {
     font-family: "Open Sans", sans-serif;
     padding: 0;
@@ -10,6 +18,7 @@ html {
     margin: 0 auto;
 }
 
+// Global button styles
 .btnGlobal {
     padding: 8px 20px;
     font-size: 15px;
@@ -21,4 +30,93 @@ html {
     &:hover {
         background-color: #961040;
     }
+}
+
+
+// Course Detail Page specific styles
+.course-detail-page {
+    font-family: $font-stack;
+
+    .course-header {
+        background-color: $primary-color;
+        padding: 2rem;
+        text-align: center;
+
+        .course-title {
+            color: $secondary-color;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .course-description {
+            color: $text-color;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            display: block; 
+            max-width: 100%; 
+            height: auto; 
+            margin: 0 auto; 
+        }
+
+        .instructor-name {
+            font-style: italic;
+            color: $text-color;
+        }
+
+        .enrollment-count {
+            font-weight: bold;
+            color: $text-color;
+        }
+
+        .view-count {
+            color: darken($text-color, 20%);
+        }
+    }
+
+    .course-content {
+        padding: 1rem;
+
+        .course-detailed-description {
+            color: $text-color;
+            font-size: 1rem;
+        }
+
+        .course-date {
+            color: lighten($text-color, 20%);
+            font-size: 0.875rem;
+        }
+
+        .course-category {
+            color: $secondary-color;
+            font-weight: bold;
+        }
+    }
+
+    .enrollment-section {
+        text-align: center;
+        padding: 2rem;
+
+        .enroll-button {
+            @extend .btnGlobal; // Use the global button styles
+            font-size: 1.25rem;
+            padding: 0.75rem 2rem;
+            margin-top: 1rem;
+            background-color: $secondary-color;
+            border: none;
+            cursor: pointer;
+
+            &:hover {
+                background-color: darken($secondary-color, 10%);
+            }
+        }
+    }
+
+    // Add additional styles for other sections as needed
 }

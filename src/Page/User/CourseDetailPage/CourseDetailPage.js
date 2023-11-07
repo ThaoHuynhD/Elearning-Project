@@ -34,10 +34,23 @@ const CourseDetailPage = () => {
   }
 
   return (
-    <div>
-      {/* Render your course details here using courseDetail data */}
-      <h1>{courseDetail.tenKhoaHoc}</h1>
-      {/* ... other details */}
+    <div className="course-detail-page">
+      <section className="course-header">
+        <h1 className="course-title">{courseDetail.tenKhoaHoc}</h1>
+        <img src={courseDetail.hinhAnh} alt=""/>
+        <p className="instructor-name">{courseDetail.nguoiTao.hoTen}</p>
+        <p className="enrollment-count">{courseDetail.soLuongHocVien} students enrolled</p>
+      </section>
+
+      <section className="course-content">
+        <p className="course-category">{courseDetail.danhMucKhoaHoc.tenDanhMucKhoaHoc}</p>
+        <p className="course-date">Created on: {courseDetail.ngayTao}</p>
+        <p className="course-description">{courseDetail.moTa}</p>
+      </section>
+
+      <section className="enrollment-section">
+        <button className="enroll-button">Đăng ký</button>
+      </section>
     </div>
   );
 };
