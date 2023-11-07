@@ -1,16 +1,19 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { fetchCourseDetail } from '../../../Redux/courseDetailSlice';
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+import { fetchCourseDetail } from "../../../Redux/courseDetailSlice";
 
 const CourseDetailPage = () => {
+  // This extracts the courseId from the URL
+  const { courseId } = useParams();
   const dispatch = useDispatch();
 
   const state = useSelector((state) => state);
   console.log(state); // Add this line to log the state
 
-  const { courseDetail, isLoading, error } = useSelector((state) => state.courseDetail);
-  const { courseId } = useParams(); // Assuming you're using React Router and the course ID is in the URL
+  const { courseDetail, isLoading, error } = useSelector(
+    (state) => state.courseDetail
+  );
 
   useEffect(() => {
     if (courseId) {
