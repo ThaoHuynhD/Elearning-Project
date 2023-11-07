@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import "./App.scss";
 import Layout from "./Template/Layout";
 import HomePage from "./Page/User/HomePage/HomePage";
 import SignInPage from "./Page/Login/SignInPage/SignInPage";
@@ -14,28 +15,70 @@ import { localServices } from "./Services/localServices";
 function App() {
   let info = localServices.get();
   let isAdmin;
-  if (info !== null && info !== undefined) { isAdmin = info.maLoaiNguoiDung === 'GV'; }
+  if (info !== null && info !== undefined) {
+    isAdmin = info.maLoaiNguoiDung === "GV";
+  }
   const userRoutes = [
-    { path: '/', element: <Layout> <HomePage /></Layout> },
-    { path: '/signIn', element: <SignInPage /> },
-    { path: '/signUp', element: <SignUpPage /> },
-    { path: '/personal', element: <Layout><PersonalPage /></Layout> },
-    { path: '/searchCourse/:tenKhoaHoc', element: <Layout><SearchCoursePage /></Layout> },
-    { path: '/listCourseByCategories/:maDanhMuc', element: <Layout> <ListCourseByCategoriesPage /></Layout> },
-    { path: '/AllCoursePage', element: <Layout><AllCoursePage /></Layout> },
-    { path: '/*', element: <NotFoundPage /> },
+    {
+      path: "/",
+      element: (
+        <Layout>
+          {" "}
+          <HomePage />
+        </Layout>
+      ),
+    },
+    { path: "/signIn", element: <SignInPage /> },
+    { path: "/signUp", element: <SignUpPage /> },
+    {
+      path: "/personal",
+      element: (
+        <Layout>
+          <PersonalPage />
+        </Layout>
+      ),
+    },
+    {
+      path: "/searchCourse/:tenKhoaHoc",
+      element: (
+        <Layout>
+          <SearchCoursePage />
+        </Layout>
+      ),
+    },
+    {
+      path: "/listCourseByCategories/:maDanhMuc",
+      element: (
+        <Layout>
+          {" "}
+          <ListCourseByCategoriesPage />
+        </Layout>
+      ),
+    },
+    {
+      path: "/AllCoursePage",
+      element: (
+        <Layout>
+          <AllCoursePage />
+        </Layout>
+      ),
+    },
+    { path: "/*", element: <NotFoundPage /> },
   ];
 
   const adminRoutes = [
-    { path: '/', element: <AdminHomePage /> },
-    { path: '/signIn', element: <SignInPage /> },
-    { path: '/signUp', element: <SignUpPage /> },
-    { path: '/personal', element: <PersonalPage /> },
-    { path: '/*', element: <NotFoundPage /> },
-    { path: '/admin', element: <AdminHomePage /> }]
+    { path: "/", element: <AdminHomePage /> },
+    { path: "/signIn", element: <SignInPage /> },
+    { path: "/signUp", element: <SignUpPage /> },
+    { path: "/personal", element: <PersonalPage /> },
+    { path: "/*", element: <NotFoundPage /> },
+    { path: "/admin", element: <AdminHomePage /> },
+  ];
 
   let selectedRoutes = userRoutes;
-  if (isAdmin) { selectedRoutes = adminRoutes }
+  if (isAdmin) {
+    selectedRoutes = adminRoutes;
+  }
   return (
     <div>
       {/* Khi nào mọi người muốn dùng spinner thì mở nó ra nhé  */}
