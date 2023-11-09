@@ -1,7 +1,10 @@
-import React from 'react'
+import React from "react";
+import TableUser from "./TableUser/TableUser";
 
 export default function UserManagement() {
-    return (
-        <div>UserManagement</div>
-    )
+  return (
+    <div>
+      <TableUser />
+    </div>
+  );
 }
