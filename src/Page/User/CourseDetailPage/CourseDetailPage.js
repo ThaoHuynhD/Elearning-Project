@@ -9,11 +9,16 @@ const CourseDetailPage = () => {
   const dispatch = useDispatch();
 
   const state = useSelector((state) => state);
-  console.log(state); // Add this line to log the state
-
+  console.log(state); 
   const { courseDetail, isLoading, error } = useSelector(
     (state) => state.courseDetail
   );
+
+    const handleCourseRegistration = async () => {
+      const data = {
+        
+      }
+    }
 
   useEffect(() => {
     if (courseId) {
