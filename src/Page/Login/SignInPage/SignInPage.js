@@ -19,6 +19,7 @@ export default function SignInPage() {
         dispatch(setInfo(res.data));
         localServices.set(res.data);
         message.success("Đăng nhập thành công");
+        localStorage.setItem("userAccount", res.data.taiKhoan);
         setTimeout(() => {
           navigate("/");
           window.location.reload();
