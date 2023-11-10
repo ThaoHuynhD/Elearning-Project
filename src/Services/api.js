@@ -2,7 +2,7 @@ import { https } from "./config";
 
 /*********************** QUẢN LÝ KHOÁ HỌC ******************************/
 export let layDanhSachKhoaHoc = () => {
-    return https.get("/api/QuanLyKhoaHoc/LayDanhSachKhoaHoc?MaNhom=GP09");
+    return https.get(`/api/QuanLyKhoaHoc/LayDanhSachKhoaHoc?MaNhom=GP09`);
 };
 //api tìm kiếm khoá học
 export let layDanhSachKhoaHocTheoTen = (tenKhoaHoc) => {
