@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 
-import { message, Image, Button, Tag } from 'antd';
+import { message, Image, Button, Tag, ConfigProvider } from 'antd';
 import { FormOutlined, DeleteOutlined } from '@ant-design/icons';
-// import Search from 'antd/es/input/Search';
+import Search from 'antd/es/input/Search';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import dayjs from 'dayjs';
-import { layDanhSachKhoaHoc } from '../../../Services/api';
+import { layDanhSachKhoaHoc, layDanhSachKhoaHocTheoTen } from '../../../Services/api';
 
 
 dayjs.extend(customParseFormat);
@@ -24,19 +24,19 @@ export default function CourseManagement() {
       message.error("Đã có lỗi xảy ra");
     }
   };
-  // const fetchDataCourseSearch = async (searchValue) => {
-  //   try {
-  //     if (searchValue === undefined || searchValue === '' || searchValue === null) return;
-  //     let response = await getCourseListSearchByName(searchValue);
-  //     const updatedCourseSearchList = response.data.content;
-  //     setCourseSearchList(updatedCourseSearchList);
-  //     setIsSearch(true);
-  //     message.success(`Có ${updatedCourseSearchList.length} kết quả tìm kiếm tương tự`)
-  //   } catch {
-  //     message.error("Đã có lỗi xảy ra");
-  //   }
-  // };
-  // const handleSearchCancel = () => { setIsSearch(false); };
+  const fetchDataCourseSearch = async (searchValue) => {
+    try {
+      if (searchValue === undefined || searchValue === '' || searchValue === null) return;
+      let response = await layDanhSachKhoaHocTheoTen(searchValue);
+      const updatedCourseSearchList = response.data;
+      setCourseSearchList(updatedCourseSearchList);
+      setIsSearch(true);
+      message.success(`Có ${updatedCourseSearchList.length} kết quả tìm kiếm tương tự`)
+    } catch {
+      message.error("Đã có lỗi xảy ra");
+    }
+  };
+  const handleSearchCancel = () => { setIsSearch(false); };
 
   const renderList = () => {
     let list = isSearch ? courseSearchList : courseList;
@@ -79,10 +79,20 @@ export default function CourseManagement() {
 
                 <td className='m-auto'>
                   <div className='flex align-middle justify-center'>
-                    <Button className='btn bg-yellow-500 p-2 flex align-middle justify-center'
-                    ><FormOutlined /></Button>
-                    <Button className='btn bg-red-500 mx-1 p-2 flex align-middle justify-center'
-                    ><DeleteOutlined /></Button>
+                    <ConfigProvider
+                      theme={{
+                        token: {
+                          colorPrimary: 'white',
+                          borderRadius: 10,
+                          fontSize: 20,
+                        },
+                      }}
+                    >
+                      <Button className='h-11 w-15 btn bg-yellow-500 p-3 flex align-middle justify-center'
+                      ><FormOutlined /></Button>
+                      <Button className='h-11 w-15  btn bg-red-500 mx-1 p-3 flex align-middle justify-center'
+                      ><DeleteOutlined /></Button>
+                    </ConfigProvider>
                   </div>
                 </td>
               </tr>
@@ -96,19 +106,43 @@ export default function CourseManagement() {
   }
   useEffect(() => {
     fetchDataCourseList();
+    fetchDataCourseSearch();
   }, []);
 
   return (
     <div>
-      {/* <div className="flex searchCourse">
+      <div className="text-right mb-2">
+        <ConfigProvider
+          theme={{
+            token: {
+              colorPrimary: 'white',
+              borderRadius: 10,
+            },
+          }}
+        >
+          <Button className='btn bg-green-600 font-bold text-black hover:text-white hover:bg-green-800'
+          >Thêm Phim Mới</Button>
+        </ConfigProvider>
+      </div>
+
+      <div className="flex searchCourse my-5">
         <Search
           enterButton size="large" onSearch={fetchDataCourseSearch}
           placeholder="input search text(phone number/name)"
           className='bg-blue-500 overflow-hidden rounded-lg'
         />
-        <button className={`btn btn-danger ${isSearch ? 'block' : 'hidden'}`}
-          onClick={() => { handleSearchCancel() }}>CancleSearch</button>
-      </div> */}
+        <ConfigProvider
+          theme={{
+            token: {
+              colorPrimary: 'white',
+              borderRadius: 10,
+            },
+          }}
+        >
+          <Button className={`btn bg-red-600 text-white font-bold ml-3 h-10 ${isSearch ? 'block' : 'hidden'}`}
+            onClick={() => { handleSearchCancel() }}>Cancle Search</Button>
+        </ConfigProvider>
+      </div>
       {renderList()}
     </div >
   )
