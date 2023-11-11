@@ -8,9 +8,9 @@ import dayjs from 'dayjs';
 import { layDanhSachKhoaHoc, layDanhSachKhoaHocTheoTen } from '../../../Services/api';
 
 
-dayjs.extend(customParseFormat);
 
 export default function CourseManagement() {
+  dayjs.extend(customParseFormat);
 
   const [courseList, setCourseList] = useState([]);
   const [courseSearchList, setCourseSearchList] = useState([]);
