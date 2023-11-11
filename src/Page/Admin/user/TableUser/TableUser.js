@@ -1,7 +1,12 @@
 import React, { useEffect } from "react";
-import { Table, Tag } from "antd";
+import { Button, Flex, Table, Tag } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchList } from "../../../../Redux/listUserSlice/listUserSlice";
+import { Input } from "antd";
+
+const { Search } = Input;
+const onSearch = (value, _e, info) => console.log(info?.source, value);
+
 const columns = [
   {
     title: "Username",
@@ -28,7 +33,7 @@ const columns = [
     dataIndex: "maLoaiNguoiDung",
     key: "maLoaiNguoiDung",
     render: (text) => {
-      if (text == "HV") {
+      if (text === "HV") {
         return <Tag color='green'>Học Viên</Tag>;
       } else {
         return <Tag color='red'>Giáo Viên</Tag>;
@@ -83,7 +88,30 @@ export default function TableUser() {
 
   return (
     <div>
-      <Table bordered columns={columns} dataSource={datasource} />
+      <Search
+        placeholder='Tìm kiếm người dùng'
+        allowClear
+        enterButton='Tìm kiếm'
+        size='large'
+        onSearch={onSearch}
+      />
+
+      <Flex
+        wrap='wrap'
+        gap='small'
+        className='site-button-ghost-wrapper my-5'>
+        <Button
+          type='primary'
+          ghost>
+          Thêm người dùng
+        </Button>
+      </Flex>
+
+      <Table
+        bordered
+        columns={columns}
+        dataSource={datasource}
+      />
     </div>
   );
 }
