@@ -38,6 +38,9 @@ export let huyGhiDanh = (data) => {
 export let themKhoaHocUploadHinh = (data) => {
   return https.post("/api/QuanLyKhoaHoc/ThemKhoaHocUploadHinh", data);
 };
+export let xoaKhoaHoc = (maKhoaHoc) => {
+  return https.delete(`/api/QuanLyKhoaHoc/XoaKhoaHoc?MaKhoaHoc=${maKhoaHoc}`);
+};
 
 /*********************** QUẢN LÝ NGƯỜI DÙNG ******************************/
 

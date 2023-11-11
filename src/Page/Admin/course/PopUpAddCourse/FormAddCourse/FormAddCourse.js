@@ -14,25 +14,34 @@ import moment from "moment/moment";
 import { useState } from "react";
 import { localServices } from "../../../../../Services/localServices";
 import { themKhoaHocUploadHinh } from "../../../../../Services/api";
-import { useDispatch } from "react-redux";
-import { setIsModalOpen } from "../../../../../Redux/openModalSlice/openModalSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { setIsModalOpen } from "../../../../../Redux/modalFormSlice/modalFormSlice";
 export default function FormAddCourse() {
-  const [imgSrc, setImgSrc] = useState(null);
+  const [imgSrc, setImgSrc] = useState(" ");
   const [form] = Form.useForm();
+  let { infoCourse } = useSelector((state) => state.modalFormSlice);
+  console.log(
+    "🚀 ~ file: FormAddCourse.js:23 ~ FormAddCourse ~ infoCourse:",
+    infoCourse,
+  );
+
   const dispatch = useDispatch();
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      maKhoaHoc: "",
-      biDanh: "",
-      tenKhoaHoc: "",
-      moTa: "",
-      luotXem: 0,
+      maKhoaHoc: infoCourse?.maKhoaHoc,
+      biDanh: infoCourse?.biDanh,
+      tenKhoaHoc: infoCourse?.tenKhoaHoc,
+      moTa: infoCourse?.moTa,
+      luotXem: infoCourse?.luotXem,
       danhGia: 0,
-      hinhAnh: {},
-      maNhom: "",
-      ngayTao: "",
-      maDanhMucKhoaHoc: "",
-      taiKhoanNguoiTao: localServices?.get().taiKhoan || "",
+      hinhAnh: null,
+      maNhom: infoCourse?.maNhom,
+      // ngayTao: infoCourse?.ngayTao || " ",
+      ngayTao: " ",
+      nguoiTao: infoCourse.nguoiTao?.hoTen,
+      maDanhMucKhoaHoc: infoCourse.danhMucKhoaHoc?.tenDanhMucKhoaHoc,
+      taiKhoanNguoiTao: localServices?.get().taiKhoan,
     },
     onSubmit: (values) => {
       console.log("values: ", values);
@@ -47,21 +56,19 @@ export default function FormAddCourse() {
       let handleAddCourse = async () => {
         try {
           let res = await themKhoaHocUploadHinh(formData);
-          console.log(
-            "🚀 ~ file: PopUpAddCourse.js:49 ~ addCourse ~ res:",
-            res,
-          );
-          message.success("Thêm khoá học thành công");
-          dispatch(setIsModalOpen(false));
-          handleClearForm();
+          if (res.status === 200) {
+            dispatch(setIsModalOpen(false));
+            message.success("Thêm khoá học thành công");
+            handleClearForm();
+          }
         } catch (err) {
-          console.log(err);
           message.error(err.response.data);
         }
       };
       handleAddCourse();
     },
   });
+
   let handleClearForm = () => {
     form.setFieldsValue({
       maKhoaHoc: "",
@@ -73,15 +80,16 @@ export default function FormAddCourse() {
       hinhAnh: {},
       maNhom: "",
       ngayTao: "",
+      nguoiTao: "",
       maDanhMucKhoaHoc: "",
       taiKhoanNguoiTao: "",
     });
   };
-  const onFinish = (values) => {
-    console.log("Success:", values);
-  };
+  const handleUpdate = () => {};
+
   let handleChangeDatePicker = (date) => {
-    formik.setFieldValue("ngayTao", moment(date).format("DD/MM/YYYY"));
+    let ngayTao = moment(date).format("DD/MM/YYYY");
+    formik.setFieldValue("ngayTao", ngayTao);
   };
   let handleChangeListCourse = (value) => {
     formik.setFieldValue("maDanhMucKhoaHoc", value);
@@ -107,8 +115,6 @@ export default function FormAddCourse() {
   };
   return (
     <Form
-      autoComplete='off'
-      onFinish={onFinish}
       form={form}
       onSubmitCapture={formik.handleSubmit}
       labelCol={{
@@ -119,29 +125,19 @@ export default function FormAddCourse() {
       }}
       layout='horizontal'
     >
-      <Form.Item
-        name='maKhoaHoc'
-        label='Mã khoá học'
-        rules={[
-          {
-            required: true,
-            message: "Trường này không được bỏ trống",
-          },
-        ]}
-      >
-        <Input name='maKhoaHoc' onChange={formik.handleChange} />
+      <Form.Item label='Mã khoá học'>
+        <Input
+          name='maKhoaHoc'
+          onChange={formik.handleChange}
+          value={formik.values.maKhoaHoc}
+        />
       </Form.Item>
-      <Form.Item
-        name='biDanh'
-        label='Bí danh'
-        rules={[
-          {
-            required: true,
-            message: "Trường này không được bỏ trống",
-          },
-        ]}
-      >
-        <Input name='biDanh' onChange={formik.handleChange} />
+      <Form.Item label='Bí danh'>
+        <Input
+          name='biDanh'
+          onChange={formik.handleChange}
+          value={formik.values.biDanh}
+        />
       </Form.Item>
       <Form.Item label='Đánh giá'>
         <InputNumber
@@ -155,47 +151,27 @@ export default function FormAddCourse() {
           }}
         />
       </Form.Item>
-      <Form.Item
-        name='tenKhoaHoc'
-        label='Tên khoá học'
-        rules={[
-          {
-            required: true,
-            message: "Trường này không được bỏ trống",
-          },
-        ]}
-      >
-        <Input name='tenKhoaHoc' onChange={formik.handleChange} />
+      <Form.Item label='Tên khoá học'>
+        <Input
+          name='tenKhoaHoc'
+          onChange={formik.handleChange}
+          value={formik.values.tenKhoaHoc}
+        />
       </Form.Item>
-      <Form.Item
-        name='luotXem'
-        label='Lượt xem'
-        rules={[
-          {
-            required: true,
-            message: "Trường này không được bỏ trống",
-          },
-        ]}
-      >
+      <Form.Item label='Lượt xem'>
         <InputNumber
           type='number'
-          name='luotXem'
           onChange={(value) => {
             formik.setFieldValue("luotXem", value);
           }}
+          value={formik.values.luotXem}
         />
       </Form.Item>
-      <Form.Item
-        name='DanhMucKhoaHoc'
-        label='Danh mục khoá học'
-        rules={[
-          {
-            required: true,
-            message: "Vui lòng chọn danh mục",
-          },
-        ]}
-      >
-        <Select onChange={handleChangeListCourse}>
+      <Form.Item label='Danh mục khoá học'>
+        <Select
+          onChange={handleChangeListCourse}
+          value={formik.values.maDanhMucKhoaHoc}
+        >
           <Select.Option value='BackEnd'>Lập trình BackEnd</Select.Option>
           <Select.Option value='Design'>Thiết kế Web</Select.Option>
           <Select.Option value='DiDong'>Lập trình di động</Select.Option>
@@ -204,40 +180,34 @@ export default function FormAddCourse() {
           <Select.Option value='TuDuy'>Tư duy lập trình</Select.Option>
         </Select>
       </Form.Item>
-      <Form.Item
-        name='nguoiTao'
-        label='Người tạo'
-        rules={[
-          {
-            required: true,
-            message: "Vui lòng không để trống",
-          },
-        ]}
-      >
-        <Input name='nguoiTao' onChange={formik.handleChange} />
+      <Form.Item label='Người tạo'>
+        <Input
+          name='nguoiTao'
+          onChange={formik.handleChange}
+          value={formik.values.nguoiTao}
+        />
       </Form.Item>
 
-      <Form.Item
-        name='moTa'
-        label='Mô tả'
-        rules={[
-          {
-            required: true,
-            message: "Vui lòng không để trống",
-          },
-        ]}
-      >
-        <Input.TextArea name='moTa' onChange={formik.handleChange} />
+      <Form.Item label='Mô tả'>
+        <Input.TextArea
+          name='moTa'
+          onChange={formik.handleChange}
+          value={formik.values.moTa}
+        />
       </Form.Item>
       <Form.Item label='Ngày tạo'>
         <DatePicker
           format={"DD/MM/YYYY"}
-          name='ngayTao'
           onChange={handleChangeDatePicker}
+          // value={moment(formik.values.ngayTao, "DD/MM/YYYY")}
         />
       </Form.Item>
       <Form.Item label='Mã nhóm'>
-        <Select style={{ width: 100 }} onChange={handleChangeGroup}>
+        <Select
+          style={{ width: 100 }}
+          onChange={handleChangeGroup}
+          value={formik.values.maNhom}
+        >
           <Select.Option value='GP01'>GP01</Select.Option>
           <Select.Option value='GP02'>GP02</Select.Option>
           <Select.Option value='GP03'>GP03</Select.Option>
@@ -261,13 +231,30 @@ export default function FormAddCourse() {
           onChange={handleChangeFile}
           accept='image/png , image/jpeg , image/jpg'
         />
-        <Image src={imgSrc} width={100} height={100} />
+        <Image
+          src={imgSrc === " " ? infoCourse.hinhAnh : imgSrc}
+          width={100}
+          height={100}
+        />
       </Form.Item>
 
-      <div className='flex items-center justify-end'>
-        <Button htmlType='submit'>Thêm</Button>
+      <div className='flex items-center justify-end space-x-4'>
+        <Button
+          className='bg-green-500 hover:bg-green-600 duration-300 text-white'
+          htmlType='submit'
+        >
+          Thêm
+        </Button>
 
-        <Button>Cập Nhật</Button>
+        <Button
+          htmlType='submit'
+          onClick={() => {
+            handleUpdate();
+          }}
+          className='bg-pink-500 hover:bg-pink-600 duration-300 text-white'
+        >
+          Cập Nhật
+        </Button>
       </div>
     </Form>
   );
