@@ -9,12 +9,12 @@ const onSearch = (value, _e, info) => console.log(info?.source, value);
 
 const columns = [
   {
-    title: "Username",
+    title: "Tài khoản",
     dataIndex: "taiKhoan",
     key: "taiKhoan",
   },
   {
-    title: "Name",
+    title: "Họ tên",
     dataIndex: "hoTen",
     key: "hoTen",
   },
@@ -24,12 +24,12 @@ const columns = [
     key: "email",
   },
   {
-    title: "Phone Number",
+    title: "Số điện thoại",
     dataIndex: "soDt",
     key: "soDt",
   },
   {
-    title: "Type",
+    title: "Loại người dùng",
     dataIndex: "maLoaiNguoiDung",
     key: "maLoaiNguoiDung",
     render: (text) => {
@@ -41,7 +41,7 @@ const columns = [
     },
   },
   {
-    title: "Action",
+    title: "Hành động",
     render: (_, user) => {
       return (
         <div className='space-x-8'>
