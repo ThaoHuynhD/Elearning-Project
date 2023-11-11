@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
+import { message } from "antd";
+import { useFormik } from "formik";
+import moment from "moment/moment";
 import {
   Button,
   DatePicker,
@@ -7,33 +10,31 @@ import {
   Select,
   InputNumber,
   Image,
-  message,
 } from "antd";
-import { useFormik } from "formik";
-import moment from "moment/moment";
-import { useState } from "react";
-import { localServices } from "../../../../../Services/localServices";
-import { themKhoaHocUploadHinh } from "../../../../../Services/api";
-import { useDispatch } from "react-redux";
-import { setIsModalOpen } from "../../../../../Redux/modalFormSlice/modalFormSlice";
-export default function FormAddCourse() {
-  const [imgSrc, setImgSrc] = useState(null);
-  const [form] = Form.useForm();
+import { useDispatch, useSelector } from "react-redux";
+import { themKhoaHocUploadHinh } from "../../../../Services/api";
+import { localServices } from "../../../../Services/localServices";
+import { setIsModalEditOpen } from "../../../../Redux/modalEditFormSlice/modalEditFormSlice";
 
+export default function FormEditCourse() {
+  const [imgSrc, setImgSrc] = useState(" ");
+  const [form] = Form.useForm();
+  let { infoCourse } = useSelector((state) => state.modalEditFormSlice);
   const dispatch = useDispatch();
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      maKhoaHoc: "",
-      biDanh: "",
-      tenKhoaHoc: "",
-      moTa: "",
-      luotXem: "",
+      maKhoaHoc: infoCourse?.maKhoaHoc,
+      biDanh: infoCourse?.biDanh,
+      tenKhoaHoc: infoCourse?.tenKhoaHoc,
+      moTa: infoCourse?.moTa,
+      luotXem: infoCourse?.luotXem,
       danhGia: 0,
-      hinhAnh: {},
-      maNhom: "",
-      ngayTao: " ",
-      nguoiTao: "",
-      maDanhMucKhoaHoc: "",
+      hinhAnh: null,
+      maNhom: infoCourse?.maNhom,
+      ngayTao: infoCourse?.ngayTao,
+      nguoiTao: infoCourse.nguoiTao?.hoTen,
+      maDanhMucKhoaHoc: infoCourse.danhMucKhoaHoc?.tenDanhMucKhoaHoc,
       taiKhoanNguoiTao: localServices?.get().taiKhoan,
     },
     onSubmit: (values) => {
@@ -50,13 +51,11 @@ export default function FormAddCourse() {
         try {
           let res = await themKhoaHocUploadHinh(formData);
           if (res.status === 200) {
-            dispatch(setIsModalOpen(false));
-            message.success("Thêm khoá học thành công");
+            dispatch(setIsModalEditOpen(false));
+
             handleClearForm();
           }
-        } catch (err) {
-          message.error(err.response.data);
-        }
+        } catch (err) {}
       };
       handleAddCourse();
     },
@@ -120,10 +119,18 @@ export default function FormAddCourse() {
       layout='horizontal'
     >
       <Form.Item label='Mã khoá học'>
-        <Input name='maKhoaHoc' onChange={formik.handleChange} />
+        <Input
+          name='maKhoaHoc'
+          onChange={formik.handleChange}
+          value={formik.values.maKhoaHoc}
+        />
       </Form.Item>
       <Form.Item label='Bí danh'>
-        <Input name='biDanh' onChange={formik.handleChange} />
+        <Input
+          name='biDanh'
+          onChange={formik.handleChange}
+          value={formik.values.biDanh}
+        />
       </Form.Item>
       <Form.Item label='Đánh giá'>
         <InputNumber
@@ -138,7 +145,11 @@ export default function FormAddCourse() {
         />
       </Form.Item>
       <Form.Item label='Tên khoá học'>
-        <Input name='tenKhoaHoc' onChange={formik.handleChange} />
+        <Input
+          name='tenKhoaHoc'
+          onChange={formik.handleChange}
+          value={formik.values.tenKhoaHoc}
+        />
       </Form.Item>
       <Form.Item label='Lượt xem'>
         <InputNumber
@@ -146,10 +157,14 @@ export default function FormAddCourse() {
           onChange={(value) => {
             formik.setFieldValue("luotXem", value);
           }}
+          value={formik.values.luotXem}
         />
       </Form.Item>
       <Form.Item label='Danh mục khoá học'>
-        <Select onChange={handleChangeListCourse}>
+        <Select
+          onChange={handleChangeListCourse}
+          value={formik.values.maDanhMucKhoaHoc}
+        >
           <Select.Option value='BackEnd'>Lập trình BackEnd</Select.Option>
           <Select.Option value='Design'>Thiết kế Web</Select.Option>
           <Select.Option value='DiDong'>Lập trình di động</Select.Option>
@@ -159,17 +174,33 @@ export default function FormAddCourse() {
         </Select>
       </Form.Item>
       <Form.Item label='Người tạo'>
-        <Input name='nguoiTao' onChange={formik.handleChange} />
+        <Input
+          name='nguoiTao'
+          onChange={formik.handleChange}
+          value={formik.values.nguoiTao}
+        />
       </Form.Item>
 
       <Form.Item label='Mô tả'>
-        <Input.TextArea name='moTa' onChange={formik.handleChange} />
+        <Input.TextArea
+          name='moTa'
+          onChange={formik.handleChange}
+          value={formik.values.moTa}
+        />
       </Form.Item>
       <Form.Item label='Ngày tạo'>
-        <DatePicker format={"DD/MM/YYYY"} onChange={handleChangeDatePicker} />
+        <DatePicker
+          format={"DD/MM/YYYY"}
+          onChange={handleChangeDatePicker}
+          value={moment(formik.values.ngayTao)}
+        />
       </Form.Item>
       <Form.Item label='Mã nhóm'>
-        <Select style={{ width: 100 }} onChange={handleChangeGroup}>
+        <Select
+          style={{ width: 100 }}
+          onChange={handleChangeGroup}
+          value={formik.values.maNhom}
+        >
           <Select.Option value='GP01'>GP01</Select.Option>
           <Select.Option value='GP02'>GP02</Select.Option>
           <Select.Option value='GP03'>GP03</Select.Option>
@@ -193,15 +224,22 @@ export default function FormAddCourse() {
           onChange={handleChangeFile}
           accept='image/png , image/jpeg , image/jpg'
         />
-        <Image src={imgSrc} width={100} height={100} />
+        <Image
+          src={imgSrc === " " ? infoCourse.hinhAnh : imgSrc}
+          width={100}
+          height={100}
+        />
       </Form.Item>
 
       <div className='flex items-center justify-end space-x-4'>
         <Button
-          className='bg-green-500 hover:bg-green-600 duration-300 text-white'
           htmlType='submit'
+          onClick={() => {
+            handleUpdate();
+          }}
+          className='bg-pink-500 hover:bg-pink-600 duration-300 text-white'
         >
-          Thêm
+          Cập Nhật
         </Button>
       </div>
     </Form>

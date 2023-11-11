@@ -14,7 +14,11 @@ import {
 
 import PopUpAddCourse from "./PopUpAddCourse/PopUpAddCourse";
 import { useDispatch } from "react-redux";
-import { getInfoCourse } from "../../../Redux/modalFormSlice/modalFormSlice";
+import {
+  getInfoCourse,
+  setIsModalEditOpen,
+} from "../../../Redux/modalEditFormSlice/modalEditFormSlice";
+import PopUpEditCourse from "./PopUpEditCourse/PopUpEditCourse";
 
 export default function CourseManagement() {
   const [courseList, setCourseList] = useState([]);
@@ -56,15 +60,14 @@ export default function CourseManagement() {
   const handleDeleteCourse = async (maKhoaHoc) => {
     try {
       let res = await xoaKhoaHoc(maKhoaHoc);
-      console.log(
-        "🚀 ~ file: CourseManagement.js:64 ~ handleDeleteCourse ~ res:",
-        res,
-      );
       message.success("Xoá khoá học thành công");
       fetchDataCourseList();
     } catch (error) {
       message.error(error.response.data);
     }
+  };
+  const handleSendStatus = () => {
+    dispatch(setIsModalEditOpen(true));
   };
 
   const renderList = () => {
@@ -130,11 +133,12 @@ export default function CourseManagement() {
                       <Button
                         className='h-11 w-15 btn bg-yellow-500 p-3 flex align-middle justify-center'
                         onClick={() => {
-                          dispatch(getInfoCourse(course.maKhoaHoc));
+                          handleSendStatus();
                         }}
                       >
                         <FormOutlined />
                       </Button>
+                      <PopUpEditCourse />
                       <Button
                         className='h-11 w-15  btn bg-red-500 mx-1 p-3 flex align-middle justify-center'
                         onClick={() => {
