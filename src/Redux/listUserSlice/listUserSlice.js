@@ -8,7 +8,7 @@ const initialState = {
 
 export const fetchList = createAsyncThunk(
   "listUser/fetchListUser",
-  async (data, { dispatch }) => {
+  async (data, { dispatch, getState }) => {
     try {
       const res = await layDanhSachNguoiDung();
       if (res.status === 200) {
@@ -17,8 +17,7 @@ export const fetchList = createAsyncThunk(
       }
       return res.data;
     } catch (error) {
-      console.log(error);
-      throw error;
+      console.log(error.message);
     }
   },
 );
