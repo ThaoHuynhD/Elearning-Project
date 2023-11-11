@@ -14,11 +14,7 @@ import {
 
 import PopUpAddCourse from "./PopUpAddCourse/PopUpAddCourse";
 import { useDispatch } from "react-redux";
-import {
-  getInfoCourse,
-  setIsModalEditOpen,
-} from "../../../Redux/modalEditFormSlice/modalEditFormSlice";
-import PopUpEditCourse from "./PopUpEditCourse/PopUpEditCourse";
+import { getInfoCourse } from "../../../Redux/modalFormSlice/modalFormSlice";
 
 export default function CourseManagement() {
   const [courseList, setCourseList] = useState([]);
@@ -65,9 +61,6 @@ export default function CourseManagement() {
     } catch (error) {
       message.error(error.response.data);
     }
-  };
-  const handleSendStatus = () => {
-    dispatch(setIsModalEditOpen(true));
   };
 
   const renderList = () => {
@@ -133,12 +126,11 @@ export default function CourseManagement() {
                       <Button
                         className='h-11 w-15 btn bg-yellow-500 p-3 flex align-middle justify-center'
                         onClick={() => {
-                          handleSendStatus();
+                          dispatch(getInfoCourse(course.maKhoaHoc));
                         }}
                       >
                         <FormOutlined />
                       </Button>
-                      <PopUpEditCourse />
                       <Button
                         className='h-11 w-15  btn bg-red-500 mx-1 p-3 flex align-middle justify-center'
                         onClick={() => {
