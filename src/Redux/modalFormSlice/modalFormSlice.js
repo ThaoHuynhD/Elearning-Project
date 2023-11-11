@@ -4,8 +4,8 @@ const initialState = {
   isModalOpen: false,
 };
 
-const openModalSlice = createSlice({
-  name: "isOpenModal",
+const modalFormSlice = createSlice({
+  name: "modalAddForm",
   initialState,
   reducers: {
     setIsModalOpen: (state, { payload }) => {
@@ -14,6 +14,6 @@ const openModalSlice = createSlice({
   },
 });
 
-export const { setIsModalOpen } = openModalSlice.actions;
+export const { setIsModalOpen } = modalFormSlice.actions;
 
-export default openModalSlice.reducer;
+export default modalFormSlice.reducer;

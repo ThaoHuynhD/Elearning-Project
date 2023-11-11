@@ -4,6 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchList } from "../../../../Redux/listUserSlice/listUserSlice";
 const columns = [
   {
+    title: "#",
+    dataIndex: "stt",
+    key: "stt",
+  },
+  {
     title: "Username",
     dataIndex: "taiKhoan",
     key: "taiKhoan",
@@ -72,7 +77,8 @@ export default function TableUser() {
 
   listUser?.map((item, index) => {
     datasource.push({
-      key: index + 1,
+      key: index,
+      stt: index + 1,
       taiKhoan: item.taiKhoan,
       hoTen: item.hoTen,
       email: item.email,
