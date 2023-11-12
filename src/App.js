@@ -83,7 +83,7 @@ function App() {
     { path: "/personal", element: <PersonalPage /> },
     { path: "/*", element: <NotFoundPage /> },
     { path: "/admin", element: <AdminHomePage /> },
-    { path: "/AddUser", element: <AddUser/>}
+    { path: "/addUser", element: <AddUser/>}
   ];
 
   let selectedRoutes = userRoutes;

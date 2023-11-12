@@ -30,6 +30,7 @@ export default function SignInPage() {
     };
     logIn();
   };
+  
   return (
     <div className='w-1/2 mx-auto'>
       <h1 className='text-center'>Đăng nhập</h1>

@@ -3,6 +3,7 @@ import { Button, Flex, Table, Tag } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchList } from "../../../../Redux/listUserSlice/listUserSlice";
 import { Input } from "antd";
+import { useNavigate } from "react-router-dom";
 
 const { Search } = Input;
 const onSearch = (value, _e, info) => console.log(info?.source, value);
@@ -60,18 +61,14 @@ const columns = [
 export default function TableUser() {
   let datasource = [];
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleAddUserClick=() => {
+    navigate("/addUser");
+  }
   const { listUser } = useSelector((state) => state.listUserSlice);
 
+
   useEffect(() => {
-    // let fetchListUser = async () => {
-    //   try {
-    //     let res = await layDanhSachNguoiDung();
-    //     setListUser(res.data);
-    //   } catch (error) {
-    //     throw error;
-    //   }
-    // };
-    // fetchListUser();
     dispatch(fetchList());
   }, []);
 
@@ -102,7 +99,9 @@ export default function TableUser() {
         className='site-button-ghost-wrapper my-5'>
         <Button
           type='primary'
-          ghost>
+          ghost
+          onClick={handleAddUserClick}
+          >
           Thêm người dùng
         </Button>
       </Flex>

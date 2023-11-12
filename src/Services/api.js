@@ -65,3 +65,7 @@ export let capNhatThongTinNguoiDung = (data) => {
 export let layDanhSachNguoiDung = () => {
   return https.get("/api/QuanLyNguoiDung/LayDanhSachNguoiDung?MaNhom=GP09");
 };
+
+export let themNguoiDung = (data) => {
+  return https.post("/api/QuanLyNguoiDung/ThemNguoiDung", data);
+}

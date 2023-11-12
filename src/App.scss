@@ -33,7 +33,7 @@ html {
 }
 
 
-// Course Detail Page specific styles
+/*COURSE DETAIL PAGE*/
 .course-detail-page {
     font-family: $font-stack;
 
@@ -105,19 +105,69 @@ html {
         padding: 2rem;
 
         .enroll-button {
-            @extend .btnGlobal; // Use the global button styles
+            @extend .btnGlobal; 
             font-size: 1.25rem;
             padding: 0.75rem 2rem;
             margin-top: 1rem;
             background-color: $secondary-color;
             border: none;
             cursor: pointer;
-
             &:hover {
                 background-color: darken($secondary-color, 10%);
             }
         }
     }
-
-    // Add additional styles for other sections as needed
 }
+
+/* ADD USER*/
+.add-user-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .add-user-form {
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  
+    .form-title {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  
+    .form-group {
+      margin-bottom: 15px;
+  
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
+  
+      input, select {
+        width: 100%;
+        padding: 10px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+      }
+    }
+  
+    .submit-button {
+      width: 100%;
+      padding: 10px 20px;
+      background-color: #1890ff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+  
+      &:hover {
+        background-color: #40a9ff;
+      }
+    }
+  }
+  
+
