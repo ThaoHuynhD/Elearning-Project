@@ -41,6 +41,9 @@ export let themKhoaHocUploadHinh = (data) => {
 export let xoaKhoaHoc = (maKhoaHoc) => {
   return https.delete(`/api/QuanLyKhoaHoc/XoaKhoaHoc?MaKhoaHoc=${maKhoaHoc}`);
 };
+export let capNhatKhoaHocUpload = (formdata) => {
+  return https.post("/api/QuanLyKhoaHoc/CapNhatKhoaHocUpload", formdata);
+};
 
 /*********************** QUẢN LÝ NGƯỜI DÙNG ******************************/
 

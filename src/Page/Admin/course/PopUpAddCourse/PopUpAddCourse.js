@@ -3,7 +3,10 @@ import { Button, Modal } from "antd";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import FormAddCourse from "./FormAddCourse/FormAddCourse";
-import { setIsModalOpen } from "../../../../Redux/modalFormSlice/modalFormSlice";
+import {
+  setIsChecked,
+  setIsModalOpen,
+} from "../../../../Redux/modalFormSlice/modalFormSlice";
 
 export default function PopUpAddCourse() {
   let { isModalOpen } = useSelector((state) => {
@@ -14,6 +17,7 @@ export default function PopUpAddCourse() {
 
   const showModal = () => {
     dispatch(setIsModalOpen(true));
+    dispatch(setIsChecked(true));
   };
   const handleOk = () => {
     dispatch(setIsModalOpen(false));

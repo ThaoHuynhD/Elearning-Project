@@ -14,7 +14,10 @@ import {
 
 import PopUpAddCourse from "./PopUpAddCourse/PopUpAddCourse";
 import { useDispatch } from "react-redux";
-import { getInfoCourse } from "../../../Redux/modalFormSlice/modalFormSlice";
+import {
+  getInfoCourse,
+  setIsChecked,
+} from "../../../Redux/modalFormSlice/modalFormSlice";
 
 export default function CourseManagement() {
   const [courseList, setCourseList] = useState([]);
@@ -127,6 +130,7 @@ export default function CourseManagement() {
                         className='h-11 w-15 btn bg-yellow-500 p-3 flex align-middle justify-center'
                         onClick={() => {
                           dispatch(getInfoCourse(course.maKhoaHoc));
+                          dispatch(setIsChecked(false));
                         }}
                       >
                         <FormOutlined />

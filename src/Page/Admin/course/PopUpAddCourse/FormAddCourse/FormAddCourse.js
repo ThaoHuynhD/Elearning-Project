@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Button,
   DatePicker,
@@ -13,32 +13,37 @@ import { useFormik } from "formik";
 import moment from "moment/moment";
 import { useState } from "react";
 import { localServices } from "../../../../../Services/localServices";
-import { themKhoaHocUploadHinh } from "../../../../../Services/api";
+import {
+  capNhatKhoaHocUpload,
+  themKhoaHocUploadHinh,
+} from "../../../../../Services/api";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsModalOpen } from "../../../../../Redux/modalFormSlice/modalFormSlice";
+import dayjs from "dayjs";
+
 export default function FormAddCourse() {
   const [imgSrc, setImgSrc] = useState(" ");
   const [form] = Form.useForm();
-  let { infoCourse } = useSelector((state) => state.modalFormSlice);
+  let { infoCourse, isChecked } = useSelector((state) => state.modalFormSlice);
   console.log(
-    "🚀 ~ file: FormAddCourse.js:23 ~ FormAddCourse ~ infoCourse:",
+    "🚀 ~ file: FormAddCourse.js:28 ~ FormAddCourse ~ infoCourse:",
     infoCourse,
   );
 
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
-      maKhoaHoc: infoCourse?.maKhoaHoc,
-      biDanh: infoCourse?.biDanh,
-      tenKhoaHoc: infoCourse?.tenKhoaHoc,
-      moTa: infoCourse?.moTa,
-      luotXem: infoCourse?.luotXem,
+      maKhoaHoc: "",
+      biDanh: "",
+      tenKhoaHoc: "",
+      moTa: "",
+      luotXem: 0,
       danhGia: 0,
-      hinhAnh: null,
-      maNhom: infoCourse?.maNhom,
+      hinhAnh: {},
+      maNhom: "",
       ngayTao: "",
-      nguoiTao: infoCourse.nguoiTao?.hoTen,
-      maDanhMucKhoaHoc: infoCourse.danhMucKhoaHoc?.tenDanhMucKhoaHoc,
+      nguoiTao: "",
+      maDanhMucKhoaHoc: "",
       taiKhoanNguoiTao: localServices?.get().taiKhoan,
     },
     onSubmit: (values) => {
@@ -48,25 +53,62 @@ export default function FormAddCourse() {
         if (key !== "hinhAnh") {
           formData.append(key, values[key]);
         } else {
-          formData.append("File", values.hinhAnh, values.hinhAnh.name);
+          if (values.hinhAnh !== null) {
+            formData.append("File", values.hinhAnh, values.hinhAnh.name);
+          }
         }
       }
-      let handleAddCourse = async () => {
-        try {
-          let res = await themKhoaHocUploadHinh(formData);
-          if (res.status === 200) {
-            dispatch(setIsModalOpen(false));
-            message.success("Thêm khoá học thành công");
-            handleClearForm();
+      if (isChecked) {
+        let handleAddCourse = async () => {
+          try {
+            let res = await themKhoaHocUploadHinh(formData);
+            if (res.status === 200) {
+              dispatch(setIsModalOpen(false));
+              message.success("Thêm khoá học thành công");
+              handleClearForm();
+            }
+          } catch (err) {
+            message.error(err.response?.data);
           }
-        } catch (err) {
-          message.error(err.response.data);
-        }
-      };
-      handleAddCourse();
+        };
+        handleAddCourse();
+      } else {
+        let handleUpdate = async () => {
+          try {
+            let res = await capNhatKhoaHocUpload(formData);
+            if (res.status === 200) {
+              dispatch(setIsModalOpen(false));
+              message.success("Cập nhật khoá học thành công");
+              handleClearForm();
+            }
+          } catch (err) {
+            message.error(err.response?.data);
+          }
+        };
+        handleUpdate();
+      }
     },
   });
+  useEffect(() => {
+    if (isChecked === false) {
+      formik.setValues({
+        maKhoaHoc: infoCourse?.maKhoaHoc,
+        biDanh: infoCourse?.biDanh,
+        tenKhoaHoc: infoCourse?.tenKhoaHoc,
+        moTa: infoCourse?.moTa,
+        luotXem: infoCourse?.luotXem,
+        danhGia: 0,
+        hinhAnh: null,
+        maNhom: infoCourse?.maNhom,
+        ngayTao: infoCourse?.ngayTao,
+        nguoiTao: infoCourse.nguoiTao?.hoTen,
+        maDanhMucKhoaHoc: infoCourse?.danhMucKhoaHoc?.maDanhMucKhoahoc,
+        taiKhoanNguoiTao: infoCourse.nguoiTao?.taiKhoan,
+      });
+    }
+  }, [isChecked, infoCourse]);
 
+  console.log(infoCourse.danhMucKhoaHoc?.maDanhMucKhoaHoc);
   let handleClearForm = () => {
     form.setFieldsValue({
       maKhoaHoc: "",
@@ -84,13 +126,15 @@ export default function FormAddCourse() {
     });
   };
 
-  const handleUpdate = () => {};
-
   let handleChangeDatePicker = (date) => {
-    let ngayTao = moment(date).format("DD/MM/YYYY");
+    let ngayTao = dayjs(date).format("DD/MM/YYYY");
     formik.setFieldValue("ngayTao", ngayTao);
   };
   let handleChangeListCourse = (value) => {
+    console.log(
+      "🚀 ~ file: FormAddCourse.js:135 ~ handleChangeListCourse ~ value:",
+      value,
+    );
     formik.setFieldValue("maDanhMucKhoaHoc", value);
   };
   let handleChangeGroup = (value) => {
@@ -127,6 +171,7 @@ export default function FormAddCourse() {
       <Form.Item label='Mã khoá học'>
         <Input
           name='maKhoaHoc'
+          disabled={isChecked ? false : true}
           onChange={formik.handleChange}
           value={formik.values.maKhoaHoc}
         />
@@ -160,6 +205,7 @@ export default function FormAddCourse() {
       <Form.Item label='Lượt xem'>
         <InputNumber
           type='number'
+          min={0}
           onChange={(value) => {
             formik.setFieldValue("luotXem", value);
           }}
@@ -169,14 +215,15 @@ export default function FormAddCourse() {
       <Form.Item label='Danh mục khoá học'>
         <Select
           onChange={handleChangeListCourse}
+          defaultValue={" "}
           value={formik.values.maDanhMucKhoaHoc}
         >
-          <Select.Option value='BackEnd'>Lập trình BackEnd</Select.Option>
-          <Select.Option value='Design'>Thiết kế Web</Select.Option>
-          <Select.Option value='DiDong'>Lập trình di động</Select.Option>
-          <Select.Option value='FrontEnd'>Lập trình Front end</Select.Option>
-          <Select.Option value='FullStack'>Lập trình Full Stack</Select.Option>
-          <Select.Option value='TuDuy'>Tư duy lập trình</Select.Option>
+          <Select.Option value='BackEnd'>BackEnd</Select.Option>
+          <Select.Option value='Design'>Design</Select.Option>
+          <Select.Option value='DiDong'>DiDong</Select.Option>
+          <Select.Option value='FrontEnd'>FrontEnd</Select.Option>
+          <Select.Option value='FullStack'>FullStack</Select.Option>
+          <Select.Option value='TuDuy'>TuDuy</Select.Option>
         </Select>
       </Form.Item>
       <Form.Item label='Người tạo'>
@@ -195,7 +242,14 @@ export default function FormAddCourse() {
         />
       </Form.Item>
       <Form.Item label='Ngày tạo'>
-        <DatePicker format={"DD/MM/YYYY"} onChange={handleChangeDatePicker} />
+        <DatePicker
+          allowClear={false}
+          format={"DD/MM/YYYY"}
+          onChange={handleChangeDatePicker}
+          value={
+            isChecked ? undefined : dayjs(formik.values.ngayTao, "DD/MM/YYYY")
+          }
+        />
       </Form.Item>
       <Form.Item label='Mã nhóm'>
         <Select
@@ -227,7 +281,7 @@ export default function FormAddCourse() {
           accept='image/png , image/jpeg , image/jpg'
         />
         <Image
-          src={imgSrc === " " ? infoCourse.hinhAnh : imgSrc}
+          src={imgSrc === " " ? infoCourse?.hinhAnh : imgSrc}
           width={100}
           height={100}
         />
@@ -235,13 +289,17 @@ export default function FormAddCourse() {
 
       <div className='flex items-center justify-end space-x-4'>
         <Button
-          className='bg-green-500 hover:bg-green-600 duration-300 text-white'
+          className={`bg-green-500 hover:bg-green-600 duration-300 text-white ${
+            isChecked ? "block" : "hidden"
+          }`}
           htmlType='submit'
         >
           Thêm
         </Button>
         <Button
-          className='bg-blue-500 hover:bg-blue-600 duration-300 text-white'
+          className={`bg-blue-500 hover:bg-blue-600 duration-300 text-white ${
+            isChecked ? "hidden" : "block"
+          }`}
           htmlType='submit'
         >
           Cập nhật

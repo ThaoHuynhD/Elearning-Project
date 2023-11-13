@@ -5,6 +5,7 @@ const initialState = {
   isModalOpen: false,
   infoCourse: {},
   loading: false,
+  isChecked: false,
 };
 export const getInfoCourse = createAsyncThunk(
   "getInfo",
@@ -31,6 +32,12 @@ const modalFormSlice = createSlice({
     },
     setIsModalOpen: (state, { payload }) => {
       state.isModalOpen = payload;
+      if (!payload) {
+        state.infoCourse = {};
+      }
+    },
+    setIsChecked: (state, { payload }) => {
+      state.isChecked = payload;
     },
   },
   extraReducers: (builder) => {
@@ -48,6 +55,7 @@ const modalFormSlice = createSlice({
   },
 });
 
-export const { setIsModalOpen, setInfoCourse } = modalFormSlice.actions;
+export const { setIsModalOpen, setInfoCourse, setIsChecked } =
+  modalFormSlice.actions;
 
 export default modalFormSlice.reducer;
