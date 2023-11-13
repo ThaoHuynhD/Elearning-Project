@@ -53,5 +53,10 @@
   "devDependencies": {
     "sass": "^1.69.5",
     "tailwindcss": "^3.3.5"
+  },
+  "overrides": {
+    "react-lottie": {
+      "react": "^0.14.7 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0"
+    }
   }
 }

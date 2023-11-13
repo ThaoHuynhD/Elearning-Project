@@ -20,17 +20,27 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { setIsModalOpen } from "../../../../../Redux/modalFormSlice/modalFormSlice";
 import dayjs from "dayjs";
+import * as Yup from "yup";
 
 export default function FormAddCourse() {
   const [imgSrc, setImgSrc] = useState(" ");
   const [form] = Form.useForm();
   let { infoCourse, isChecked } = useSelector((state) => state.modalFormSlice);
-  console.log(
-    "🚀 ~ file: FormAddCourse.js:28 ~ FormAddCourse ~ infoCourse:",
-    infoCourse,
-  );
 
   const dispatch = useDispatch();
+  const validationSchema = Yup.object().shape({
+    maKhoaHoc: Yup.string().required("Mã khóa học không được bỏ trống"),
+    biDanh: Yup.string().required("Bí danh không được bỏ trống"),
+    tenKhoaHoc: Yup.string().required("Tên khoá học không được bỏ trống"),
+    moTa: Yup.string().required("Mô tả không được bỏ trống"),
+    luotXem: Yup.string().required("Lượt xem không được bỏ trống"),
+    danhGia: Yup.string().required("Lượt xem không được bỏ trống"),
+    maNhom: Yup.string().required("Mã nhóm không được bỏ trống"),
+    ngayTao: Yup.string().required("Ngày tạo không được bỏ trống"),
+    nguoiTao: Yup.string().required("Vui lòng không được bỏ trống"),
+    maDanhMucKhoaHoc: Yup.string().required("Vui lòng không được bỏ trống"),
+  });
+
   const formik = useFormik({
     initialValues: {
       maKhoaHoc: "",
@@ -46,6 +56,7 @@ export default function FormAddCourse() {
       maDanhMucKhoaHoc: "",
       taiKhoanNguoiTao: localServices?.get().taiKhoan,
     },
+    validationSchema: validationSchema,
     onSubmit: (values) => {
       console.log("values: ", values);
       let formData = new FormData();
@@ -108,7 +119,6 @@ export default function FormAddCourse() {
     }
   }, [isChecked, infoCourse]);
 
-  console.log(infoCourse.danhMucKhoaHoc?.maDanhMucKhoaHoc);
   let handleClearForm = () => {
     form.setFieldsValue({
       maKhoaHoc: "",
@@ -131,10 +141,6 @@ export default function FormAddCourse() {
     formik.setFieldValue("ngayTao", ngayTao);
   };
   let handleChangeListCourse = (value) => {
-    console.log(
-      "🚀 ~ file: FormAddCourse.js:135 ~ handleChangeListCourse ~ value:",
-      value,
-    );
     formik.setFieldValue("maDanhMucKhoaHoc", value);
   };
   let handleChangeGroup = (value) => {
@@ -174,14 +180,22 @@ export default function FormAddCourse() {
           disabled={isChecked ? false : true}
           onChange={formik.handleChange}
           value={formik.values.maKhoaHoc}
+          onBlur={formik.handleBlur}
         />
+        {formik.touched.maKhoaHoc && formik.errors.maKhoaHoc ? (
+          <div className='text-red-500'>{formik.errors.maKhoaHoc}</div>
+        ) : null}
       </Form.Item>
       <Form.Item label='Bí danh'>
         <Input
           name='biDanh'
           onChange={formik.handleChange}
           value={formik.values.biDanh}
+          onBlur={formik.handleBlur}
         />
+        {formik.touched.biDanh && formik.errors.biDanh ? (
+          <div className='text-red-500'>{formik.errors.biDanh}</div>
+        ) : null}
       </Form.Item>
       <Form.Item label='Đánh giá'>
         <InputNumber
@@ -190,17 +204,25 @@ export default function FormAddCourse() {
           min={1}
           max={10}
           defaultValue={3}
+          onBlur={formik.handleBlur}
           onChange={(value) => {
             formik.setFieldValue("danhGia", value);
           }}
         />
+        {formik.touched.danhGia && formik.errors.danhGia ? (
+          <div className='text-red-500'>{formik.errors.danhGia}</div>
+        ) : null}
       </Form.Item>
       <Form.Item label='Tên khoá học'>
         <Input
           name='tenKhoaHoc'
           onChange={formik.handleChange}
           value={formik.values.tenKhoaHoc}
+          onBlur={formik.handleBlur}
         />
+        {formik.touched.tenKhoaHoc && formik.errors.tenKhoaHoc ? (
+          <div className='text-red-500'>{formik.errors.tenKhoaHoc}</div>
+        ) : null}
       </Form.Item>
       <Form.Item label='Lượt xem'>
         <InputNumber
@@ -210,13 +232,18 @@ export default function FormAddCourse() {
             formik.setFieldValue("luotXem", value);
           }}
           value={formik.values.luotXem}
+          onBlur={formik.handleBlur}
         />
+        {formik.touched.luotXem && formik.errors.luotXem ? (
+          <div className='text-red-500'>{formik.errors.luotXem}</div>
+        ) : null}
       </Form.Item>
       <Form.Item label='Danh mục khoá học'>
         <Select
           onChange={handleChangeListCourse}
           defaultValue={" "}
           value={formik.values.maDanhMucKhoaHoc}
+          onBlur={formik.handleBlur}
         >
           <Select.Option value='BackEnd'>BackEnd</Select.Option>
           <Select.Option value='Design'>Design</Select.Option>
@@ -225,13 +252,20 @@ export default function FormAddCourse() {
           <Select.Option value='FullStack'>FullStack</Select.Option>
           <Select.Option value='TuDuy'>TuDuy</Select.Option>
         </Select>
+        {formik.touched.maDanhMucKhoaHoc && formik.errors.maDanhMucKhoaHoc ? (
+          <div className='text-red-500'>{formik.errors.maDanhMucKhoaHoc}</div>
+        ) : null}
       </Form.Item>
       <Form.Item label='Người tạo'>
         <Input
           name='nguoiTao'
           onChange={formik.handleChange}
           value={formik.values.nguoiTao}
+          onBlur={formik.handleBlur}
         />
+        {formik.touched.nguoiTao && formik.errors.nguoiTao ? (
+          <div className='text-red-500'>{formik.errors.nguoiTao}</div>
+        ) : null}
       </Form.Item>
 
       <Form.Item label='Mô tả'>
@@ -239,7 +273,11 @@ export default function FormAddCourse() {
           name='moTa'
           onChange={formik.handleChange}
           value={formik.values.moTa}
+          onBlur={formik.handleBlur}
         />
+        {formik.touched.moTa && formik.errors.moTa ? (
+          <div className='text-red-500'>{formik.errors.moTa}</div>
+        ) : null}
       </Form.Item>
       <Form.Item label='Ngày tạo'>
         <DatePicker
@@ -249,13 +287,18 @@ export default function FormAddCourse() {
           value={
             isChecked ? undefined : dayjs(formik.values.ngayTao, "DD/MM/YYYY")
           }
+          onBlur={formik.handleBlur}
         />
+        {formik.touched.ngayTao && formik.errors.ngayTao ? (
+          <div className='text-red-500'>{formik.errors.ngayTao}</div>
+        ) : null}
       </Form.Item>
       <Form.Item label='Mã nhóm'>
         <Select
           style={{ width: 100 }}
           onChange={handleChangeGroup}
           value={formik.values.maNhom}
+          onBlur={formik.handleBlur}
         >
           <Select.Option value='GP01'>GP01</Select.Option>
           <Select.Option value='GP02'>GP02</Select.Option>
@@ -272,6 +315,9 @@ export default function FormAddCourse() {
           <Select.Option value='GP14'>GP14</Select.Option>
           <Select.Option value='GP15'>GP15</Select.Option>
         </Select>
+        {formik.touched.maNhom && formik.errors.maNhom ? (
+          <div className='text-red-500'>{formik.errors.maNhom}</div>
+        ) : null}
       </Form.Item>
 
       <Form.Item label='Hình ảnh'>
