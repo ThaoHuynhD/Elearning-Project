@@ -1,116 +1,150 @@
-import React, { useEffect } from "react";
-import { Button, Flex, Table, Tag } from "antd";
+import React, { useEffect, useState } from "react";
+import { Table, Tag, Modal, Button, Input, Form } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchList } from "../../../../Redux/listUserSlice/listUserSlice";
-import { Input } from "antd";
-import { useNavigate } from "react-router-dom";
 
-const { Search } = Input;
-const onSearch = (value, _e, info) => console.log(info?.source, value);
-
-const columns = [
-  {
-    title: "Tài khoản",
-    dataIndex: "taiKhoan",
-    key: "taiKhoan",
-  },
-  {
-    title: "Họ tên",
-    dataIndex: "hoTen",
-    key: "hoTen",
-  },
-  {
-    title: "Email",
-    dataIndex: "email",
-    key: "email",
-  },
-  {
-    title: "Số điện thoại",
-    dataIndex: "soDt",
-    key: "soDt",
-  },
-  {
-    title: "Loại người dùng",
-    dataIndex: "maLoaiNguoiDung",
-    key: "maLoaiNguoiDung",
-    render: (text) => {
-      if (text === "HV") {
-        return <Tag color='green'>Học Viên</Tag>;
-      } else {
-        return <Tag color='red'>Giáo Viên</Tag>;
-      }
-    },
-  },
-  {
-    title: "Hành động",
-    render: (_, user) => {
-      return (
-        <div className='space-x-8'>
-          <button className='text-2xl text-yellow-400 hover:text-yellow-500 duration-300'>
-            <i className='fa-solid fa-pen-to-square'></i>
-          </button>
-          <button className='text-2xl text-red-600 hover:text-red-700 duration-300'>
-            <i className='fa-solid fa-square-xmark '></i>
-          </button>
-        </div>
-      );
-    },
-  },
-];
-
-export default function TableUser() {
-  let datasource = [];
+const TableUser = () => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [form] = Form.useForm();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const handleAddUserClick=() => {
-    navigate("/addUser");
-  }
   const { listUser } = useSelector((state) => state.listUserSlice);
-
+  let datasource = [];
 
   useEffect(() => {
     dispatch(fetchList());
-  }, []);
+  }, [dispatch]);
 
-  listUser?.map((item, index) => {
+  useEffect(() => {
+    if (currentUser) {
+      form.setFieldsValue(currentUser);
+    }
+  }, [currentUser, form]);
+
+  useEffect(() => {
+    if (currentUser) {
+      form.setFieldsValue(currentUser);
+    }
+  }, [currentUser, form]);
+
+  listUser?.forEach((item, index) => {
     datasource.push({
       key: index + 1,
-      taiKhoan: item.taiKhoan,
-      hoTen: item.hoTen,
-      email: item.email,
-      soDt: item.soDt,
-      maLoaiNguoiDung: item.maLoaiNguoiDung,
+      ...item,
     });
   });
 
+  const handleEditClick = (user) => {
+    setCurrentUser(user);
+    setIsModalVisible(true);
+  };
+
+  const handleModalCancel = () => {
+    setIsModalVisible(false);
+    setCurrentUser(null);
+  };
+
+  const handleSubmit = (values) => {
+    console.log(values);
+    // Here you can call your API to update the user
+    // For example: thongTinNguoiDung(values).then(...).catch(...);
+    setIsModalVisible(false); // Close the modal after submission
+  };
+
+  const columns = [
+    {
+      title: "Tài khoản",
+      dataIndex: "taiKhoan",
+      key: "taiKhoan",
+    },
+    {
+      title: "Họ tên",
+      dataIndex: "hoTen",
+      key: "hoTen",
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+    },
+    {
+      title: "Số điện thoại",
+      dataIndex: "soDt",
+      key: "soDt",
+    },
+    {
+      title: "Loại người dùng",
+      dataIndex: "maLoaiNguoiDung",
+      key: "maLoaiNguoiDung",
+      render: (text) => {
+        if (text === "HV") {
+          return <Tag color='green'>Học Viên</Tag>;
+        } else {
+          return <Tag color='red'>Giáo Viên</Tag>;
+        }
+      },
+    },
+    {
+      title: "Hành động",
+      render: (_, user) => (
+        <div className='space-x-8'>
+          <button
+            className='text-2xl text-yellow-400 hover:text-yellow-500 duration-300'
+            onClick={() => handleEditClick(user)}>
+            <i className='editUser fa-solid fa-pen-to-square'></i>
+          </button>
+          {/* Other buttons if necessary */}
+        </div>
+      ),
+    },
+  ];
+
   return (
     <div>
-      <Search
-        placeholder='Tìm kiếm người dùng'
-        allowClear
-        enterButton='Tìm kiếm'
-        size='large'
-        onSearch={onSearch}
-      />
-
-      <Flex
-        wrap='wrap'
-        gap='small'
-        className='site-button-ghost-wrapper my-5'>
-        <Button
-          type='primary'
-          ghost
-          onClick={handleAddUserClick}
-          >
-          Thêm người dùng
-        </Button>
-      </Flex>
-
+      {/* Your existing code for Search and Add User Button */}
       <Table
         bordered
         columns={columns}
         dataSource={datasource}
       />
+
+      <Modal
+        title='Edit User'
+        visible={isModalVisible}
+        onCancel={handleModalCancel}
+        footer={null} // Remove default buttons
+      >
+        <Form
+          form={form}
+          initialValues={{
+            taiKhoan: "",
+            matKhau: "",
+            hoTen: "",
+            soDT: "",
+            maLoaiNguoiDung: "",
+            maNhom: "",
+            email: "",
+          }}
+          onFinish={handleSubmit}
+          layout='vertical'>
+          {/* Your form fields here */}
+          <Form.Item
+            name='taiKhoan'
+            label='Tài khoản'>
+            <Input />
+          </Form.Item>
+          {/* ... other form items ... */}
+          <Form.Item>
+            <Button
+              type='primary'
+              htmlType='submit'>
+              Lưu lại
+            </Button>
+          </Form.Item>
+        </Form>
+      </Modal>
     </div>
   );
-}
+};
+
+export default TableUser;

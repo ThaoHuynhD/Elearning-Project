@@ -13,6 +13,7 @@ import AdminHomePage from "./Page/Admin/AdminHomePage";
 import { localServices } from "./Services/localServices";
 import CourseDetailPage from "./Page/User/CourseDetailPage/CourseDetailPage";
 import AddUser from "./Page/Admin/user/AddUser/AddUser";
+import EditUser from "./Page/Admin/user/EditUser/EditUser";
 
 function App() {
   let info = localServices.get();
@@ -83,7 +84,8 @@ function App() {
     { path: "/personal", element: <PersonalPage /> },
     { path: "/*", element: <NotFoundPage /> },
     { path: "/admin", element: <AdminHomePage /> },
-    { path: "/addUser", element: <AddUser/>}
+    { path: "/addUser", element: <AddUser/>},
+    { path: `/editUser/:taiKhoan`, element: <EditUser/>}
   ];
 
   let selectedRoutes = userRoutes;

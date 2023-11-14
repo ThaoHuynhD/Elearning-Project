@@ -15,6 +15,7 @@ const AddUser = () => {
           maNhom: "",
           email: "",
         }}
+
         onSubmit={(values, { setSubmitting, resetForm }) => {
           themNguoiDung(values)
             .then((response) => {
@@ -30,6 +31,7 @@ const AddUser = () => {
               resetForm(); // Optionally reset the form to initial values
             });
         }}>
+          
         {({ isSubmitting }) => (
           <Form className='add-user-form w-full max-w-xl'>
             <h3 className='form-title text-center text-lg font-bold '>
