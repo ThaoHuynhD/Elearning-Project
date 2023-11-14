@@ -4,14 +4,11 @@ import { Breadcrumb, Layout, Menu, theme } from "antd";
 import UserManagement from "./user/UserManagement";
 import PersonalPage from "../User/PersonalPage/PersonalPage";
 import CourseManagement from "./course/CourseManagement";
+import { Header } from "antd/es/layout/layout";
+import AdminHeader from "../../Components/AdminHeader/AdminHeader";
 const { Content, Sider } = Layout;
 function getItem(label, key, icon, children) {
-  return {
-    key,
-    icon,
-    children,
-    label,
-  };
+  return { key, icon, children, label };
 }
 const items = [
   getItem("User Management", "userManage", <TeamOutlined />),
@@ -53,9 +50,7 @@ export default function AdminHomePage() {
         onCollapse={(value) => setCollapsed(value)}
       >
         <Menu
-          style={{
-            paddingTop: 10,
-          }}
+          style={{ paddingTop: 10 }}
           theme='dark'
           defaultSelectedKeys={["user"]}
           mode='inline'
@@ -64,6 +59,9 @@ export default function AdminHomePage() {
         />
       </Sider>
       <Layout>
+        <Header>
+          <AdminHeader />
+        </Header>
         <Content style={{ margin: "0 16px" }}>
           <Breadcrumb style={{ margin: "16px 0" }}>
             {breadcrumbItems}
