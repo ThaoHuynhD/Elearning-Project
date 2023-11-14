@@ -55,10 +55,6 @@ export default function AdminHomePage() {
         <Menu
           style={{
             paddingTop: 10,
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "13%",
           }}
           theme='dark'
           defaultSelectedKeys={["user"]}
