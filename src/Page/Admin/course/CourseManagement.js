@@ -1,43 +1,46 @@
 import React, { useEffect, useState } from 'react'
-
 import { message, Image, Button, Tag, ConfigProvider } from 'antd';
-import { FormOutlined, DeleteOutlined } from '@ant-design/icons';
+import { FormOutlined, DeleteOutlined, ContactsOutlined } from '@ant-design/icons';
 import Search from 'antd/es/input/Search';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import dayjs from 'dayjs';
-import { layDanhSachKhoaHoc, layDanhSachKhoaHocTheoTen } from '../../../Services/api';
+import { layDanhSachKhoaHocTheoTen } from '../../../Services/api';
 
-
-
-export default function CourseManagement() {
+export default function CourseManagement({ setSelectedItem, setSelectedCourse, courseList }) {
   dayjs.extend(customParseFormat);
 
-  const [courseList, setCourseList] = useState([]);
   const [courseSearchList, setCourseSearchList] = useState([]);
   const [isSearch, setIsSearch] = useState(false);
 
-  const fetchDataCourseList = async () => {
-    try {
-      let response = await layDanhSachKhoaHoc();
-      setCourseList(response.data);
-    } catch {
-      message.error("Đã có lỗi xảy ra");
-    }
+  const colorMap = {
+    'BackEnd': 'green',
+    'FrontEnd': 'blue',
+    'Design': 'red',
+    'DiDong': 'yellow',
+    'TuDuy': 'purple'
   };
+
+
   const fetchDataCourseSearch = async (searchValue) => {
     try {
+      if (searchValue === '') message.error("Vui lòng nhập nội dung cần tìm vào ô tìm kiếm")
       if (searchValue === undefined || searchValue === '' || searchValue === null) return;
       let response = await layDanhSachKhoaHocTheoTen(searchValue);
       const updatedCourseSearchList = response.data;
+
       setCourseSearchList(updatedCourseSearchList);
       setIsSearch(true);
+
       message.success(`Có ${updatedCourseSearchList.length} kết quả tìm kiếm tương tự`)
     } catch {
       message.error("Đã có lỗi xảy ra");
     }
   };
   const handleSearchCancel = () => { setIsSearch(false); };
-
+  const handleMoveToEnrollment = (maKhoaHoc) => {
+    setSelectedItem('enrollmentByCourse');
+    setSelectedCourse(maKhoaHoc);
+  }
   const renderList = () => {
     let list = isSearch ? courseSearchList : courseList;
     return (
@@ -58,13 +61,8 @@ export default function CourseManagement() {
         </thead>
         <tbody>
           {list.map((course, index) => {
-            let maDanhMucKhoahoc = course.danhMucKhoaHoc.maDanhMucKhoahoc
-            let tagColor;
-            if (maDanhMucKhoahoc === 'BackEnd') tagColor = 'green'
-            else if (maDanhMucKhoahoc === 'FrontEnd') tagColor = 'blue'
-            else if (maDanhMucKhoahoc === 'Design') tagColor = 'red'
-            else if (maDanhMucKhoahoc === 'DiDong') tagColor = 'yellow'
-            else if (maDanhMucKhoahoc === 'TuDuy') tagColor = 'purple';
+            let maDanhMucKhoahoc = course.danhMucKhoaHoc.maDanhMucKhoahoc;
+            let tagColor = colorMap[maDanhMucKhoahoc] || 'default';
             return (
               <tr key={index} className='border'>
                 <td className='border px-2'>{index + 1}</td>
@@ -76,22 +74,16 @@ export default function CourseManagement() {
                 <td className='border px-2'>{course.soLuongHocVien}</td>
                 <td className='border px-2'>{course.luotXem}</td>
                 <td className='border px-2'>{course.nguoiTao.taiKhoan}</td>
-
                 <td className='m-auto'>
                   <div className='flex align-middle justify-center'>
-                    <ConfigProvider
-                      theme={{
-                        token: {
-                          colorPrimary: 'white',
-                          borderRadius: 10,
-                          fontSize: 20,
-                        },
-                      }}
-                    >
+                    <ConfigProvider theme={{ token: { colorPrimary: 'white', borderRadius: 10, fontSize: 20, }, }}>
                       <Button className='h-11 w-15 btn bg-yellow-500 p-3 flex align-middle justify-center'
                       ><FormOutlined /></Button>
                       <Button className='h-11 w-15  btn bg-red-500 mx-1 p-3 flex align-middle justify-center'
                       ><DeleteOutlined /></Button>
+                      <Button className='h-11 w-15  btn bg-green-500 mx-1 p-3 flex align-middle justify-center'
+                        onClick={() => { handleMoveToEnrollment(course.maKhoaHoc) }}
+                      ><ContactsOutlined /></Button>
                     </ConfigProvider>
                   </div>
                 </td>
@@ -102,48 +94,27 @@ export default function CourseManagement() {
         </tbody>
       </table>
     )
-
   }
   useEffect(() => {
-    fetchDataCourseList();
     fetchDataCourseSearch();
   }, []);
 
   return (
-    <div>
+    <ConfigProvider theme={{ token: { colorPrimary: 'white', borderRadius: 10 } }}>
       <div className="text-right mb-2">
-        <ConfigProvider
-          theme={{
-            token: {
-              colorPrimary: 'white',
-              borderRadius: 10,
-            },
-          }}
-        >
-          <Button className='btn bg-green-600 font-bold text-black hover:text-white hover:bg-green-800'
-          >Thêm Phim Mới</Button>
-        </ConfigProvider>
+        <Button className='btn bg-green-600 font-bold text-black hover:text-white hover:bg-green-700'
+        >Thêm Phim Mới</Button>
       </div>
-
       <div className="flex searchCourse my-5">
         <Search
           enterButton size="large" onSearch={fetchDataCourseSearch}
           placeholder="input search text(phone number/name)"
           className='bg-blue-500 overflow-hidden rounded-lg'
         />
-        <ConfigProvider
-          theme={{
-            token: {
-              colorPrimary: 'white',
-              borderRadius: 10,
-            },
-          }}
-        >
-          <Button className={`btn bg-red-600 text-white font-bold ml-3 h-10 ${isSearch ? 'block' : 'hidden'}`}
-            onClick={() => { handleSearchCancel() }}>Cancle Search</Button>
-        </ConfigProvider>
+        <Button className={`btn bg-red-600 text-white font-bold ml-3 h-10 ${isSearch ? 'block' : 'hidden'}`}
+          onClick={() => { handleSearchCancel() }}>Cancle Search</Button>
       </div>
       {renderList()}
-    </div >
+    </ConfigProvider>
   )
 }
