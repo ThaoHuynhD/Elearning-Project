@@ -1,54 +1,82 @@
 import React, { useEffect, useState } from "react";
-import { Table, Tag, Modal, Button, Input, Form } from "antd";
+import { Table, Tag, Modal, Input, Button, message } from "antd";
+import { PlusOutlined } from '@ant-design/icons';
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchList } from "../../../../Redux/listUserSlice/listUserSlice";
+import {
+  deleteUser,
+  fetchList,
+  updateUser,
+  searchUser,
+} from "../../../../Redux/listUserSlice/listUserSlice";
+import UpdateUserModal from "./UpdateUserModal";
+import SearchUserModal from "./SearchUserModal";
+import AddUser from "../AddUser/AddUser";
 
 const TableUser = () => {
+  const navigate = useNavigate();
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
+  const [isSearchModalVisible, setIsSearchModalVisible] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
-  const [form] = Form.useForm();
+  const [searchResult, setSearchResult] = useState(null);
   const dispatch = useDispatch();
   const { listUser } = useSelector((state) => state.listUserSlice);
-  let datasource = [];
 
   useEffect(() => {
     dispatch(fetchList());
   }, [dispatch]);
 
-  useEffect(() => {
-    if (currentUser) {
-      form.setFieldsValue(currentUser);
-    }
-  }, [currentUser, form]);
+  let datasource = listUser?.map((item, index) => ({
+    key: index + 1,
+    ...item,
+  }));
 
-  useEffect(() => {
-    if (currentUser) {
-      form.setFieldsValue(currentUser);
-    }
-  }, [currentUser, form]);
-
-  listUser?.forEach((item, index) => {
-    datasource.push({
-      key: index + 1,
-      ...item,
-    });
-  });
-
-  const handleEditClick = (user) => {
-    setCurrentUser(user);
-    setIsModalVisible(true);
-  };
+  const handleAddUser = () => {
+    navigate("/addUser");
+  }
 
   const handleModalCancel = () => {
     setIsModalVisible(false);
     setCurrentUser(null);
   };
 
-  const handleSubmit = (values) => {
-    console.log(values);
-    // Here you can call your API to update the user
-    // For example: thongTinNguoiDung(values).then(...).catch(...);
-    setIsModalVisible(false); // Close the modal after submission
+  const handleEditClick = (user) => {
+    console.log("user:", user);
+    setCurrentUser(user);
+    setIsModalVisible(true);
+    setIsUpdateModalVisible(true);
+  };
+
+  const handleDelete = (taiKhoan) => {
+    Modal.confirm({
+      title: "Bạn có chắc muốn xóa người dùng này?",
+      content: "Hành động này không thể đảo ngược",
+      onOk: () => {
+        dispatch(deleteUser(taiKhoan)).then((response) => {
+          if (response.meta.requestStatus === "fulfilled") {
+            message.success("Người dùng đã bị xóa");
+          } else {
+            message.error("Đã có lỗi xảy ra");
+          }
+        });
+      },
+    });
+  };
+
+  const handleSearch = (value) => {
+    dispatch(searchUser(value))
+      .then((action) => {
+        if (action.type === "listUser/searchUser/fulfilled") {
+          setSearchResult(action.payload);
+          setIsSearchModalVisible(true);
+        } else {
+          console.error("Search failed:", action.error);
+        }
+      })
+      .catch((error) => {
+        console.error("Search error:", error);
+      });
   };
 
   const columns = [
@@ -89,11 +117,16 @@ const TableUser = () => {
       render: (_, user) => (
         <div className='space-x-8'>
           <button
-            className='text-2xl text-yellow-400 hover:text-yellow-500 duration-300'
+            className='text-2xl text-yellow-400 hover:text-yellow-700 duration-300'
             onClick={() => handleEditClick(user)}>
             <i className='editUser fa-solid fa-pen-to-square'></i>
           </button>
-          {/* Other buttons if necessary */}
+
+          <button
+            className='text-2xl text-red-400 hover:text-red-700 duration-300'
+            onClick={() => handleDelete(user.taiKhoan)}>
+            <i class='fa-solid fa-trash'></i>
+          </button>
         </div>
       ),
     },
@@ -101,48 +134,47 @@ const TableUser = () => {
 
   return (
     <div>
-      {/* Your existing code for Search and Add User Button */}
+      <div className='search-bar'>
+        <h3>Tìm kiếm</h3>
+        <Input.Search
+          placeholder='Nhập tài khoản người dùng'
+          enterButton='Tìm kiếm'
+          onSearch={handleSearch}
+        />
+      </div>
+
+      <Button
+        type="primary"
+        icon={<PlusOutlined/>}
+        onClick={handleAddUser}
+      >
+        Thêm người dùng
+      </Button>
+
+
       <Table
         bordered
         columns={columns}
         dataSource={datasource}
       />
 
-      <Modal
-        title='Edit User'
-        visible={isModalVisible}
+      {/* UpdateUserModal for editing user information */}
+      <UpdateUserModal
+        isVisible={isModalVisible}
         onCancel={handleModalCancel}
-        footer={null} // Remove default buttons
-      >
-        <Form
-          form={form}
-          initialValues={{
-            taiKhoan: "",
-            matKhau: "",
-            hoTen: "",
-            soDT: "",
-            maLoaiNguoiDung: "",
-            maNhom: "",
-            email: "",
-          }}
-          onFinish={handleSubmit}
-          layout='vertical'>
-          {/* Your form fields here */}
-          <Form.Item
-            name='taiKhoan'
-            label='Tài khoản'>
-            <Input />
-          </Form.Item>
-          {/* ... other form items ... */}
-          <Form.Item>
-            <Button
-              type='primary'
-              htmlType='submit'>
-              Lưu lại
-            </Button>
-          </Form.Item>
-        </Form>
-      </Modal>
+        user={currentUser}
+        onUpdate={(updatedUser) => {
+          dispatch(updateUser(updatedUser));
+          setIsUpdateModalVisible(false);
+        }}
+      />
+
+      {/* SearchUserModal for displaying search results */}
+      <SearchUserModal
+        isVisible={isSearchModalVisible}
+        onCancel={() => setIsSearchModalVisible(false)}
+        user={searchResult}
+      />
     </div>
   );
 };

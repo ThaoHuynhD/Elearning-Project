@@ -19,16 +19,15 @@ const AddUser = () => {
         onSubmit={(values, { setSubmitting, resetForm }) => {
           themNguoiDung(values)
             .then((response) => {
-              console.log("User added successfully:", response);
-              // Handle success (e.g., show success message, navigate to another page, etc.)
+             alert ("Đã thêm người dùng thành công");
+             resetForm();
             })
             .catch((error) => {
-              console.error("Error adding user:", error);
-              // Handle error (e.g., show error message)
+              alert("Error adding user:", error.message);
             })
             .finally(() => {
-              setSubmitting(false); // Finish the submitting state
-              resetForm(); // Optionally reset the form to initial values
+              setSubmitting(false); 
+              resetForm(); 
             });
         }}>
           

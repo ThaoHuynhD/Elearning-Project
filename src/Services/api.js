@@ -2,11 +2,7 @@ import { https } from "./config";
 
 /*********************** QUẢN LÝ KHOÁ HỌC ******************************/
 export let layDanhSachKhoaHoc = () => {
-<<<<<<< HEAD
   return https.get("/api/QuanLyKhoaHoc/LayDanhSachKhoaHoc?MaNhom=GP09");
-=======
-    return https.get(`/api/QuanLyKhoaHoc/LayDanhSachKhoaHoc?MaNhom=GP09`);
->>>>>>> ba4c7421f4226b88caeacee9eca546df3f8053a9
 };
 //api tìm kiếm khoá học
 export let layDanhSachKhoaHocTheoTen = (tenKhoaHoc) => {
@@ -38,7 +34,6 @@ export let dangKyKhoaHoc = (data) => {
 export let ghiDanhKhoaHoc = (data) => {
   return https.post("/api/QuanLyKhoaHoc/GhiDanhKhoaHoc", data);
 };
-
 export let huyGhiDanh = (data) => {
   return https.post("/api/QuanLyKhoaHoc/HuyGhiDanh", data);
 };
@@ -51,7 +46,6 @@ export let themKhoaHocUploadHinh = (data) => {
 export let dangNhap = (data) => {
   return https.post("/api/QuanLyNguoiDung/DangNhap", data);
 };
-
 export let dangKy = (data) => {
   return https.post("/api/QuanLyNguoiDung/DangKy", data);
 };
@@ -69,7 +63,17 @@ export let capNhatThongTinNguoiDung = (data) => {
 export let layDanhSachNguoiDung = () => {
   return https.get("/api/QuanLyNguoiDung/LayDanhSachNguoiDung?MaNhom=GP09");
 };
-
+export let timKiemNguoiDung = (taiKhoan) => {
+  return https.get("/api/QuanLyNguoiDung/TimKiemNguoiDung", {
+    params: {
+      MaNhom: "GP09",
+      tuKhoa: taiKhoan
+    }
+  });
+};
 export let themNguoiDung = (data) => {
   return https.post("/api/QuanLyNguoiDung/ThemNguoiDung", data);
-}
+};
+export let xoaNguoiDung = (taiKhoan) => {
+  return https.delete(`/api/QuanLyNguoiDung/XoaNguoiDung?TaiKhoan=${taiKhoan}`)
+};
