@@ -1,23 +1,19 @@
 import React, { useEffect, useState } from "react";
-
-import { message, Image, Button, Tag, ConfigProvider } from "antd";
+import { message, Image, Button, Tag, ConfigProvider, Modal } from "antd";
 import { FormOutlined, DeleteOutlined } from "@ant-design/icons";
 import Search from "antd/es/input/Search";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import dayjs from "dayjs";
-
 import {
   layDanhSachKhoaHoc,
   layDanhSachKhoaHocTheoTen,
   xoaKhoaHoc,
+  layThongTinKhoaHoc,
 } from "../../../Services/api";
-
-import PopUpAddCourse from "./PopUpAddCourse/PopUpAddCourse";
 import { useDispatch } from "react-redux";
-import {
-  getInfoCourse,
-  setIsChecked,
-} from "../../../Redux/modalFormSlice/modalFormSlice";
+import AddCoursePopup from "./AddCoursePopup/AddCoursePopup";
+import FormEdit from "./EditCoursePopup/FormEdit";
+import { setInfoCourse } from "../../../Redux/popupEditModal/popupEditModal";
 
 export default function CourseManagement() {
   const [courseList, setCourseList] = useState([]);
@@ -25,6 +21,23 @@ export default function CourseManagement() {
   const [isSearch, setIsSearch] = useState(false);
   const dispatch = useDispatch();
   dayjs.extend(customParseFormat);
+  const [isModalEditOpen, setIsModalEditOpen] = useState(false);
+  const showModalEdit = (maKhoaHoc) => {
+    let getInfoCourse = async () => {
+      try {
+        let res = await layThongTinKhoaHoc(maKhoaHoc);
+        dispatch(setInfoCourse(res.data));
+        setIsModalEditOpen(true);
+      } catch (err) {
+        message.error("Đã có lỗi xảy ra...");
+      }
+    };
+    getInfoCourse();
+  };
+
+  const handleCancel = () => {
+    setIsModalEditOpen(false);
+  };
 
   const fetchDataCourseList = async () => {
     try {
@@ -58,7 +71,7 @@ export default function CourseManagement() {
   };
   const handleDeleteCourse = async (maKhoaHoc) => {
     try {
-      let res = await xoaKhoaHoc(maKhoaHoc);
+      await xoaKhoaHoc(maKhoaHoc);
       message.success("Xoá khoá học thành công");
       fetchDataCourseList();
     } catch (error) {
@@ -127,10 +140,10 @@ export default function CourseManagement() {
                       }}
                     >
                       <Button
+                        type='default'
                         className='h-11 w-15 btn bg-yellow-500 p-3 flex align-middle justify-center'
                         onClick={() => {
-                          dispatch(getInfoCourse(course.maKhoaHoc));
-                          dispatch(setIsChecked(false));
+                          showModalEdit(course.maKhoaHoc);
                         }}
                       >
                         <FormOutlined />
@@ -169,11 +182,23 @@ export default function CourseManagement() {
             },
           }}
         >
-          {/* <Button className='btn bg-green-600 font-bold text-black hover:text-white hover:bg-green-800'>
-            Thêm Phim Mới
-          </Button> */}
-          <PopUpAddCourse />
+          <AddCoursePopup fetchDataCourseList={fetchDataCourseList} />
         </ConfigProvider>
+      </div>
+      <div id='modal_edit'>
+        <Modal
+          title='Cập nhật khoá học'
+          width={"60%"}
+          footer={false}
+          open={isModalEditOpen}
+          centered
+          onCancel={handleCancel}
+        >
+          <FormEdit
+            setIsModalEditOpen={setIsModalEditOpen}
+            fetchDataCourseList={fetchDataCourseList}
+          />
+        </Modal>
       </div>
 
       <div className='flex searchCourse my-5'>

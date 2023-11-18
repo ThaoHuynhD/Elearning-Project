@@ -12,7 +12,6 @@ export const fetchList = createAsyncThunk(
     try {
       const res = await layDanhSachNguoiDung();
       if (res.status === 200) {
-        console.log("🚀 ~ file: listUserSlice.js:14 ~ res:", res);
         dispatch(setListUser(res.data));
       }
       return res.data;

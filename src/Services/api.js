@@ -53,7 +53,6 @@ export let huyGhiDanh = (data) => {
 export let themKhoaHocUploadHinh = (data) => {
   return https.post("/api/QuanLyKhoaHoc/ThemKhoaHocUploadHinh", data);
 };
-
 export let capNhatKhoaHocUpload = (formdata) => {
   return https.post("/api/QuanLyKhoaHoc/CapNhatKhoaHocUpload", formdata);
 };
