@@ -1,5 +1,7 @@
-$primary-color: #f24080;
-$secondary-color: #44255b;
+$secondary-color: #f24080;
+$primary-color: #44255b;
+$error-color: #ff4d4f;
+
 $text-color: #333;
 $font-stack: 'Open Sans', sans-serif;
 $hover-color: #961040;
@@ -147,7 +149,7 @@ html {
         margin-bottom: 5px;
       }
   
-      input, select {
+      .form-control, select {
         width: 100%;
         padding: 10px;
         border-radius: 4px;
@@ -171,3 +173,145 @@ html {
   }
   
 
+/*SIGNIN */
+.page-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px; 
+    background: #f7f7f7; 
+}
+  
+.sign-in-container {
+    background-color: $primary-color;
+    color: white;
+    padding: 50px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 500px; 
+    width: 100%; 
+    color: white;
+  
+    h1 {
+      margin-bottom: 20px;
+      color: $secondary-color;
+    }
+  
+    .form-group {
+      margin-bottom: 20px;
+  
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
+  
+      .form-control {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid darken($primary-color, 10%);
+        background-color: lighten($primary-color, 5%);
+        color: white;
+  
+        &::placeholder {
+          color: lighten(white, 20%);
+        }
+      }
+    }
+  
+    .error-message {
+      color: $secondary-color;
+      font-size: 0.875rem;
+    }
+  
+    .dang-nhap-button {
+      background-color: $secondary-color;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+  
+      &:hover {
+        background-color: darken($secondary-color, 10%);
+      }
+    }
+  }
+  
+  @media only screen and (max-width: 600px) {
+    .sign-in-container {
+      padding: 20px;
+      .submit-button {
+        width: 100%;
+      }
+    }
+  }
+
+  /*SIGNUP*/
+  .sign-up-container {
+    background-color: $primary-color;
+    padding: 50px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%; 
+    color: white;
+  
+    h1 {
+      color: $secondary-color;
+      margin-bottom: 20px;
+      text-align: center; 
+    }
+  
+    .form-group {
+      margin-bottom: 20px;
+  
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
+  
+      .form-control, select {
+        width: 100%; 
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid darken($primary-color, 10%);
+        background-color: lighten($primary-color, 5%);
+        color: white;
+  
+        &::placeholder {
+          color: lighten(white, 20%);
+        }
+      }
+  
+      .error-message {
+        color: $error-color;
+        margin-top: 5px;
+        font-size: 0.875rem;
+      }
+    }
+  
+    .dang-ky-button {
+      width: 100%;
+      padding: 10px 20px;
+      border-radius: 5px;
+      background-color: $secondary-color;
+      border: none;
+      color: white;
+      cursor: pointer;
+      text-transform: uppercase; 
+  
+      &:hover {
+        background-color: darken($secondary-color, 10%);
+      }
+    }
+  }
+  
+  @media only screen and (max-width: 600px) {
+    .sign-up-container {
+      padding: 30px; // Reduced padding on smaller screens
+    }
+  }
+
+ 
+  

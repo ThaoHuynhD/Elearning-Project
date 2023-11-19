@@ -41,106 +41,108 @@ export default function SignUpPage() {
     fetchDataUserRegister();
   };
   return (
-    <div className='w-1/2 mx-auto'>
-      <h1 className='text-center'>Đăng ký</h1>
-      <Formik
-        initialValues={{
-          taiKhoan: "",
-          hoTen: "",
-          matKhau: "",
-          email: "",
-          soDT: "",
-          maNhom: "",
-        }}
-        validationSchema={signupUserSchema}
-        onSubmit={handleSubmit}
-      >
-        {(formikProps) => (
-          <Form>
-            <div className='form-group'>
-              <label htmlFor='taiKhoan'>Tài khoản</label>
-              <Field
-                name='taiKhoan'
-                type='text'
-                className='form-control'
-                onChange={formikProps.handleChange}
-              />
-              <ErrorMessage name='taiKhoan' />
-            </div>
-            <div className='form-group'>
-              <label htmlFor='hoTen'>Họ tên</label>
-              <Field
-                name='hoTen'
-                type='text'
-                className='form-control'
-                onChange={formikProps.handleChange}
-              />
-              <ErrorMessage name='hoTen' />
-            </div>
-            <div className='form-group'>
-              <label htmlFor='matKhau'>Mật khẩu</label>
-              <Field
-                name='matKhau'
-                type='password'
-                className='form-control'
-                onChange={formikProps.handleChange}
-              />
-              <ErrorMessage name='matKhau' />
-            </div>
-            <div className='form-group'>
-              <label htmlFor='email'>Email</label>
-              <Field
-                name='email'
-                type='email'
-                className='form-control'
-                onChange={formikProps.handleChange}
-              />
-              <ErrorMessage name='email' />
-            </div>
-            <div className='form-group'>
-              <label htmlFor='soDT'>Số điện thoại</label>
-              <Field
-                name='soDT'
-                type='text'
-                className='form-control'
-                onChange={formikProps.handleChange}
-              />
-              <ErrorMessage name='soDT'>
-                {(msg) => <div>{msg}</div>}
-              </ErrorMessage>
-            </div>
-            <div className='form-group'>
-              <label htmlFor='maNhom'>Mã nhóm</label>
-              <Field
-                as='select'
-                name='maNhom'
-                className='form-control'
-                onChange={formikProps.handleChange}
-              >
-                <option value='GP01'>GP01</option>
-                <option value='GP02'>GP02</option>
-                <option value='GP03'>GP03</option>
-                <option value='GP04'>GP04</option>
-                <option value='GP05'>GP05</option>
-                <option value='GP06'>GP06</option>
-                <option value='GP07'>GP07</option>
-                <option value='GP08'>GP08</option>
-                <option value='GP09'>GP09</option>
-                <option value='GP010'>GP010</option>
-              </Field>
-              <ErrorMessage name='maNhom' />
-            </div>
-            <div className='text-center'>
-              <button
-                type='submit'
-                className='bg-green-600 text-white rounded py-2 px-4'
-              >
-                Đăng ký
-              </button>
-            </div>
-          </Form>
-        )}
-      </Formik>
+    <div className="page-container">
+      <div className='sign-up-container w-1/2 mx-auto'>
+        <h1 className='text-center'>Đăng ký</h1>
+        <Formik
+          initialValues={{
+            taiKhoan: "",
+            hoTen: "",
+            matKhau: "",
+            email: "",
+            soDT: "",
+            maNhom: "",
+          }}
+          validationSchema={signupUserSchema}
+          onSubmit={handleSubmit}
+        >
+          {(formikProps) => (
+            <Form>
+              <div className='form-group'>
+                <label htmlFor='taiKhoan'>Tài khoản</label>
+                <Field
+                  name='taiKhoan'
+                  type='text'
+                  className='form-control'
+                  onChange={formikProps.handleChange}
+                />
+                <ErrorMessage name='taiKhoan' />
+              </div>
+              <div className='form-group'>
+                <label htmlFor='hoTen'>Họ tên</label>
+                <Field
+                  name='hoTen'
+                  type='text'
+                  className='form-control'
+                  onChange={formikProps.handleChange}
+                />
+                <ErrorMessage name='hoTen' />
+              </div>
+              <div className='form-group'>
+                <label htmlFor='matKhau'>Mật khẩu</label>
+                <Field
+                  name='matKhau'
+                  type='password'
+                  className='form-control'
+                  onChange={formikProps.handleChange}
+                />
+                <ErrorMessage name='matKhau' />
+              </div>
+              <div className='form-group'>
+                <label htmlFor='email'>Email</label>
+                <Field
+                  name='email'
+                  type='email'
+                  className='form-control'
+                  onChange={formikProps.handleChange}
+                />
+                <ErrorMessage name='email' />
+              </div>
+              <div className='form-group'>
+                <label htmlFor='soDT'>Số điện thoại</label>
+                <Field
+                  name='soDT'
+                  type='text'
+                  className='form-control'
+                  onChange={formikProps.handleChange}
+                />
+                <ErrorMessage name='soDT'>
+                  {(msg) => <div>{msg}</div>}
+                </ErrorMessage>
+              </div>
+              <div className='form-group'>
+                <label htmlFor='maNhom'>Mã nhóm</label>
+                <Field
+                  as='select'
+                  name='maNhom'
+                  className='form-control'
+                  onChange={formikProps.handleChange}
+                >
+                  <option value='GP01'>GP01</option>
+                  <option value='GP02'>GP02</option>
+                  <option value='GP03'>GP03</option>
+                  <option value='GP04'>GP04</option>
+                  <option value='GP05'>GP05</option>
+                  <option value='GP06'>GP06</option>
+                  <option value='GP07'>GP07</option>
+                  <option value='GP08'>GP08</option>
+                  <option value='GP09'>GP09</option>
+                  <option value='GP010'>GP010</option>
+                </Field>
+                <ErrorMessage name='maNhom' />
+              </div>
+              <div className='text-center'>
+                <button
+                  type='submit'
+                  className='dang-ky-button bg-green-600 text-white rounded py-2 px-4'
+                >
+                  Đăng ký
+                </button>
+              </div>
+            </Form>
+          )}
+        </Formik>
+      </div>
     </div>
   );
 }
