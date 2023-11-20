@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Table, Tag, Modal, Input, Button, message } from "antd";
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -10,36 +10,49 @@ import {
   searchUser,
 } from "../../../../Redux/listUserSlice/listUserSlice";
 import UpdateUserModal from "./UpdateUserModal";
-import SearchUserModal from "./SearchUserModal";
 import AddUser from "../AddUser/AddUser";
 
 const TableUser = () => {
   const navigate = useNavigate();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
-  const [isSearchModalVisible, setIsSearchModalVisible] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [searchResult, setSearchResult] = useState(null);
+  const [isSearch, setIsSearch] = useState(false);
   const dispatch = useDispatch();
   const { listUser } = useSelector((state) => state.listUserSlice);
+  let dataSource = [];
 
   useEffect(() => {
     dispatch(fetchList());
   }, [dispatch]);
 
-  let datasource = listUser?.map((item, index) => ({
-    key: index + 1,
-    ...item,
-  }));
+  if (isSearch) {
+    searchResult?.map((item, index) =>
+      dataSource.push({
+        key: index + 1,
+        ...item,
+      })
+    );
+  } else {
+    listUser?.map((item, index) =>
+      dataSource.push({
+        key: index + 1,
+        ...item,
+      })
+    );
+  }
+
+  console.log("result", searchResult);
 
   const handleAddUser = () => {
     navigate("/addUser");
-  }
-
-  const handleModalCancel = () => {
-    setIsModalVisible(false);
-    setCurrentUser(null);
   };
+
+  // const handleModalCancel = () => {
+  //   setIsModalVisible(false);
+  //   setCurrentUser(null);
+  // };
 
   const handleEditClick = (user) => {
     console.log("user:", user);
@@ -69,15 +82,20 @@ const TableUser = () => {
       .then((action) => {
         if (action.type === "listUser/searchUser/fulfilled") {
           setSearchResult(action.payload);
-          setIsSearchModalVisible(true);
+          setIsSearch(true);
         } else {
-          console.error("Search failed:", action.error);
+          message.error("Tìm kiếm thất bại:", action.error);
         }
       })
       .catch((error) => {
-        console.error("Search error:", error);
+        message.error("Lỗi tìm kiếm:", error);
       });
   };
+
+  const handleClearSearch = () => {
+    setIsSearch(false);
+    dispatch(fetchList());
+  }
 
   const columns = [
     {
@@ -141,39 +159,23 @@ const TableUser = () => {
           enterButton='Tìm kiếm'
           onSearch={handleSearch}
         />
+        <Button
+          onClick={handleClearSearch}
+          className="clea-search-button"
+        >Ngưng tìm kiếm</Button>
       </div>
 
       <Button
-        type="primary"
-        icon={<PlusOutlined/>}
-        onClick={handleAddUser}
-      >
+        type='default'
+        icon={<PlusOutlined />}
+        onClick={handleAddUser}>
         Thêm người dùng
       </Button>
-
 
       <Table
         bordered
         columns={columns}
-        dataSource={datasource}
-      />
-
-      {/* UpdateUserModal for editing user information */}
-      <UpdateUserModal
-        isVisible={isModalVisible}
-        onCancel={handleModalCancel}
-        user={currentUser}
-        onUpdate={(updatedUser) => {
-          dispatch(updateUser(updatedUser));
-          setIsUpdateModalVisible(false);
-        }}
-      />
-
-      {/* SearchUserModal for displaying search results */}
-      <SearchUserModal
-        isVisible={isSearchModalVisible}
-        onCancel={() => setIsSearchModalVisible(false)}
-        user={searchResult}
+        dataSource={dataSource}
       />
     </div>
   );

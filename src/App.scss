@@ -5,7 +5,6 @@ $error-color: #ff4d4f;
 $text-color: #333;
 $font-stack: 'Open Sans', sans-serif;
 $hover-color: #961040;
-$font-stack: "Open Sans", sans-serif;
 
 // Base styles
 html {
@@ -36,282 +35,268 @@ html {
 
 
 /*COURSE DETAIL PAGE*/
-.course-detail-page {
-    font-family: $font-stack;
+$primary-color: #44255b; 
+$secondary-color: #f24080;
+$accent-color: #ED9ED6;
+$background-color: #f7f7f7;
 
-    .course-header {
-        background-color: $primary-color;
-        padding: 2rem;
-        text-align: center;
 
-        .course-title {
-            color: $secondary-color;
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
 
-        .course-description {
-            color: $text-color;
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            
-        }
+/*SIGN UP*/
+.sign-up-container {
+  background-color: $primary-color;
+  padding: 50px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: 100%; 
+  color: white;
 
-        img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            display: block; 
-            max-width: 100%; 
-            height: auto; 
-            margin: 0 auto; 
-        }
-
-        .instructor-name {
-            font-style: italic;
-            color: $text-color;
-        }
-
-        .enrollment-count {
-            font-weight: bold;
-            color: $text-color;
-        }
-
-        .view-count {
-            color: darken($text-color, 20%);
-        }
-    }
-
-    .course-content {
-        padding: 1rem;
-        text-align: center;
-
-        .course-detailed-description {
-            color: $text-color;
-            font-size: 1rem;
-        }
-
-        .course-date {
-            color: lighten($text-color, 20%);
-            font-size: 0.875rem;
-        }
-
-        .course-category {
-            color: $secondary-color;
-            font-weight: bold;
-        }
-    }
-
-    .enrollment-section {
-        text-align: center;
-        padding: 2rem;
-
-        .enroll-button {
-            @extend .btnGlobal; 
-            font-size: 1.25rem;
-            padding: 0.75rem 2rem;
-            margin-top: 1rem;
-            background-color: $secondary-color;
-            border: none;
-            cursor: pointer;
-            &:hover {
-                background-color: darken($secondary-color, 10%);
-            }
-        }
-    }
-}
-
-/* ADD USER*/
-.add-user-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+  h1 {
+    margin-bottom: 20px;
+    color: white;
+    font-size: 3rem;
+    font-weight: bold;
   }
-  
-  .add-user-form {
-    width: 100%;
-    max-width: 500px;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-  
-    .form-title {
-      text-align: center;
-      margin-bottom: 20px;
+
+  .form-group {
+    margin-bottom: 20px;
+
+    label {
+      display: block;
+      margin-bottom: 5px;
     }
-  
-    .form-group {
-      margin-bottom: 15px;
-  
-      label {
-        display: block;
-        margin-bottom: 5px;
-      }
-  
-      .form-control, select {
-        width: 100%;
-        padding: 10px;
-        border-radius: 4px;
-        border: 1px solid #ccc;
-      }
-    }
-  
-    .submit-button {
-      width: 100%;
-      padding: 10px 20px;
-      background-color: #1890ff;
+
+    .form-control, select {
+      width: 100%; 
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid darken($primary-color, 10%);
+      background-color: lighten($primary-color, 5%);
       color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-  
-      &:hover {
-        background-color: #40a9ff;
-      }
-    }
-  }
-  
 
-/*SIGNIN */
-.page-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 20px; 
-    background: #f7f7f7; 
-}
-  
-.sign-in-container {
-    background-color: $primary-color;
-    color: white;
-    padding: 50px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    max-width: 500px; 
-    width: 100%; 
-    color: white;
-  
-    h1 {
-      margin-bottom: 20px;
-      color: $secondary-color;
-    }
-  
-    .form-group {
-      margin-bottom: 20px;
-  
-      label {
-        display: block;
-        margin-bottom: 5px;
-      }
-  
-      .form-control {
-        width: 100%;
-        padding: 10px;
-        border-radius: 5px;
-        border: 1px solid darken($primary-color, 10%);
-        background-color: lighten($primary-color, 5%);
-        color: white;
-  
-        &::placeholder {
-          color: lighten(white, 20%);
-        }
+      &::placeholder {
+        color: lighten(white, 20%);
       }
     }
-  
+
     .error-message {
-      color: $secondary-color;
+      color: $error-color;
+      margin-top: 5px;
       font-size: 0.875rem;
     }
-  
-    .dang-nhap-button {
-      background-color: $secondary-color;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-  
-      &:hover {
-        background-color: darken($secondary-color, 10%);
-      }
-    }
-  }
-  
-  @media only screen and (max-width: 600px) {
-    .sign-in-container {
-      padding: 20px;
-      .submit-button {
-        width: 100%;
-      }
-    }
   }
 
-  /*SIGNUP*/
-  .sign-up-container {
-    background-color: $primary-color;
-    padding: 50px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    max-width: 500px;
-    width: 100%; 
+  .dang-ky-button {
+    width: 100%;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: $secondary-color;
+    border: none;
     color: white;
-  
-    h1 {
-      color: $secondary-color;
-      margin-bottom: 20px;
-      text-align: center; 
-    }
-  
-    .form-group {
-      margin-bottom: 20px;
-  
-      label {
-        display: block;
-        margin-bottom: 5px;
-      }
-  
-      .form-control, select {
-        width: 100%; 
-        padding: 10px;
-        border-radius: 5px;
-        border: 1px solid darken($primary-color, 10%);
-        background-color: lighten($primary-color, 5%);
-        color: white;
-  
-        &::placeholder {
-          color: lighten(white, 20%);
-        }
-      }
-  
-      .error-message {
-        color: $error-color;
-        margin-top: 5px;
-        font-size: 0.875rem;
-      }
-    }
-  
-    .dang-ky-button {
-      width: 100%;
-      padding: 10px 20px;
-      border-radius: 5px;
-      background-color: $secondary-color;
-      border: none;
-      color: white;
-      cursor: pointer;
-      text-transform: uppercase; 
-  
-      &:hover {
-        background-color: darken($secondary-color, 10%);
-      }
+    cursor: pointer;
+    text-transform: uppercase; 
+
+    &:hover {
+      background-color: darken($secondary-color, 10%);
     }
   }
-  
-  @media only screen and (max-width: 600px) {
-    .sign-up-container {
-      padding: 30px; // Reduced padding on smaller screens
-    }
+}
+
+@media only screen and (max-width: 600px) {
+  .sign-up-container {
+    padding: 30px; 
+  }
+}
+
+/*NOT FOUND PAGE*/
+.not-found-page {
+  text-align: center;
+  color: $text-color;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  h1 {
+      font-size: 4rem; 
+      font-weight: bold;
+      margin-bottom: 1rem;
+      color: $secondary-color;
   }
 
- 
+
+  .lottie-container {
+      max-width: 400px;
+      margin: auto;
+      @media (max-width: 768px) {
+          max-width: 300px;
+      }
+  }
+}
+
+/* COURSE DETAIL PAGE */
+$category-text-color: #e0e0e0;
+.course-detail-page {
+  font-family: $font-stack;
+  background: $primary-color;
+  color: white;
+
+  .course-header {
+    background-color: lighten($primary-color, 5%);
+    padding: 4rem;
+    text-align: center;
+    border-radius: 1rem;
+    margin: 2rem 0;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+
+    .course-title {
+      color: $secondary-color;
+      font-size: 4rem; // larger for emphasis
+      margin-bottom: 2rem; // more space after title
+      text-shadow: 2px 2px rgba(0, 0, 0, 0.1); // subtle text shadow for depth
+    }
+
+    .course-description {
+      color:  $category-text-color;
+      font-size: 1.25rem; // slightly larger for readability
+
+      margin-bottom: 2rem; // consistent spacing
+      max-width: 800px; // maximum width for readability
+      margin: auto; // center align the text block
+    }
+    
+    img {
+      max-width: 100%; // responsive image sizing
+      height: auto; // maintain aspect ratio
+      border-radius: 1rem; // rounded corners
+      margin: 2rem 0; // spacing above and below
+    }
+    
+    
+  }
+
+  .course-content {
+    padding: 2rem; // more padding for separation
+    background-color: lighten($primary-color, 10%);
+    border-radius: 1rem;
+    margin: 2rem 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   
+    .course-instructor {
+      display: inline-block; // align these elements in a line
+      margin-right: 1rem; // spacing between items
+      font-size: 1.25rem; // slightly larger font size
+      color:  $category-text-color;
+    }
+  
+    .course-category {
+      font-size: 1rem;
+      color: white;
+      margin-top: 1rem;
+    }
+}
+
+  .enrollment-section {
+    text-align: center;
+    padding: 3rem;
+    background-color: lighten($primary-color, 15%);
+    border-radius: 1rem;
+    margin: 2rem 0;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    .enroll-button {
+      @extend .btnGlobal; // keep global button styles
+      font-size: 1.5rem; // larger button font
+      padding: 1rem 3rem; // larger button for clickability
+      margin-top: 2rem; // more space above the button
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); // more pronounced shadow for depth
+      &:hover {
+        background-color: darken($secondary-color, 15%);
+        transform: scale(1.05); // subtle grow effect on hover
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .course-header, .course-content, .enrollment-section {
+    padding: 1rem; // less padding on smaller screens
+    margin: 1rem 0; // less margin on smaller screens
+}
+
+  .course-title {
+    font-size: 3rem; // smaller title on smaller screens
+  }
+}
+
+/************** ADMIN *********************/
+/* Admin center container */
+.admin-center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  background-color: #f0f2f5; // Adjust the background color as needed
+}
+
+/* Add form styling */
+.add-form {
+  width: 100%;
+  max-width: 500px;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Form title */
+.add-form-title {
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+/* Form group styling */
+.add-form-group {
+  margin-bottom: 1rem;
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #333;
+  }
+
+  /* Input and Select styling */
+  .add-input, .add-form select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+}
+
+/* Submit button styling */
+.add-submit-button {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #1890ff;
+  }
+}
+
+/* Responsive design for smaller screens */
+@media only screen and (max-width: 768px) {
+  .add-form {
+    padding: 1rem;
+  }
+}

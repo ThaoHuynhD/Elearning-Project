@@ -4,7 +4,7 @@ import { themNguoiDung } from "../../../../Services/api";
 
 const AddUser = () => {
   return (
-    <div className='add-user-container flex justify-center items-center h-screen'>
+    <div className='admin-center-container'>
       <Formik
         initialValues={{
           taiKhoan: "",
@@ -15,70 +15,72 @@ const AddUser = () => {
           maNhom: "",
           email: "",
         }}
-
         onSubmit={(values, { setSubmitting, resetForm }) => {
           themNguoiDung(values)
             .then((response) => {
-             alert ("Đã thêm người dùng thành công");
-             resetForm();
+              alert("Đã thêm người dùng thành công");
+              resetForm();
             })
             .catch((error) => {
               alert("Error adding user:", error.message);
             })
             .finally(() => {
-              setSubmitting(false); 
-              resetForm(); 
+              setSubmitting(false);
+              resetForm();
             });
         }}>
-          
         {({ isSubmitting }) => (
-          <Form className='add-user-form w-full max-w-xl'>
-            <h3 className='form-title text-center text-lg font-bold '>
-              Thêm người dùng mới
-            </h3>
-            <div className='form-group'>
+          <Form className='add-form'>
+            <h3 className='add-form-title '>Thêm người dùng mới</h3>
+            <div className='add-form-group'>
               <label htmlFor='taiKhoan'>Tài khoản</label>
               <Field
                 name='taiKhoan'
                 type='text'
+                className='add-input'
               />
             </div>
-            <div className='form-group'>
+            <div className='add-form-group'>
               <label htmlFor='matKhau'>Mật khẩu</label>
               <Field
                 name='matKhau'
                 type='password'
+                className='add-input'
               />
             </div>
-            <div className='form-group'>
+            <div className='add-form-group'>
               <label htmlFor='hoTen'>Họ tên</label>
               <Field
                 name='hoTen'
                 type='text'
+                className='add-input'
               />
             </div>
-            <div className='form-group'>
+            <div className='add-form-group'>
               <label htmlFor='soDT'>Số điện thoại</label>
               <Field
                 name='soDT'
                 type='text'
+                className='add-input'
               />
             </div>
-            <div className='form-group'>
+            <div className='add-form-group'>
               <label htmlFor='maLoaiNguoiDung'>Mã loại người dùng</label>
               <Field
                 as='select'
-                name='maLoaiNguoiDung'>
+                name='maLoaiNguoiDung'
+                className='add-input'>
                 <option value=''>Chọn loại người dùng</option>
                 <option value='GV'>Giáo vụ</option>
                 <option value='HV'>Học viên</option>
               </Field>
             </div>
-            <div className='form-group'>
+            <div className='add-form-group'>
               <label htmlFor='maNhom'>Mã nhóm</label>
               <Field
                 as='select'
-                name='maNhom'>
+                name='maNhom'
+                className='add-input'>
                 <option value=''>Chọn mã nhóm</option>
                 <option value='GP00'>GP00</option>
                 <option value='GP01'>GP01</option>
@@ -93,17 +95,19 @@ const AddUser = () => {
                 <option value='GP010'>GP010</option>
               </Field>
             </div>
-            <div className='form-group'>
+            <div className='add-form-group'>
               <label htmlFor='email'>Email</label>
               <Field
                 name='email'
                 type='email'
+                className='add-input'
               />
             </div>
-            <div className='form-group'>
+            <div className='add-form-group'>
               <button
                 type='submit'
-                className='submit-button bg-blue-400 text-white' disabled={isSubmitting}>
+                className='add-submit-button bg-blue-400 text-white'
+                disabled={isSubmitting}>
                 Thêm người dùng
               </button>
             </div>
@@ -115,4 +119,3 @@ const AddUser = () => {
 };
 
 export default AddUser;
-

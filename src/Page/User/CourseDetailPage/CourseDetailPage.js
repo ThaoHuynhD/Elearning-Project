@@ -16,9 +16,6 @@ const CourseDetailPage = () => {
     }
   }, [dispatch, courseId]);
 
-  // Replace 'userAccount' with actual user account from state or context
-  // const userAccount = "userAccount"; // This should be dynamic
-
   const handleCourseRegistration = async () => {
     const userAccount = localStorage.getItem("userAccount");
     if (!userAccount) {
@@ -56,15 +53,13 @@ const CourseDetailPage = () => {
   return (
     <div className="course-detail-page">
       <section className="course-header">
-        <h1 className="course-title">{courseDetail.tenKhoaHoc}</h1>
         <img src={courseDetail.hinhAnh} alt={courseDetail.tenKhoaHoc || "Course Image"} />
-        <p className="instructor-name">{courseDetail.nguoiTao.hoTen}</p>
-        <p className="enrollment-count">{courseDetail.soLuongHocVien} students enrolled</p>
+        <p className="course-category">{courseDetail.danhMucKhoaHoc.tenDanhMucKhoaHoc}</p>
+        <h1 className="course-title">{courseDetail.tenKhoaHoc}</h1>
       </section>
 
       <section className="course-content">
-        <p className="course-category">{courseDetail.danhMucKhoaHoc.tenDanhMucKhoaHoc}</p>
-        <p className="course-date">Created on: {courseDetail.ngayTao}</p>
+        <p className="course-instructor">Giáo viên: {courseDetail.nguoiTao.hoTen}</p>
         <p className="course-description">{courseDetail.moTa}</p>
       </section>
 

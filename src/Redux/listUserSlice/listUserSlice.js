@@ -16,7 +16,7 @@ export const fetchList = createAsyncThunk(
     try {
       const res = await timKiemNguoiDung();
       if (res.status === 200) {
-        console.log("🚀 ~ file: listUserSlice.js:14 ~ res:", res);
+        // console.log("🚀 ~ file: listUserSlice.js:14 ~ res:", res);
         dispatch(setListUser(res.data));
       }
       return res.data;
@@ -66,7 +66,7 @@ export const deleteUser = createAsyncThunk(
 
 export const searchUser = createAsyncThunk(
   "listUser/searchUser",
-  async (taiKhoan, {rejectWithValue}) => {
+  async (taiKhoan, { rejectWithValue }) => {
     try {
       const response = await timKiemNguoiDung(taiKhoan);
       if (response.status === 200) {
@@ -74,9 +74,8 @@ export const searchUser = createAsyncThunk(
       } else {
         return rejectWithValue(response.data);
       }
-    }
-    catch (error) {
-      console.log("error:", error)
+    } catch (error) {
+      console.log("error:", error);
       return rejectWithValue(error.response.data);
     }
   }
@@ -116,26 +115,26 @@ const listUserSlice = createSlice({
       })
 
       .addCase(deleteUser.pending, (state) => {
-        state.loading=true;
+        state.loading = true;
       })
       .addCase(deleteUser.fulfilled, (state, action) => {
-        state.loading=false;
+        state.loading = false;
       })
-      .addCase(deleteUser.rejected, (state, action)=> {
-        state.loading=false;
-        state.error=action.payload || "Failed to delete user";
+      .addCase(deleteUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || "Failed to delete user";
       })
 
-      .addCase(searchUser.fulfilled, (state, action)=>{
+      .addCase(searchUser.fulfilled, (state, action) => {
         state.searchResults = action.payload;
         // clear previous search-related errors
         state.searchError = null;
       })
-      .addCase(searchUser.rejected, (state, action)=>{
+      .addCase(searchUser.rejected, (state, action) => {
         state.searchError = action.error.message || "Failed to search users";
-        // clear previous search results 
+        // clear previous search results
         state.searchResults = null;
-      })
+      });
   },
 });
 
