@@ -9,7 +9,7 @@ export default function EnrollmentByCourse({ selectedCourse, setSelectedCourse, 
     const [tableData, setTableData] = useState([]);
 
     const tableColumns = [
-        { title: 'STT', dataIndex: 'number', key: 'number', },
+        { title: 'Ordinal', dataIndex: 'ordinal', key: 'ordinal', },
         { title: 'User Name', dataIndex: 'hoTen', key: 'hoTen', },
         { title: 'Account Name', dataIndex: 'taiKhoan', key: 'taiKhoan', },
         { title: 'Actions', dataIndex: 'thaoTac', key: 'thaoTac', },
@@ -72,7 +72,7 @@ export default function EnrollmentByCourse({ selectedCourse, setSelectedCourse, 
             enrollmentList.forEach((item, index) => {
                 let updateRow = {
                     key: index,
-                    number: index + 1,
+                    ordinal: index + 1,
                     hoTen: item.hoTen,
                     taiKhoan: item.taiKhoan,
                     thaoTac: (

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { message, Image, Button, Tag, ConfigProvider } from 'antd';
+import { message, Image, Button, Tag, ConfigProvider, Table } from 'antd';
 import { FormOutlined, DeleteOutlined, ContactsOutlined } from '@ant-design/icons';
 import Search from 'antd/es/input/Search';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
@@ -12,14 +12,7 @@ export default function CourseManagement({ setSelectedItem, setSelectedCourse, c
   const [courseSearchList, setCourseSearchList] = useState([]);
   const [isSearch, setIsSearch] = useState(false);
 
-  const colorMap = {
-    'BackEnd': 'green',
-    'FrontEnd': 'blue',
-    'Design': 'red',
-    'DiDong': 'yellow',
-    'TuDuy': 'purple'
-  };
-
+  const colorMap = { 'BackEnd': 'green', 'FrontEnd': 'blue', 'Design': 'red', 'DiDong': 'yellow', 'TuDuy': 'purple' };
 
   const fetchDataCourseSearch = async (searchValue) => {
     try {
@@ -41,66 +34,54 @@ export default function CourseManagement({ setSelectedItem, setSelectedCourse, c
     setSelectedItem('enrollmentByCourse');
     setSelectedCourse(maKhoaHoc);
   }
-  const renderList = () => {
-    let list = isSearch ? courseSearchList : courseList;
-    return (
-      <table className='listCourse text-center overflow-hidden'>
-        <thead>
-          <tr>
-            <th className='max-w-150 border'>STT</th>
-            <th className='max-w-150 border'>HÌNH ẢNH</th>
-            <th className='max-w-300 border'>TÊN KHÓA HỌC</th>
-            <th className='max-w-150 border'>MÃ DANH MỤC KHÓA HỌC</th>
-            <th className='max-w-300 border'>MÔ TẢ</th>
-            <th className='max-w-150 border'>NGÀY TẠO</th>
-            <th className='max-w-150 border'>SỐ LƯỢNG HỌC VIÊN</th>
-            <th className='max-w-150 border'>LƯỢT XEM</th>
-            <th className='max-w-150 border'>NGƯỜI TẠO</th>
-            <th className='max-w-150 border'>THAO TÁC</th>
-          </tr>
-        </thead>
-        <tbody>
-          {list.map((course, index) => {
-            let maDanhMucKhoahoc = course.danhMucKhoaHoc.maDanhMucKhoahoc;
-            let tagColor = colorMap[maDanhMucKhoahoc] || 'default';
-            return (
-              <tr key={index} className='border'>
-                <td className='border px-2'>{index + 1}</td>
-                <td className='border px-2 xl:px-5 py-1'><Image width={50} height={80} src={course.hinhAnh} alt='' /></td>
-                <td className='border px-2 text-left'>{course.tenKhoaHoc.substring(0, 30)}{course.tenKhoaHoc.length > 30 ? '...' : ''}</td>
-                <td className='border px-2'><Tag color={tagColor}>{maDanhMucKhoahoc}</Tag></td>
-                <td className='border px-2 xl:px-5 text-left'>{course.moTa.substring(0, 200)}{course.moTa.length > 200 ? '...' : ''}</td>
-                <td className='border px-2'>{course.ngayTao}</td>
-                <td className='border px-2'>{course.soLuongHocVien}</td>
-                <td className='border px-2'>{course.luotXem}</td>
-                <td className='border px-2'>{course.nguoiTao.taiKhoan}</td>
-                <td className='m-auto'>
-                  <div className='flex align-middle justify-center'>
-                    <ConfigProvider theme={{ token: { colorPrimary: 'white', borderRadius: 10, fontSize: 20, }, }}>
-                      <Button className='h-11 w-15 btn bg-yellow-500 p-3 flex align-middle justify-center'
-                      ><FormOutlined /></Button>
-                      <Button className='h-11 w-15  btn bg-red-500 mx-1 p-3 flex align-middle justify-center'
-                      ><DeleteOutlined /></Button>
-                      <Button className='h-11 w-15  btn bg-green-500 mx-1 p-3 flex align-middle justify-center'
-                        onClick={() => { handleMoveToEnrollment(course.maKhoaHoc) }}
-                      ><ContactsOutlined /></Button>
-                    </ConfigProvider>
-                  </div>
-                </td>
-              </tr>
-            )
-          })
-          }
-        </tbody>
-      </table>
-    )
-  }
+  const tableColumns = [
+    { title: 'Ordinal', dataIndex: 'ordinal', key: 'ordinal', },
+    { title: 'Image', dataIndex: 'image', key: 'image', },
+    { title: 'Name', dataIndex: 'courseName', key: 'courseName', },
+    { title: 'Type', dataIndex: 'courseType', key: 'courseType', },
+    { title: 'Description', dataIndex: 'description', key: 'description', },
+    { title: 'Create Date', dataIndex: 'dateCreate', key: 'dateCreate', sorter: (a, b) => a.dateCreate - b.dateCreate, },
+    { title: 'Attendees Amount', dataIndex: 'courseAttendees', key: 'courseAttendees', },
+    { title: 'Course Views', dataIndex: 'courseViews', key: 'courseViews', sorter: (a, b) => a.courseViews - b.courseViews, },
+    { title: 'Create Account', dataIndex: 'createAccount', key: 'createAccount', },
+    { title: 'Actions', dataIndex: 'actions', key: 'actions', },
+  ];
+  const courseData = [];
+  let list = isSearch ? courseSearchList : courseList;
+  list.forEach((course, index) => {
+    let maDanhMucKhoahoc = course.danhMucKhoaHoc.maDanhMucKhoahoc;
+    let tagColor = colorMap[maDanhMucKhoahoc] || 'default';
+    let dataRow = {
+      ordinal: index + 1,
+      image: <Image width={50} height={80} src={course.hinhAnh} alt='' />,
+      courseName: `${course.tenKhoaHoc.substring(0, 30)}${course.tenKhoaHoc.length > 30 ? '...' : ''}`,
+      courseType: <Tag color={tagColor}>{maDanhMucKhoahoc}</Tag>,
+      description: `${course.moTa.substring(0, 200)}${course.moTa.length > 200 ? '...' : ''}`,
+      dateCreate: course.ngayTao,
+      courseAttendees: course.soLuongHocVien,
+      courseViews: course.luotXem,
+      createAccount: course.nguoiTao.taiKhoan,
+      actions: <div className='flex align-middle justify-center'>
+        <ConfigProvider theme={{ token: { colorPrimary: 'black', borderRadius: 10, fontSize: 20, }, }}>
+          <Button className='h-11 w-10 text-2xl border-none font-extrabold text-yellow-500 flex align-middle justify-center'
+          ><FormOutlined /></Button>
+          <Button className='h-11 w-10 text-2xl border-none font-extrabold text-red-500 mx-1 flex align-middle justify-center'
+          ><DeleteOutlined /></Button>
+          <Button className='h-11 w-10 text-2xl border-none font-extrabold text-green-500 flex align-middle justify-center'
+            onClick={() => { handleMoveToEnrollment(course.maKhoaHoc) }}
+          ><ContactsOutlined /></Button>
+        </ConfigProvider>
+      </div>,
+    }
+    courseData.push(dataRow);
+  })
+
   useEffect(() => {
     fetchDataCourseSearch();
   }, []);
 
   return (
-    <ConfigProvider theme={{ token: { colorPrimary: 'white', borderRadius: 10 } }}>
+    <ConfigProvider theme={{ token: { colorPrimary: 'black', borderRadius: 10 } }}>
       <div className="text-right mb-2">
         <Button className='btn bg-green-600 font-bold text-black hover:text-white hover:bg-green-700'
         >Thêm Phim Mới</Button>
@@ -114,7 +95,7 @@ export default function CourseManagement({ setSelectedItem, setSelectedCourse, c
         <Button className={`btn bg-red-600 text-white font-bold ml-3 h-10 ${isSearch ? 'block' : 'hidden'}`}
           onClick={() => { handleSearchCancel() }}>Cancle Search</Button>
       </div>
-      {renderList()}
+      <Table columns={tableColumns} dataSource={courseData} />
     </ConfigProvider>
   )
 }
