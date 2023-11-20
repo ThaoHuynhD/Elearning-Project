@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Form, Input, Modal, message } from 'antd';
+import { Button, Form, Input, Modal, Table, message } from 'antd';
 import { capNhatThongTinNguoiDung } from '../../../Services/api';
 import { userDetailLocalStorage } from '../../../Services/localServices';
 
@@ -76,41 +76,49 @@ export default function PersonalInfo({ userDetail }) {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+
   return (
     <div className='container'>
-      <div className="text-center py-5"><span className='px-5 py-2 text-3xl my-5 mx-auto font-semibold text-center'>Thông tin cá nhân của bạn</span></div>
+      <div className="text-center py-5">
+        <span className='px-5 py-2 text-3xl my-5 mx-auto font-semibold text-center'>Your Profile</span>
+        <img
+          src={`https://i.pravatar.cc/150?u=${userDetail.hoTen}`}
+          className='rounded-full m-auto mt-5'
+          alt=''
+        />
+      </div>
       <div className=' w-1/2 mx-auto'>
-        <table className='table border-hidden text-left rounded-2xl overflow-hidden'>
+        <table className='table p-5 text-left rounded-2xl overflow-hidden'>
           <tbody>
             <tr>
-              <th>Tên Tài Khoản</th>
+              <th className='p-1 pr-4'>Account</th>
               <td>{userDetail.taiKhoan}</td>
             </tr>
             <tr>
-              <th>Mật Khẩu</th>
+              <th className='p-1 pr-4'>Password</th>
               <td>{userDetail.matKhau}</td>
             </tr>
             <tr>
-              <th>Số Điện Thoại</th>
+              <th className='p-1 pr-4'>Phone Number</th>
               <td>{userDetail.soDT}</td>
             </tr>
             <tr>
-              <th>Họ Và Tên</th>
+              <th className='p-1 pr-4'>Fullname</th>
               <td>{userDetail.hoTen}</td>
             </tr>
             <tr>
-              <th>Địa Chỉ Email</th>
+              <th className='p-1 pr-4'>Email</th>
               <td>{userDetail.email}</td>
             </tr>
           </tbody>
         </table>
-        <div className="text-center mb-20">
-          <Button className='btn-red' onClick={showModal}>
-            Cập nhật
-          </Button>
+        <div className="text-center m-10">
+          <button className='btnGlobal' onClick={showModal}>
+            Update
+          </button>
         </div>
       </div>
-      <Modal title="Cập Nhật Thông Tin" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+      <Modal title="updateInfo" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
         <div className='p-10 mb-20 border bg-white rounded-2xl text-center'>
           <Form
             theme={'dark'}
@@ -124,12 +132,11 @@ export default function PersonalInfo({ userDetail }) {
             scrollToFirstError
           >
             <Form.Item name="taiKhoan"
-              label="Tên Tài Khoản"
-              tooltip="Bạn muốn được gọi là?"
+              label="Account Name"
               rules={[
                 {
                   required: true,
-                  message: 'Vui lòng nhập tên tài khoản',
+                  message: 'Insert your account',
                   whitespace: true,
                 },
               ]}
@@ -137,11 +144,11 @@ export default function PersonalInfo({ userDetail }) {
               <Input />
             </Form.Item>
             <Form.Item name="matKhau"
-              label="Mật Khẩu"
+              label="Password"
               rules={[
                 {
                   required: true,
-                  message: 'Vui lòng nhập mật khẩu!',
+                  message: 'Insert your password!',
                 },
               ]}
               hasFeedback
@@ -149,53 +156,53 @@ export default function PersonalInfo({ userDetail }) {
               <Input.Password />
             </Form.Item>
             <Form.Item name="soDT"
-              label="Số Điện Thoại"
+              label="Phone Number"
               rules={[
                 {
                   required: true,
-                  message: 'Vui lòng nhập số điện thoại!',
+                  message: 'Insert Your Phone Number!',
                   whitespace: true,
                 },
               ]}>
               <Input />
             </Form.Item>
             <Form.Item name="maNhom"
-              label="Mã Nhóm"
+              label="Group Code"
               className='d-none'
               rules={[
                 {
                   required: true,
-                  message: 'Vui lòng nhập mã nhóm!',
+                  message: 'Insert Group Code!',
                   whitespace: true,
                 },
               ]}>
               <Input disabled={true} placeholder={userDetail.maNhom} />
             </Form.Item>
             <Form.Item name="maLoaiNguoiDung"
-              label="Mã Loại Người Dùng"
+              label="User Type"
               className='d-none'
               rules={[
                 {
                   required: true,
-                  message: 'Vui lòng nhập mã loại người dùng!',
+                  message: 'Insert User Type!',
                   whitespace: true,
                 },
               ]}>
               <Input disabled={true} placeholder={userDetail.maLoaiNguoiDung} />
             </Form.Item>
             <Form.Item name="hoTen"
-              label="Họ Và Tên"
+              label="Fullname"
               rules={[
                 {
                   required: true,
-                  message: 'Vui lòng nhập họ tên của bạn!',
+                  message: 'Insert Your Fullname!',
                   whitespace: true,
                 },
               ]}>
               <Input />
             </Form.Item>
             <Form.Item name="email"
-              label="Địa Chỉ Email"
+              label="Email"
               rules={[
                 {
                   type: 'email',
@@ -209,9 +216,9 @@ export default function PersonalInfo({ userDetail }) {
             >
               <Input />
             </Form.Item>
-            <Button className='btn-red' htmlType="submit">
-              Cập nhật
-            </Button>
+            <button className='btnGlobal' htmlType="submit">
+              Update
+            </button>
           </Form>
         </div>
       </Modal>

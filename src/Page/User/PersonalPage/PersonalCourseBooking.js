@@ -1,4 +1,4 @@
-import { Button, Image, message } from 'antd';
+import { Button, message } from 'antd';
 import React from 'react'
 import { huyGhiDanh } from '../../../Services/api';
 
@@ -29,49 +29,21 @@ export default function PersonalCourseBooking({ userDetail }) {
         fetchData(data);
     }
     const renderUserRegisteredCourseList = () => {
-        return chiTietKhoaHocGhiDanh.map((khoaHoc, index) => {
-            return (
-                <div key={index}>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <th>Tên Khóa Học: </th>
-                                <td><span className="text-yellow-500 font-bold"> {khoaHoc.tenKhoaHoc}</span></td>
-                            </tr>
-                            <tr>
-                                <th>Ngày Đăng Ký: </th>
-                                <td>
-                                    <span className='text-success'>{khoaHoc.ngayTao.substring(0, 10)} - {khoaHoc.ngayTao.substring(14, 20)}</span>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th>Mô Tả: </th>
-                                <td><span>{khoaHoc.moTa}</span></td>
-                            </tr>
-                            <tr>
-                                <th>Hình Ảnh: </th>
-                                <td><Image width={100} height={100} src={khoaHoc.hinhAnh} alt='' /></td>
-                            </tr>
-                            <tr>
-                                <th>Lượt Xem: </th>
-                                <td>{khoaHoc.luotXem}</td>
-                            </tr>
-                            <tr>
-                                <td><Button onClick={() => { handleCancleUserCourse(khoaHoc.maKhoaHoc) }}>HỦY GHI DANH</Button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>)
+        return chiTietKhoaHocGhiDanh.map((course, index) => {
+            return <div key={index} className='grid grid-cols-4 shadow-lg h-24 my-4 border py-4 rounded-lg overflow-hidden'>
+                <img className='ml-5 rounded-full overflow-hidden w-16 h-16' src={course.hinhAnh} alt='null' />
+                <span className="text-yellow-500 font-bold col-span-2 mt-5"> {course.tenKhoaHoc}</span>
+                <Button className='mt-4 btn-red' onClick={() => { handleCancleUserCourse(course.maKhoaHoc) }}>HỦY GHI DANH</Button>
+            </div>
         })
     }
     return (
         <div className='container'>
             <div className="text-center">
                 <span className='text-3xl font-semibold'
-                >Danh Sách Khóa Học Bạn Đã Đăng Ký</span>
+                >Course List you have assign</span>
             </div>
-            <div className='grid grid-cols-4'>{renderUserRegisteredCourseList()}</div>
+            <div>{renderUserRegisteredCourseList()}</div>
         </div>
     )
 }
