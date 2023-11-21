@@ -5,6 +5,7 @@ const UpdateUserModal = ({ isVisible, onCancel, user, onUpdate }) => {
   const [form] = Form.useForm();
 
   const handleSubmit = (values) => {
+    console.log("Submitting form with values:", values);
     onUpdate(values);
   };
 

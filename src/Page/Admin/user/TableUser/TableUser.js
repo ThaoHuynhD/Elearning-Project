@@ -49,16 +49,17 @@ const TableUser = () => {
     navigate("/addUser");
   };
 
-  // const handleModalCancel = () => {
-  //   setIsModalVisible(false);
-  //   setCurrentUser(null);
-  // };
+  const handleModalCancel = () => {
+    setIsModalVisible(false);
+    setCurrentUser(null);
+  };
 
   const handleEditClick = (user) => {
     console.log("user:", user);
     setCurrentUser(user);
     setIsModalVisible(true);
     setIsUpdateModalVisible(true);
+    console.log(`Modal visibility state: ${isModalVisible}`);
   };
 
   const handleDelete = (taiKhoan) => {
@@ -177,6 +178,18 @@ const TableUser = () => {
         columns={columns}
         dataSource={dataSource}
       />
+
+     {/* UpdateUserModal for editing user information */}
+     <UpdateUserModal
+      isVisible={isModalVisible}
+      onCancel={handleModalCancel}
+      user={currentUser}
+      onUpdate={(updatedUser) => {
+        dispatch(updateUser(updatedUser));
+        setIsModalVisible(false);
+      }}
+    />
+
     </div>
   );
 };
