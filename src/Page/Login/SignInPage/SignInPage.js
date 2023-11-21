@@ -52,7 +52,7 @@ export default function SignInPage() {
                   type='text'
                   className='form-control'
                 />
-                <ErrorMessage name='taiKhoan' />
+                <ErrorMessage className="error-message" name='taiKhoan' />
               </div>
               <div className='form-group'>
                 <label htmlFor='matKhau'>Mật khẩu</label>
@@ -67,7 +67,7 @@ export default function SignInPage() {
               <div className='text-center'>
                 <button
                   type='submit'
-                  className='dang-nhap-button bg-green-600 text-white rounded py-2 px-4'
+                  className='dang-nhap-button'
                 >
                   Đăng nhập
                 </button>

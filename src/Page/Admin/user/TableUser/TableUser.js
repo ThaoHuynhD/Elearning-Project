@@ -14,7 +14,7 @@ import AddUser from "../AddUser/AddUser";
 
 const TableUser = () => {
   const navigate = useNavigate();
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(true);
   const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [searchResult, setSearchResult] = useState(null);

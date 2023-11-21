@@ -134,7 +134,7 @@ export default function SignUpPage() {
               <div className='text-center'>
                 <button
                   type='submit'
-                  className='dang-ky-button bg-green-600 text-white rounded py-2 px-4'
+                  className='dang-ky-button'
                 >
                   Đăng ký
                 </button>
