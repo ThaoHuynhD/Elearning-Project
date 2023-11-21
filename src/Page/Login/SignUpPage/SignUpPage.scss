@@ -1,0 +1,88 @@
+/* SIGN UP PAGE */
+$secondary-color: #f24080;
+$primary-color: #44255b;
+$error-color: #ff4d4f;
+$text-color: #f7f7f7;
+$font-stack: 'Open Sans', sans-serif;
+$hover-color: #961040;
+
+
+.sign-up-container {
+  background-color: $primary-color;
+  padding: 50px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: 100%; 
+  color: $text-color;
+  margin: auto; 
+  
+  
+  h1 {
+    margin-bottom: 20px;
+    color: $secondary-color;
+    font-size: 3rem;
+    font-weight: bold;
+  }
+  
+
+
+  .form-group {
+    margin-bottom: 20px;
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold; 
+      text-transform: uppercase; 
+      letter-spacing: 0.05em;
+      color: $text-color; 
+    }
+
+    .form-control, select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ED9ED6; 
+      background-color: adjust-color($primary-color, $lightness: 20%);
+      color: $text-color;
+
+      &::placeholder {
+        color: $text-color;
+      }
+    }
+    
+    .error-message {
+      color: $error-color;
+      margin-top: 5px;
+      font-size: 0.875rem;
+      
+    }
+  }
+
+  .dang-ky-button {
+    width: 100%;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: $secondary-color;
+    color: $text-color;
+    cursor: pointer;
+    text-transform: uppercase;
+    
+    
+    transition: background-color 0.3s ease;
+    
+    &:hover {
+      background-color: darken($secondary-color, 10%);
+    }
+  }
+}
+
+
+@media only screen and (max-width: 600px) {
+  .sign-up-container {
+    padding: 30px;
+  }
+}
+
+

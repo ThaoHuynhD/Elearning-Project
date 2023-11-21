@@ -86,7 +86,7 @@ export default function CourseList() {
                     <span>{item.luotXem}+ students</span>
                   </div>
                   <div className='hover:text-[#961040] duration-300'>
-                    <NavLink>
+                    <NavLink to={`/courseDetail/${item.maKhoaHoc}`}>
                       <span>ENROLL COURSE</span>
                       <i className='fa-solid fa-arrow-right ml-3'></i>
                     </NavLink>

@@ -27,6 +27,9 @@ export let layThongTinKhoaHoc = (maKhoaHoc) => {
     `/api/QuanLyKhoaHoc/LayThongTinKhoaHoc?maKhoaHoc=${maKhoaHoc}`,
   );
 };
+export let dangKyKhoaHoc = (data) => {
+  return https.post("/api/QuanLyKhoaHoc/DangKyKhoaHoc", data);
+};
 export let layThongTinHocVienKhoaHoc = (maKhoaHoc) => {
   return https.get(
     `/api/QuanLyKhoaHoc/LayThongTinHocVienKhoaHoc?maKhoaHoc=${maKhoaHoc}`,
@@ -44,9 +47,7 @@ export let xoaKhoaHoc = (maKhoaHoc) => {
 export let ghiDanhKhoaHoc = (data) => {
   return https.post("/api/QuanLyKhoaHoc/GhiDanhKhoaHoc", data);
 };
-export let dangKyKhoaHoc = (data) => {
-  return https.post("/api/QuanLyKhoaHoc/DangKyKhoaHoc", data);
-};
+
 export let huyGhiDanh = (data) => {
   return https.post("/api/QuanLyKhoaHoc/HuyGhiDanh", data);
 };
@@ -71,14 +72,14 @@ export let thongTinNguoiDung = () => {
 export let thongTinTaiKhoan = () => {
   return https.post("/api/QuanLyNguoiDung/ThongTinTaiKhoan");
 };
-export let layDanhSachNguoiDung = () => {
-  return https.get("/api/QuanLyNguoiDung/LayDanhSachNguoiDung?MaNhom=GP09");
-};
-export let timKiemNguoiDung = (data) => {
-  return https.get(
-    `/api/QuanLyNguoiDung/TimKiemNguoiDung?MaNhom=GP09&?tuKhoa=${data}`,
-  );
-};
+// export let layDanhSachNguoiDung = () => {
+//   return https.get("/api/QuanLyNguoiDung/LayDanhSachNguoiDung?MaNhom=GP09");
+// };
+// export let timKiemNguoiDung = (data) => {
+//   return https.get(
+//     `/api/QuanLyNguoiDung/TimKiemNguoiDung?MaNhom=GP09&?tuKhoa=${data}`,
+//   );
+// };
 export let capNhatThongTinNguoiDung = (data) => {
   return https.put("/api/QuanLyNguoiDung/CapNhatThongTinNguoiDung", data);
 };
@@ -116,4 +117,22 @@ export let layDanhSachHocVienKhoaHoc = (maKhoaHoc) => {
     `/api/QuanLyNguoiDung/LayDanhSachHocVienKhoaHoc`,
     maKhoaHoc,
   );
+};
+
+export let layDanhSachNguoiDung = () => {
+  return https.get("/api/QuanLyNguoiDung/LayDanhSachNguoiDung?MaNhom=GP09");
+};
+export let timKiemNguoiDung = (taiKhoan) => {
+  return https.get("/api/QuanLyNguoiDung/TimKiemNguoiDung", {
+    params: {
+      MaNhom: "GP09",
+      tuKhoa: taiKhoan,
+    },
+  });
+};
+export let themNguoiDung = (data) => {
+  return https.post("/api/QuanLyNguoiDung/ThemNguoiDung", data);
+};
+export let xoaNguoiDung = (taiKhoan) => {
+  return https.delete(`/api/QuanLyNguoiDung/XoaNguoiDung?TaiKhoan=${taiKhoan}`);
 };

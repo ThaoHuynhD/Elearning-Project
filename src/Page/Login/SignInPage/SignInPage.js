@@ -19,6 +19,7 @@ export default function SignInPage() {
         dispatch(setInfo(res.data));
         localServices.set(res.data);
         message.success("Đăng nhập thành công");
+        localStorage.setItem("userAccount", res.data.taiKhoan);
         setTimeout(() => {
           navigate("/");
           window.location.reload();
@@ -29,49 +30,52 @@ export default function SignInPage() {
     };
     logIn();
   };
+  
   return (
-    <div className='w-1/2 mx-auto'>
-      <h1 className='text-center'>Đăng nhập</h1>
-      <Formik
-        initialValues={{
-          taiKhoan: "",
-          matKhau: "",
-        }}
-        onSubmit={handleSubmit}
-      >
-        {({ handleChange }) => (
-          <Form>
-            <div className='form-group'>
-              <label htmlFor='taiKhoan'>Tài khoản</label>
-              <Field
-                name='taiKhoan'
-                onChange={handleChange}
-                type='text'
-                className='form-control'
-              />
-              <ErrorMessage name='taiKhoan' />
-            </div>
-            <div className='form-group'>
-              <label htmlFor='matKhau'>Mật khẩu</label>
-              <Field
-                name='matKhau'
-                onChange={handleChange}
-                type='password'
-                className='form-control'
-              />
-              <ErrorMessage name='matKhau' />
-            </div>
-            <div className='text-center'>
-              <button
-                type='submit'
-                className='bg-green-600 text-white rounded py-2 px-4'
-              >
-                Đăng nhập
-              </button>
-            </div>
-          </Form>
-        )}
-      </Formik>
+    <div className="page-container">
+      <div className='sign-in-container w-1/2 mx-auto'>
+        <h1 className='text-center'>Đăng nhập</h1>
+        <Formik
+          initialValues={{
+            taiKhoan: "",
+            matKhau: "",
+          }}
+          onSubmit={handleSubmit}
+        >
+          {({ handleChange }) => (
+            <Form>
+              <div className='form-group'>
+                <label htmlFor='taiKhoan'>Tài khoản</label>
+                <Field
+                  name='taiKhoan'
+                  onChange={handleChange}
+                  type='text'
+                  className='form-control'
+                />
+                <ErrorMessage className="error-message" name='taiKhoan' />
+              </div>
+              <div className='form-group'>
+                <label htmlFor='matKhau'>Mật khẩu</label>
+                <Field
+                  name='matKhau'
+                  onChange={handleChange}
+                  type='password'
+                  className='form-control'
+                />
+                <ErrorMessage name='matKhau' />
+              </div>
+              <div className='text-center'>
+                <button
+                  type='submit'
+                  className='dang-nhap-button'
+                >
+                  Đăng nhập
+                </button>
+              </div>
+            </Form>
+          )}
+        </Formik>
+      </div>
     </div>
   );
 }

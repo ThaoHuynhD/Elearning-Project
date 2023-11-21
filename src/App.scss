@@ -1,3 +1,9 @@
+@import "../src/Page/Login/SignUpPage/SignUpPage.scss";
+@import "../src/Page/Login/SignInPage/SignInPage.scss";
+@import "../src/Page/NotFoundPage/NotFoundPage.scss";
+@import "../src/Page/User/CourseDetailPage/CourseDetailPage.scss";
+
+// Base styles
 html {
     font-family: "Open Sans", sans-serif;
     padding: 0;
@@ -10,6 +16,7 @@ html {
     margin: 0 auto;
 }
 
+// Global button styles
 .btnGlobal {
     padding: 8px 20px;
     font-size: 15px;

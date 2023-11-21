@@ -11,6 +11,8 @@ import AllCoursePage from "./Page/User/AllCoursePage/AllCoursePage";
 import NotFoundPage from "./Page/NotFoundPage/NotFoundPage";
 import AdminHomePage from "./Page/Admin/AdminHomePage";
 import { localServices } from "./Services/localServices";
+import CourseDetailPage from "./Page/User/CourseDetailPage/CourseDetailPage";
+import AddUser from "./Page/Admin/user/AddUser/AddUser";
 
 function App() {
   let info = localServices.get();
@@ -63,6 +65,14 @@ function App() {
         </Layout>
       ),
     },
+    {
+      path: "/courseDetail/:courseId",
+      element: (
+        <Layout>
+          <CourseDetailPage/>
+        </Layout>
+      )
+    },
     { path: "/*", element: <NotFoundPage /> },
   ];
 
@@ -73,6 +83,7 @@ function App() {
     { path: "/personal", element: <PersonalPage /> },
     { path: "/*", element: <NotFoundPage /> },
     { path: "/admin", element: <AdminHomePage /> },
+    { path: "/addUser", element: <AddUser/>},
   ];
 
   let selectedRoutes = userRoutes;

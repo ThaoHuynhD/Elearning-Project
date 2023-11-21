@@ -14,6 +14,7 @@ export const TOKEN_CYBER =
 export const configHeader = () => {
   return { TokenCybersoft: TOKEN_CYBER };
 };
+export const GROUPID = "GP09"
 
 // axios instance
 export const https = axios.create({

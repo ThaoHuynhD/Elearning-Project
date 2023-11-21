@@ -1,0 +1,171 @@
+/* COURSE DETAIL PAGE */
+$secondary-color: #f24080;
+$primary-color: #44255b;
+$error-color: #ff4d4f;
+$text-color: #f7f7f7;
+$font-stack: 'Open Sans', sans-serif;
+$hover-color: #961040;
+$category-text-color: #e0e0e0;
+
+.course-detail-page {
+    font-family: $font-stack;
+    background: $primary-color;
+    color: white;
+
+    .course-header {
+        background-color: lighten($primary-color, 5%);
+        padding: 4rem;
+        text-align: center;
+        border-radius: 1rem;
+        margin: 2rem 0;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+
+        .course-title {
+        color: $secondary-color;
+        font-size: 4rem; 
+        margin-bottom: 2rem; 
+        text-shadow: 2px 2px rgba(0, 0, 0, 0.1); 
+        }
+
+        .course-description {
+        color:  $category-text-color;
+        font-size: 1.25rem; 
+
+        margin-bottom: 2rem; 
+        max-width: 800px; 
+        margin: auto; 
+        }
+        
+        img {
+        max-width: 100%; 
+        height: auto; 
+        border-radius: 1rem; 
+        margin: 2rem 0; 
+        }
+        
+        
+    }
+
+    .course-content {
+        padding: 2rem; 
+        background-color: lighten($primary-color, 10%);
+        border-radius: 1rem;
+        margin: 2rem 0;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    
+        .course-instructor {
+        display: inline-block; 
+        margin-right: 1rem; 
+        font-size: 1.25rem;
+        color:  $category-text-color;
+        }
+    
+        .course-category {
+        font-size: 1rem;
+        color: white;
+        margin-top: 1rem;
+        }
+    }
+
+    .enrollment-section {
+        text-align: center;
+        padding: 3rem;
+        background-color: lighten($primary-color, 15%);
+        border-radius: 1rem;
+        margin: 2rem 0;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        .enroll-button {
+        @extend .btnGlobal;
+        font-size: 1.5rem; 
+        padding: 1rem 3rem; 
+        margin-top: 2rem; 
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); 
+        &:hover {
+            background-color: darken($secondary-color, 15%);
+            transform: scale(1.05); 
+        }
+        }
+    }
+    }
+
+    @media only screen and (max-width: 768px) {
+    .course-header, .course-content, .enrollment-section {
+        padding: 1rem; 
+        margin: 1rem 0; 
+    }
+
+    .course-title {
+        font-size: 3rem; 
+    }
+    }
+
+    /************** ADMIN *********************/
+    /* Admin center container */
+    .admin-center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    background-color: #f0f2f5; // Adjust the background color as needed
+    }
+
+    /* Add form styling */
+    .add-form {
+    width: 100%;
+    max-width: 500px;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Form title */
+    .add-form-title {
+    text-align: center;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    color: #333;
+    }
+
+    /* Form group styling */
+    .add-form-group {
+    margin-bottom: 1rem;
+
+    label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #333;
+    }
+
+    /* Input and Select styling */
+    .add-input, .add-form select {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid #d9d9d9;
+        border-radius: 4px;
+        font-size: 1rem;
+    }
+    }
+
+    /* Submit button styling */
+    .add-submit-button {
+    width: 100%;
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: #1890ff;
+    }
+    }
+
+    /* Responsive design for smaller screens */
+    @media only screen and (max-width: 768px) {
+    .add-form {
+        padding: 1rem;
+    }
+}
