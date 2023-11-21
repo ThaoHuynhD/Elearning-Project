@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Modal, Form, Input, Button } from "antd";
 
 const UpdateUserModal = ({ isVisible, onCancel, user, onUpdate }) => {
-  const [form] = Form.useForm();
 
   const handleSubmit = (values) => {
     console.log("Submitting form with values:", values);
     onUpdate(values);
   };
+  const [form] = Form.useForm();
 
+  useEffect(() => {
+    form.setFieldsValue(user);
+  }, [user, form]);
   
   return (
     <Modal

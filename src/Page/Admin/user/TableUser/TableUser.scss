@@ -1,0 +1,23 @@
+.search-bar .ant-btn {
+    background-color: #5C6BC0; 
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+
+    &:hover {
+        background-color: darken(#5C6BC0, 10%);
+      transform: translateY(-2px); // Slight raise effect
+    }
+
+    &:active {
+      transform: translateY(1px); // Depress effect on click
+    }
+
+    
+    .icon {
+        margin-right: 5px;
+    }
+}

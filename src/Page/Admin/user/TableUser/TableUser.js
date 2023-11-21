@@ -10,11 +10,10 @@ import {
   searchUser,
 } from "../../../../Redux/listUserSlice/listUserSlice";
 import UpdateUserModal from "./UpdateUserModal";
-import AddUser from "../AddUser/AddUser";
 
 const TableUser = () => {
   const navigate = useNavigate();
-  const [isModalVisible, setIsModalVisible] = useState(true);
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [searchResult, setSearchResult] = useState(null);
@@ -55,12 +54,10 @@ const TableUser = () => {
   };
 
   const handleEditClick = (user) => {
-    console.log("user:", user);
     setCurrentUser(user);
     setIsModalVisible(true);
-    setIsUpdateModalVisible(true);
-    console.log(`Modal visibility state: ${isModalVisible}`);
   };
+
 
   const handleDelete = (taiKhoan) => {
     Modal.confirm({
@@ -160,9 +157,10 @@ const TableUser = () => {
           enterButton='Tìm kiếm'
           onSearch={handleSearch}
         />
+
         <Button
           onClick={handleClearSearch}
-          className="clea-search-button"
+          className="clear-search-button"
         >Ngưng tìm kiếm</Button>
       </div>
 
@@ -179,7 +177,6 @@ const TableUser = () => {
         dataSource={dataSource}
       />
 
-     {/* UpdateUserModal for editing user information */}
      <UpdateUserModal
       isVisible={isModalVisible}
       onCancel={handleModalCancel}
