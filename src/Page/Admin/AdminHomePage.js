@@ -13,14 +13,14 @@ function getItem(label, key, icon, children) {
   return { key, icon, children, label };
 }
 const items = [
-  getItem('User Management', 'userManage', <TeamOutlined />),
-  getItem('Course Management', 'courseManage', <ScheduleOutlined />,),
+  getItem('User Management', 'Users', <TeamOutlined />),
+  getItem('Course Management', 'Courses', <ScheduleOutlined />,),
 ];
 
 export default function AdminHomePage() {
   const [collapsed, setCollapsed] = useState(false);
   const { token: { colorBgContainer }, } = theme.useToken();
-  const [selectedItem, setSelectedItem] = useState('courseManage');
+  const [selectedItem, setSelectedItem] = useState('Users');
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [courseList, setCourseList] = useState([]);
 
@@ -38,14 +38,14 @@ export default function AdminHomePage() {
   const breadcrumbItems = [
     <Breadcrumb.Item key="Admin">Admin</Breadcrumb.Item>,
     selectedItem === "enrollmentByCourse" ?
-      <><Breadcrumb.Item>Course</Breadcrumb.Item>
+      <><Breadcrumb.Item><div onClick={() => handleMenuItemClick('Courses')} className='cursor-pointer'>Courses</div></Breadcrumb.Item>
         <Breadcrumb.Item key={selectedItem}>Enrollment By Course</Breadcrumb.Item></> :
       <Breadcrumb.Item key={selectedItem}>{selectedItem}</Breadcrumb.Item>
   ];
 
   const componentMapping = {
-    userManage: <UserManagement />,
-    courseManage: <CourseManagement setSelectedItem={setSelectedItem} setSelectedCourse={setSelectedCourse} />,
+    Users: <UserManagement />,
+    Courses: <CourseManagement setSelectedItem={setSelectedItem} setSelectedCourse={setSelectedCourse} />,
     enrollmentByCourse: <EnrollmentByCourse selectedCourse={selectedCourse} setSelectedCourse={setSelectedCourse} courseList={courseList} />,
     personal: <PersonalPage />,
   };

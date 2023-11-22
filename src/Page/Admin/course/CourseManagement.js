@@ -103,14 +103,17 @@ export default function CourseManagement({ setSelectedItem, setSelectedCourse })
       actions: <div className='flex align-middle justify-center'>
         <button className='h-11 w-10 text-2xl border-none font-extrabold text-yellow-500 hover:text-yellow-600 flex align-middle justify-center'
           onClick={() => { showModalEdit(course.maKhoaHoc); }}
+          title={'Fix This Course'}
         ><i className='fa-solid fa-pen-to-square'></i></button>
 
         <button className='h-11 w-10 text-2xl border-none font-extrabold text-red-500 hover:text-red-700 mx-1 flex align-middle justify-center'
           onClick={() => { handleDeleteCourse(course.maKhoaHoc); }}
+          title={'Delete This Course'}
         ><i className='fa-solid fa-square-xmark '></i></button>
 
         <button className='h-11 w-10 text-2xl border-none font-extrabold text-green-500 hover:text-green-700 flex align-middle justify-center'
           onClick={() => { handleMoveToEnrollment(course.maKhoaHoc) }}
+          title={'Move to All Enrollment of this Course'}
         ><i class="fa-regular fa-calendar"></i></button>
       </div>,
     }
@@ -143,9 +146,11 @@ export default function CourseManagement({ setSelectedItem, setSelectedCourse })
           enterButton size="large" onSearch={fetchDataCourseSearch}
           placeholder="Input search text(phone number/name)"
           className='bg-blue-500 overflow-hidden rounded-lg'
+          title={'Search Data about Courses'}
         />
         <Button className={`btn bg-red-600 text-white font-bold ml-3 h-10 ${isSearch ? 'block' : 'hidden'}`}
-          onClick={() => { handleSearchCancel() }}>Cancle Search</Button>
+          onClick={() => { handleSearchCancel() }}
+          title={'Search Data about Courses'}>Cancle Search</Button>
       </div>
       <Table columns={tableColumns} dataSource={courseData} />
     </div>
