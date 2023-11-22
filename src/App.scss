@@ -29,3 +29,23 @@ html {
         background-color: #961040;
     }
 }
+
+.ant-modal-footer {
+    display: none;
+}
+
+.btnGlobalOutline {
+    padding: 8px 20px;
+    font-size: 15px;
+    border: 1px solid #f24080;
+    background-color: white;
+    color: #f24080;
+    border-radius: 25px;
+    transition: all 0.5s;
+
+    &:hover {
+        background-color: #f24080;
+        border: 1px solid white;
+        color: white;
+    }
+}

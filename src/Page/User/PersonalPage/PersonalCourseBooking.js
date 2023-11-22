@@ -1,18 +1,18 @@
-import { Button, Image, message } from 'antd';
+import { message } from 'antd';
 import React from 'react'
 import { huyGhiDanh } from '../../../Services/api';
+import { useNavigate } from 'react-router-dom';
 
 export default function PersonalCourseBooking({ userDetail }) {
-
+    const navigate = useNavigate();
     let chiTietKhoaHocGhiDanh = userDetail.chiTietKhoaHocGhiDanh;
     if (!chiTietKhoaHocGhiDanh || !userDetail) {
         return <div>Loading...</div>;
     }
     const fetchData = async (data) => {
         try {
-            const response = await huyGhiDanh(data);
-            console.log("response.data.content: ", response);
-            message.success("Hủy ghi danh thành công");
+            await huyGhiDanh(data);
+            message.success("Terminate your course successful");
             setTimeout(() => {
                 window.location.reload();
             }, 1000);
@@ -29,49 +29,28 @@ export default function PersonalCourseBooking({ userDetail }) {
         fetchData(data);
     }
     const renderUserRegisteredCourseList = () => {
-        return chiTietKhoaHocGhiDanh.map((khoaHoc, index) => {
+        return chiTietKhoaHocGhiDanh.map((course, index) => {
             return (
-                <div key={index}>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <th>Tên Khóa Học: </th>
-                                <td><span className="text-yellow-500 font-bold"> {khoaHoc.tenKhoaHoc}</span></td>
-                            </tr>
-                            <tr>
-                                <th>Ngày Đăng Ký: </th>
-                                <td>
-                                    <span className='text-success'>{khoaHoc.ngayTao.substring(0, 10)} - {khoaHoc.ngayTao.substring(14, 20)}</span>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th>Mô Tả: </th>
-                                <td><span>{khoaHoc.moTa}</span></td>
-                            </tr>
-                            <tr>
-                                <th>Hình Ảnh: </th>
-                                <td><Image width={100} height={100} src={khoaHoc.hinhAnh} alt='' /></td>
-                            </tr>
-                            <tr>
-                                <th>Lượt Xem: </th>
-                                <td>{khoaHoc.luotXem}</td>
-                            </tr>
-                            <tr>
-                                <td><Button onClick={() => { handleCancleUserCourse(khoaHoc.maKhoaHoc) }}>HỦY GHI DANH</Button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>)
+                <div key={index} className='bg-purple-100 grid lg:grid-cols-3 grid-cols-3 shadow-lg lg:h-24 h-40 my-4 border py-4 rounded-xl'>
+                    <img className='ml-5 rounded-full overflow-hidden lg:w-16 lg:h-16 w-20 h-20 col-span-1 lg:col-auto'
+                        src={course.hinhAnh} alt={course.tenKhoaHoc} />
+                    <span className="text-left font-bold mt-5 ml-2 col-span-2 lg:col-auto"> {course.tenKhoaHoc}</span>
+                    <button className='lg:mx-4 lg:my-4 my-5 mx-auto w-11/12 lg:w-max btnGlobalOutline p-0 col-span-3 lg:col-auto'
+                        onClick={() => { handleCancleUserCourse(course.maKhoaHoc) }}>Cancle Enrollment</button>
+                </div>
+            )
         })
     }
     return (
-        <div className='container'>
+        <div className='lg:ml-10 mt-10'>
             <div className="text-center">
-                <span className='text-3xl font-semibold'
-                >Danh Sách Khóa Học Bạn Đã Đăng Ký</span>
+                <span className='text-3xl font-semibold'>Course List you have assign</span>
             </div>
-            <div className='grid grid-cols-4'>{renderUserRegisteredCourseList()}</div>
+            <div>{renderUserRegisteredCourseList()}</div>
+            <div className="text-right">
+                <p className='lg:text-3xl text-md lg:p-10 py-4'>View Other Courses of Educator at <span className='cursor-pointer font-semibold underline text-purple-900'
+                    onClick={() => { navigate('/') }}>HERE</span></p>
+            </div>
         </div>
     )
 }
