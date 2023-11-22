@@ -23,7 +23,7 @@ export default function AddCoursePopup({ fetchDataCourseList }) {
         className='flex items-center bg-green-600 hover:bg-green-700 duration-300'
         onClick={showModal}
       >
-        <PlusCircleOutlined /> Thêm khoá học
+        <PlusCircleOutlined /> Add New Course
       </Button>
       <Modal
         title='Thêm khoá học'

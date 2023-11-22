@@ -5,9 +5,7 @@ export let layDanhSachKhoaHoc = () => {
     return https.get("/api/QuanLyKhoaHoc/LayDanhSachKhoaHoc?MaNhom=GP09");
 };
 export let layDanhSachKhoaHocTheoTen = (tenKhoaHoc) => {
-    return https.get(
-    `/api/QuanLyKhoaHoc/LayDanhSachKhoaHoc?tenKhoaHoc=${tenKhoaHoc}&MaNhom=GP09`,
-  );
+    return https.get(`/api/QuanLyKhoaHoc/LayDanhSachKhoaHoc?tenKhoaHoc=${tenKhoaHoc}&MaNhom=GP09`,);
 };
 export let layDanhMucKhoaHoc = () => {
     return https.get("/api/QuanLyKhoaHoc/LayDanhMucKhoaHoc");
@@ -19,9 +17,7 @@ export let layDanhSachKhoaHoc_PhanTrang = (number) => {
     return https.get(`/api/QuanLyKhoaHoc/LayDanhSachKhoaHoc_PhanTrang?page=${number}&pageSize=9&MaNhom=GP09`);
 };
 export let layThongTinKhoaHoc = (maKhoaHoc) => {
-    return https.get(
-    `/api/QuanLyKhoaHoc/LayThongTinKhoaHoc?maKhoaHoc=${maKhoaHoc}`,
-  );
+    return https.get(`/api/QuanLyKhoaHoc/LayThongTinKhoaHoc?maKhoaHoc=${maKhoaHoc}`,);
 };
 export let layThongTinHocVienKhoaHoc = (maKhoaHoc) => {
     return https.get(`/api/QuanLyKhoaHoc/LayThongTinHocVienKhoaHoc?maKhoaHoc=${maKhoaHoc}`);
@@ -51,7 +47,6 @@ export let capNhatKhoaHocUpload = (formdata) => {
     return https.post("/api/QuanLyKhoaHoc/CapNhatKhoaHocUpload", formdata);
 };
 
-
 export let layDanhSachNguoiDungChuaGhiDanh = (maKhoaHoc) => {
     return https.post(`/api/QuanLyNguoiDung/LayDanhSachNguoiDungChuaGhiDanh`, { "maKhoaHoc": maKhoaHoc });
 };
@@ -78,18 +73,28 @@ export let thongTinTaiKhoan = () => {
 export let layDanhSachNguoiDung = () => {
     return https.get("/api/QuanLyNguoiDung/LayDanhSachNguoiDung?MaNhom=GP09");
 };
-export let timKiemNguoiDung = (data) => {
-    return https.get(`/api/QuanLyNguoiDung/TimKiemNguoiDung?MaNhom=GP09&?tuKhoa=${data}`);
+export let timKiemNguoiDung = (taiKhoan) => {
+    return https.get("/api/QuanLyNguoiDung/TimKiemNguoiDung", {
+        params: { MaNhom: "GP09", tuKhoa: taiKhoan, },
+    });
 };
 export let capNhatThongTinNguoiDung = (data) => {
     return https.put("/api/QuanLyNguoiDung/CapNhatThongTinNguoiDung", data);
 };
-export let layDanhSachNguoiDungChuaGhiDanh = (maKhoaHoc) => {
-  return https.post(`/api/QuanLyNguoiDung/LayDanhSachNguoiDungChuaGhiDanh`, maKhoaHoc);
+
+export let layDanhSachKhoaHocChuaGhiDanh = (taiKhoan) => {
+    return https.post(`/api/QuanLyNguoiDung/LayDanhSachKhoaHocChuaGhiDanh?taiKhoan=${taiKhoan}`,);
 };
-export let layDanhSachHocVienChoXetDuyet = (maKhoaHoc) => {
-  return https.post(`/api/QuanLyNguoiDung/LayDanhSachHocVienChoXetDuyet`, maKhoaHoc);
+export let layDanhSachKhoaHocChoXetDuyet = (taiKhoan) => {
+    return https.post(`/api/QuanLyNguoiDung/LayDanhSachKhoaHocChoXetDuyet`, taiKhoan,);
 };
-export let layDanhSachHocVienKhoaHoc = (maKhoaHoc) => {
-  return https.post(`/api/QuanLyNguoiDung/LayDanhSachHocVienKhoaHoc`, maKhoaHoc);
+export let layDanhSachKhoaHocDaXetDuyet = (taiKhoan) => {
+    return https.post(`/api/QuanLyNguoiDung/LayDanhSachKhoaHocDaXetDuyet`, taiKhoan,);
+};
+
+export let themNguoiDung = (data) => {
+    return https.post("/api/QuanLyNguoiDung/ThemNguoiDung", data);
+};
+export let xoaNguoiDung = (taiKhoan) => {
+    return https.delete(`/api/QuanLyNguoiDung/XoaNguoiDung?TaiKhoan=${taiKhoan}`);
 };
