@@ -18,10 +18,10 @@ export default function FormAdd({ form, setIsModalOpen, fetchDataCourseList }) {
     if (selectedImg) {
       formData.append("hinhAnh", selectedImg, selectedImg.name);
     }
-    for (let values of formData.entries()) {
-      const [key, value] = values;
-      console.log("key:", key, "-", "value:", value);
-    }
+    // for (let values of formData.entries()) {
+    //   const [key, value] = values;
+    //   console.log("key:", key, "-", "value:", value);
+    // }
     try {
       await themKhoaHocUploadHinh(formData);
       message.success("Thêm khoá học thành công");

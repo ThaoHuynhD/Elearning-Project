@@ -91,7 +91,7 @@ export default function CourseList() {
                     ></i>
                     <span>{item.luotXem}+ students</span>
                   </div>
-                  <div className='hover:text-[#961040] duration-300'>
+                  <div className='hover:text-[#961040] hover:font-semibold duration-300'>
                     <NavLink
                       to={info ? `/courseDetail/${item.maKhoaHoc}` : `/signIn`}
                     >

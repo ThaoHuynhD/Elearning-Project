@@ -12,7 +12,7 @@ import FormEnrollment from "./FormEnrollment";
 import { useNavigate } from "react-router-dom";
 import UpdateUserModal from "./UpdateUserModal";
 import { setTaiKhoan } from "../../../../Redux/formEnrollSlice/formEnrollSlice";
-import AddUser from "../AddUser/AddUser";
+// import AddUser from "../AddUser/AddUser";
 
 export default function TableUser() {
   const columns = [
