@@ -235,83 +235,12 @@ export default function FormEdit({ setIsModalEditOpen, fetchDataCourseList }) {
         >
           <DatePicker format={"DD/MM/YYYY"} />
         </Form.Item>
-        <Form.Item
-          label='Mã nhóm'
-          name='maNhom'
-          rules={[
-            {
-              required: true,
-              message: "Vui lòng chọn mã nhóm",
-              whitespace: true,
-            },
-          ]}
-        >
+        <Form.Item label='Mã nhóm' name='maNhom' className='hidden'>
           <Select
+            disabled
             style={{
               width: 120,
             }}
-            options={[
-              {
-                value: "GP01",
-                label: "GP01",
-              },
-              {
-                value: "GP02",
-                label: "GP02",
-              },
-              {
-                value: "GP03",
-                label: "GP03",
-              },
-              {
-                value: "GP04",
-                label: "GP04",
-              },
-              {
-                value: "GP05",
-                label: "GP05",
-              },
-              {
-                value: "GP06",
-                label: "GP06",
-              },
-              {
-                value: "GP07",
-                label: "GP07",
-              },
-              {
-                value: "GP08",
-                label: "GP08",
-              },
-              {
-                value: "GP09",
-                label: "GP09",
-              },
-              {
-                value: "GP10",
-                label: "GP10",
-              },
-              {
-                value: "GP11",
-                label: "GP11",
-              },
-              {
-                value: "GP12",
-                label: "GP12",
-              },
-              {
-                value: "GP13",
-                label: "GP13",
-              },
-              {
-                value: "GP14",
-                label: "GP14",
-              },
-              {
-                value: "GP15",
-                label: "GP15",
-              },
-            ]}
           />
         </Form.Item>
         <Form.Item

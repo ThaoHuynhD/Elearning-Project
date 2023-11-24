@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./NumberCounter.scss";
-import { Modal } from "antd";
+import { ConfigProvider, Modal } from "antd";
 import CountUp from "react-countup";
 import ReactPlayer from "react-player";
 
@@ -15,7 +15,7 @@ export default function NumberCounter() {
   return (
     <section className='numberCounter'>
       <div className='container pt-20'>
-        <div className='goal__section flex justify-center'>
+        <div className='goal__section flex justify-center flex-wrap lg:flex-nowrap'>
           <div className='goal__video '>
             <figure className='rounded-3xl  overflow-hidden'>
               <img
@@ -26,25 +26,37 @@ export default function NumberCounter() {
               <div className='btnPlay'>
                 <button
                   onClick={showModal}
-                  className='w-[80px] h-[80px] leading-[80px] text-4xl text-center text-white  bg-[#f24080] hover:bg-[#961040] rounded-full duration-300'
+                  className='w-[40px] h-[40px] leading-[40px] text-2xl md:w-[80px] md:h-[80px] md:leading-[80px] md:text-4xl text-center text-white  bg-[#f24080] hover:bg-[#961040] rounded-full duration-300'
                 >
                   <i className='fa-solid fa-play'></i>
                 </button>
 
-                <Modal
-                  centered
-                  open={isModalOpen}
-                  footer={null}
-                  onCancel={handleCancel}
-                  width={"60%"}
+                <ConfigProvider
+                  theme={{
+                    token: {
+                      paddingContentHorizontalLG: 0,
+                      paddingContentVerticalLG: 0,
+                    },
+                  }}
                 >
-                  <ReactPlayer
-                    controls
-                    url={"https://www.youtube.com/watch?v=LXb3EKWsInQ"}
-                    width={"100%"}
-                    height={"500px"}
-                  />
-                </Modal>
+                  <Modal
+                    centered={true}
+                    open={isModalOpen}
+                    footer={null}
+                    onCancel={handleCancel}
+                    width={"80%"}
+                  >
+                    <div className='player-wrapper'>
+                      <ReactPlayer
+                        className='react-player'
+                        controls
+                        url={"https://youtu.be/OMbNoo4mCcI"}
+                        width={"100%"}
+                        height={"100%"}
+                      />
+                    </div>
+                  </Modal>
+                </ConfigProvider>
               </div>
             </figure>
           </div>
@@ -69,21 +81,21 @@ export default function NumberCounter() {
       <div className='number'>
         <div className='overlay__purpel'></div>
         <div className='container'>
-          <div className='grid grid-cols-4 gap-6'>
-            <div className='number__item border-r-2 border-[#ffffff24]'>
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 lg:gap-6'>
+            <div className='number__item lg:border-r-2 border-[#ffffff24]'>
               <h1>
                 <CountUp enableScrollSpy end={45} duration={8} />
                 k+
               </h1>
               <p>Active Students</p>
             </div>
-            <div className='number__item border-r-2 border-[#ffffff24]'>
+            <div className='number__item lg:border-r-2 border-[#ffffff24]'>
               <h1>
                 <CountUp enableScrollSpy end={72} duration={8} />+
               </h1>
               <p>Faculty Courses</p>
             </div>
-            <div className='number__item border-r-2 border-[#ffffff24]'>
+            <div className='number__item lg:border-r-2 border-[#ffffff24]'>
               <h1>
                 <CountUp enableScrollSpy end={90} duration={8} />+
               </h1>

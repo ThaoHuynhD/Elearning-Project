@@ -1,26 +1,25 @@
+$color-purpil-1: #41246d;
+$color-pink-1: #f24080;
 .listCourseByCateGories {
     .nameCourse {
-        padding: 5px 15px;
+        padding: 0.31rem 0.93rem;
         position: absolute;
-        bottom: -15px;
-        left: 20px;
-        font-size: 15px;
+        bottom: -0.93rem;
+        left: 1.25rem;
+        font-size: 0.93rem;
         transition: all 0.5s;
-        border-radius: 25px;
+        border-radius: 1.56rem;
         color: white;
         display: inline-block;
     }
     .nameCourse_bg1 {
-        background: #f24080;
+        background: $color-pink-1;
     }
     .nameCourse_bg2 {
-        background: #41246d;
+        background: $color-purpil-1;
     }
     .info__item {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        padding: 40px 30px 15px;
+        padding: 1.25rem 1.25rem 0.93rem;
         background: white;
     }
 }

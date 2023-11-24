@@ -10,8 +10,10 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import { Rate } from "antd";
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 export default function CourseList() {
   const [courseList, setCourseList] = useState([]);
+  const { info } = useSelector((state) => state.userSlice);
   useEffect(() => {
     let getCourseList = async () => {
       try {
@@ -60,6 +62,7 @@ export default function CourseList() {
                     </span>
                   </div>
                   <Rate
+                    disabled
                     className={
                       (index + 1) % 2 !== 0
                         ? "text-sm ml-4 text-[#F24080]"
@@ -75,19 +78,24 @@ export default function CourseList() {
                     className='rounded-full'
                     alt='...'
                   />
-                  <p className='ml-4 font-semibold'>{item.nguoiTao.hoTen}</p>
+                  <div className='ml-4'>
+                    <h1 className='text-[#8c8c8c]'>Lecturer</h1>
+                    <p className=' font-semibold'>{item.nguoiTao.hoTen}</p>
+                  </div>
                 </div>
                 <div className='flex items-center justify-between text-sm border-t-2 border-zinc-100 pt-3'>
                   <div>
                     <i
-                      className='fa-regular fa-eye mr-3'
+                      className='fa-regular fa-eye mr-1 lg:mr-3'
                       style={{ color: "#F24080" }}
                     ></i>
                     <span>{item.luotXem}+ students</span>
                   </div>
                   <div className='hover:text-[#961040] duration-300'>
-                    <NavLink to={`/courseDetail/${item.maKhoaHoc}`}>
-                      <span>ENROLL COURSE</span>
+                    <NavLink
+                      to={info ? `/courseDetail/${item.maKhoaHoc}` : `/signIn`}
+                    >
+                      <span className='text-xs md:text-sm'>ENROLL COURSE</span>
                       <i className='fa-solid fa-arrow-right ml-3'></i>
                     </NavLink>
                   </div>
@@ -103,7 +111,7 @@ export default function CourseList() {
     <section className='courseList'>
       <div className='container'>
         <div className='overlay'>
-          <div className='courseList__title w-1/2 mx-auto'>
+          <div className='courseList__title w-[90%] md:w-2/3 lg:w-1/2 mx-auto'>
             <div className='text-center'>
               <h1 className='font-extrabold text-[42px] mb-5'>
                 Most Featured Courses
@@ -116,11 +124,25 @@ export default function CourseList() {
           </div>
           <div className='courselist__Item mt-10'>
             <Swiper
-              slidesPerView={3}
-              spaceBetween={30}
+              slidesPerView={1}
+              spaceBetween={10}
               navigation={true}
               modules={[Navigation]}
               className='mySwiper'
+              breakpoints={{
+                640: {
+                  slidesPerView: 2,
+                  spaceBetween: 10,
+                },
+                768: {
+                  slidesPerView: 2,
+                  spaceBetween: 20,
+                },
+                1024: {
+                  slidesPerView: 3,
+                  spaceBetween: 50,
+                },
+              }}
             >
               {renderCourseItem()}
             </Swiper>

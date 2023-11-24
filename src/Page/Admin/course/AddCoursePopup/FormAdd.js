@@ -18,10 +18,10 @@ export default function FormAdd({ form, setIsModalOpen, fetchDataCourseList }) {
     if (selectedImg) {
       formData.append("hinhAnh", selectedImg, selectedImg.name);
     }
-    // for (let values of formData.entries()) {
-    //   const [key, value] = values;
-    //   console.log("key:", key, "-", "value:", value);
-    // }
+    for (let values of formData.entries()) {
+      const [key, value] = values;
+      console.log("key:", key, "-", "value:", value);
+    }
     try {
       await themKhoaHocUploadHinh(formData);
       message.success("Thêm khoá học thành công");
@@ -33,7 +33,6 @@ export default function FormAdd({ form, setIsModalOpen, fetchDataCourseList }) {
   };
   const handleChangeFile = (e) => {
     let file = e.target.files[0];
-    console.log("🚀 ~ file: FormAdd.js:28 ~ handleChangeFile ~ file:", file);
     setSelectedImg(file);
     if (
       file.type === "image/jpeg" ||
@@ -50,6 +49,10 @@ export default function FormAdd({ form, setIsModalOpen, fetchDataCourseList }) {
   useEffect(() => {
     form.setFieldsValue({
       taiKhoanNguoiTao: localServices?.get().taiKhoan,
+      maNhom: "GP09",
+      nguoiTao: localServices?.get().hoTen,
+      maKhoaHoc: Math.floor(Math.random() * 10000),
+      ngayTao: dayjs(),
     });
   }, [form]);
 
@@ -64,11 +67,10 @@ export default function FormAdd({ form, setIsModalOpen, fetchDataCourseList }) {
           span: 4,
         }}
         wrapperCol={{
-          span: 16,
+          span: 18,
         }}
         initialValues={{
           maDanhMucKhoaHoc: "Chọn khoá học",
-          maNhom: "GP09",
         }}
       >
         <Form.Item
@@ -78,17 +80,7 @@ export default function FormAdd({ form, setIsModalOpen, fetchDataCourseList }) {
         >
           <Input />
         </Form.Item>
-        <Form.Item
-          label='Mã khoá học'
-          name='maKhoaHoc'
-          rules={[
-            {
-              required: true,
-              message: "Vui lòng nhập mã khoá học",
-              whitespace: true,
-            },
-          ]}
-        >
+        <Form.Item className='hidden' label='Mã khoá học' name='maKhoaHoc'>
           <Input />
         </Form.Item>
         <Form.Item
@@ -182,17 +174,7 @@ export default function FormAdd({ form, setIsModalOpen, fetchDataCourseList }) {
             ]}
           />
         </Form.Item>
-        <Form.Item
-          label='Người tạo'
-          name='nguoiTao'
-          rules={[
-            {
-              required: true,
-              message: "Vui lòng không bỏ trống",
-              whitespace: true,
-            },
-          ]}
-        >
+        <Form.Item className='hidden' label='Người tạo' name='nguoiTao'>
           <Input />
         </Form.Item>
         <Form.Item
@@ -211,26 +193,17 @@ export default function FormAdd({ form, setIsModalOpen, fetchDataCourseList }) {
         <Form.Item
           label='Ngày tạo'
           name='ngayTao'
-          rules={[
-            {
-              required: true,
-              message: "Vui lòng chọn ngày tạo",
-            },
-          ]}
+          className='hidden'
+          // rules={[
+          //   {
+          //     required: true,
+          //     message: "Vui lòng chọn ngày tạo",
+          //   },
+          // ]}
         >
           <DatePicker format={"DD/MM/YYYY"} />
         </Form.Item>
-        <Form.Item
-          label='Mã nhóm'
-          name='maNhom'
-          rules={[
-            {
-              required: true,
-              message: "Vui lòng chọn mã nhóm",
-              whitespace: true,
-            },
-          ]}
-        >
+        <Form.Item className='hidden' label='Mã nhóm' name='maNhom'>
           <Select
             style={{
               width: 120,
@@ -316,8 +289,9 @@ export default function FormAdd({ form, setIsModalOpen, fetchDataCourseList }) {
           />
           <Image src={imgSrc} width={100} height={100} />
         </Form.Item>
-        <div className='flex justify-end'>
+        <div className='flex justify-center'>
           <Button
+            size={"large"}
             className='bg-green-500 hover:bg-green-600 duration-300 text-white'
             htmlType='submit'
           >

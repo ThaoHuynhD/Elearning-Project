@@ -81,3 +81,15 @@
         font-weight: 800;
     }
 }
+
+@media screen and (max-width: 768px) {
+    .courseList {
+        .overlay {
+            .courselist__Item {
+                .info__item {
+                    padding: 40px 16px 15px;
+                }
+            }
+        }
+    }
+}

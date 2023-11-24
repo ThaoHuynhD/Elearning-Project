@@ -1,11 +1,21 @@
-import { FloatButton } from 'antd'
-import React from 'react'
+import { ConfigProvider, FloatButton } from "antd";
+import React from "react";
 
 export default function BackToTop() {
-    return (
-        <FloatButton.BackTop
-            shape='square'
-            icon={<i className='fa-solid fa-angle-up '></i>}
-        />
-    )
+  return (
+    <ConfigProvider
+      theme={{
+        token: {
+          colorBgElevated: "#f24080",
+          colorFillContent: "#961040",
+        },
+      }}
+    >
+      <FloatButton.BackTop
+        duration={1200}
+        shape='square'
+        icon={<i className='fa-solid fa-angle-up text-white font-semibold'></i>}
+      />
+    </ConfigProvider>
+  );
 }

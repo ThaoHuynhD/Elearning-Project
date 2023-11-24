@@ -113,6 +113,7 @@ export default function TableUser() {
     searchResult?.map((item, index) =>
       dataSource.push({
         key: index + 1,
+        stt: index + 1,
         ...item,
       }),
     );
@@ -120,6 +121,7 @@ export default function TableUser() {
     listUser?.map((item, index) =>
       dataSource.push({
         key: index + 1,
+        stt: index + 1,
         ...item,
       }),
     );

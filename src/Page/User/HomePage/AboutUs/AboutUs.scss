@@ -30,3 +30,15 @@
         }
     }
 }
+
+@media screen and (max-width: 575.98px) {
+    .aboutUs {
+        .regarding_us {
+            .regarding_left {
+                border-right: none;
+                border-bottom: 1px solid rgba(217, 217, 217, 0.47);
+                padding-bottom: 20px;
+            }
+        }
+    }
+}

@@ -4,8 +4,8 @@ import "./AboutUs.scss";
 
 export default function AboutUs() {
   return (
-    <section className='aboutUs pt-28'>
-      <div className='container grid grid-cols-2 gap-28'>
+    <section id='ABOUT US' className='aboutUs pt-28'>
+      <div className='container grid grid-cols-1 sm:grid-cols-2 gap-12 lg:gap-28'>
         <div className='aboutUs__left'>
           <img
             src='./image/aboutUs/about_1.jpg'
@@ -44,7 +44,7 @@ export default function AboutUs() {
               size={"small"}
             />
           </div>
-          <div className='regarding_us grid grid-cols-2 gap-8 mt-[20px]'>
+          <div className='regarding_us grid-cols-1 grid sm:grid-cols-2 gap-4 sm:gap-8 mt-[20px]'>
             <div className='regarding_left'>
               <div className='flex items-center mb-4'>
                 <i className='fa-solid fa-medal'></i>
@@ -76,7 +76,7 @@ export default function AboutUs() {
         </div>
         <div className='aboutUs__right flex flex-col justify-around'>
           <div>
-            <h1 className='text-[42px] font-extrabold leading-[1.1] mb-5'>
+            <h1 className='text-[30px] sm:text-[42px] font-extrabold leading-[1.1] mb-5'>
               Why Students Choose Us for Gaining Knowledge !
             </h1>
             <p>
@@ -88,7 +88,7 @@ export default function AboutUs() {
           <img
             src='./image/aboutUs/about_2.jpg'
             alt='...'
-            className='rounded-xl w-full'
+            className='rounded-xl w-full mt-5 md:mt-0'
           />
         </div>
       </div>

@@ -13,6 +13,7 @@ import AdminHomePage from "./Page/Admin/AdminHomePage";
 import { localServices } from "./Services/localServices";
 import CourseDetailPage from "./Page/User/CourseDetailPage/CourseDetailPage";
 import AddUser from "./Page/Admin/user/AddUser/AddUser";
+import Loading from "./Components/Loading/Loading";
 
 function App() {
   let info = localServices.get();
@@ -69,9 +70,9 @@ function App() {
       path: "/courseDetail/:courseId",
       element: (
         <Layout>
-          <CourseDetailPage/>
+          <CourseDetailPage />
         </Layout>
-      )
+      ),
     },
     { path: "/*", element: <NotFoundPage /> },
   ];
@@ -83,7 +84,7 @@ function App() {
     { path: "/personal", element: <PersonalPage /> },
     { path: "/*", element: <NotFoundPage /> },
     { path: "/admin", element: <AdminHomePage /> },
-    { path: "/addUser", element: <AddUser/>},
+    { path: "/addUser", element: <AddUser /> },
   ];
 
   let selectedRoutes = userRoutes;

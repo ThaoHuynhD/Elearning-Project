@@ -5,6 +5,7 @@ import listUserSlice from "./listUserSlice/listUserSlice";
 import formEnrollSlice from "./formEnrollSlice/formEnrollSlice";
 import popupEditModal from "./popupEditModal/popupEditModal";
 import courseDetailReducer from "./courseDetailSlice";
+import categoriesSlice from "./categoriesSlice/categoriesSlice";
 
 export const store = configureStore({
   reducer: {
@@ -14,5 +15,6 @@ export const store = configureStore({
     formEnrollSlice,
     popupEditModal,
     courseDetail: courseDetailReducer,
+    categoriesSlice,
   },
 });

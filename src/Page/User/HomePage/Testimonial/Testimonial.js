@@ -39,9 +39,9 @@ let renderTestimonailItem = () => {
 
 export default function Testimonial() {
   return (
-    <section className='testimonial py-28'>
+    <section className='testimonial py-12 lg:py-28'>
       <div className='container'>
-        <div className='testimonial__title w-1/2 mx-auto'>
+        <div className='testimonial__title w-[95%] md:w-[85%] lg:w-1/2 mx-auto'>
           <div className='text-center'>
             <h1 className='font-extrabold text-[42px] mb-5'>
               Review's From Students
@@ -52,7 +52,7 @@ export default function Testimonial() {
             </p>
           </div>
         </div>
-        <div className='testimonial__list grid grid-cols-2 gap-10 my-10 px-10'>
+        <div className='testimonial__list grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-5 lg:gap-10 my-10 px-0 lg:px-10'>
           {renderTestimonailItem()}
         </div>
       </div>

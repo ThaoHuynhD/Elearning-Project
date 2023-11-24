@@ -1,13 +1,13 @@
 .header {
     .header__top {
-        padding: 12px 0;
+        padding: 0.75rem 0;
         background-color: #41246d;
         border-bottom: 1px solid rgba(255, 255, 255, 0.11);
         color: #fff;
 
         .iconHeader {
             color: #d9d9d9;
-            font-size: 15px;
+            font-size: 0.93rem;
             line-height: 1;
 
             i {
@@ -59,9 +59,13 @@
             filter: invert(100%) saturate(100%) hue-rotate(154deg) sepia(19%) contrast(200%);
         }
     }
-
-    #menu-toggle:checked+#menu {
-        display: block;
+}
+.ant-input-search > .ant-input-group > .ant-input-group-addon:last-child {
+    background-color: #f24080;
+    button {
+        &:hover {
+            background-color: #961040;
+        }
     }
 }
 
@@ -72,5 +76,45 @@
 
     100% {
         opacity: 1;
+    }
+}
+
+@media screen and (max-width: 991.98px) {
+    .header__middle {
+        background-color: #41246d;
+        color: white;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.11);
+    }
+    .ant-collapse > .ant-collapse-item > .ant-collapse-header {
+        color: white;
+        justify-content: center;
+        align-items: center;
+    }
+    .ant-collapse > .ant-collapse-item > .ant-collapse-header > .ant-collapse-header-text {
+        margin-inline-end: 0;
+        flex: none;
+    }
+    .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-arrow {
+        font-size: 20px;
+    }
+    .menuList {
+        li {
+            border-bottom: 1px solid #e6e6e6;
+            padding: 10px;
+            a {
+                font-weight: 700;
+                transition: all 0.5s;
+
+                &:hover {
+                    color: #961040;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 767.98px) {
+    .searchBar {
+        width: 150px;
     }
 }

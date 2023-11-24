@@ -83,9 +83,7 @@
 }
 .ant-modal-wrap {
     .ant-modal {
-        // width: 60% !important;
         .ant-modal-content {
-            // padding: 0;
             .ant-modal-close {
                 color: white;
                 right: 0;
@@ -93,4 +91,51 @@
             }
         }
     }
+}
+
+@media screen and (max-width: 991.98px) {
+    .numberCounter {
+        .goal__section {
+            .goal__content {
+                margin-left: 0px;
+                margin-top: 40px;
+                width: 100%;
+                p {
+                    margin: 20px 0;
+                }
+            }
+        }
+        .number {
+            .number__item {
+                padding: 30px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 575.98px) {
+    .numberCounter {
+        .goal__section {
+            .goal__content {
+                h1 {
+                    font-size: 28px;
+                }
+            }
+        }
+        .number {
+            .number__item {
+                padding: 20px;
+            }
+        }
+    }
+}
+.player-wrapper {
+    position: relative;
+    padding-top: 56.25%;
+}
+
+.react-player {
+    position: absolute;
+    top: 0;
+    left: 0;
 }

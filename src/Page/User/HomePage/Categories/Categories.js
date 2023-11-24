@@ -2,20 +2,26 @@ import React, { useEffect, useState } from "react";
 import "./Categories.scss";
 import { layDanhMucKhoaHoc } from "../../../../Services/api";
 import { NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setListCategories } from "../../../../Redux/categoriesSlice/categoriesSlice";
+import { categoriesLocalStorage } from "../../../../Services/localServices";
 
 export default function Categories() {
   const [categories, setCategories] = useState([]);
+  const dispatch = useDispatch();
   useEffect(() => {
     let getListCategories = async () => {
       try {
         let res = await layDanhMucKhoaHoc();
+        dispatch(setListCategories(res.data));
+        categoriesLocalStorage.set(res.data);
         setCategories(res.data);
       } catch (err) {
         console.log(err);
       }
     };
     getListCategories();
-  }, []);
+  }, [dispatch]);
   let handleSetImg = (index) => {
     switch (index) {
       case 0:
@@ -30,7 +36,7 @@ export default function Categories() {
         return "https://img.icons8.com/external-flaticons-flat-flat-icons/64/external-full-stack-computer-programming-flaticons-flat-flat-icons.png";
       case 5:
         return "https://img.icons8.com/external-others-pike-picture/50/external-blogger-blogger-internet-social-channel-others-pike-picture-14.png";
-      default: ;
+      default:
     }
   };
   let renderListCategories = () => {
@@ -62,11 +68,11 @@ export default function Categories() {
   return (
     <section className='categories my-20'>
       <div className='container relative'>
-        <div className='categories__title text-4xl font-bold mb-5 '>
+        <div className='categories__title text-2xl md:text-4xl font-bold mb-5 '>
           <h1>Explore</h1>
           <h1>Our Best Categories</h1>
         </div>
-        <div className='grid grid-cols-3 grid-row-2 gap-5'>
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>
           {renderListCategories()}
         </div>
       </div>
