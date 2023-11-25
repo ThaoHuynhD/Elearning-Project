@@ -92,6 +92,14 @@ export default function ListCourseByCategoriesPage() {
                     ></i>
                     <span>{item.luotXem}+ students</span>
                   </div>
+                  <div className='hover:text-[#961040] hover:font-semibold duration-300'>
+                    <NavLink
+                      to={info ? `/courseDetail/${item.maKhoaHoc}` : `/signIn`}
+                    >
+                      <span className='text-xs md:text-sm'>ENROLL COURSE</span>
+                      <i className='fa-solid fa-arrow-right ml-3'></i>
+                    </NavLink>
+                  </div>
                 </div>
               </div>
             </div>
