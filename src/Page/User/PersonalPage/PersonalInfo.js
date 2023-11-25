@@ -15,7 +15,7 @@ export default function PersonalInfo({ userDetail }) {
         span: 8,
       },
       sm: {
-        span: 4,
+        span: 6,
       },
     },
     wrapperCol: {
@@ -118,16 +118,15 @@ export default function PersonalInfo({ userDetail }) {
         </button>
       </div>
       <Modal
-        className='bg-white rounded-2xl text-center overflow-hidden pb-0 lg:max-w-4xl min-w-max lg:min-w-fit'
-        // style={{ minWidth: "95%" }}
+        className='bg-white rounded-2xl text-center overflow-hidden pb-0 lg:max-w-4xl min-w-max lg:min-w-1/2'
         open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-        <h1 className='lg:text-3xl text-xl font-bold pt-5'>Update User Infomation</h1>
+        <h1 className='lg:text-3xl text-xl font-bold pt-5'>User Infomation</h1>
         <Form
           theme={'dark'}
           {...formItemLayout}
           form={form}
           name="register"
-          className='lg:p-16 p-4 m-auto'
+          className='lg:p-10 p-4 m-auto'
           onFinish={onFinish}
           style={{
             maxWidth: 800,
@@ -144,7 +143,7 @@ export default function PersonalInfo({ userDetail }) {
               },
             ]}
           >
-            <Input />
+            <Input disabled={true} placeholder={userDetail.taiKhoan} />
           </Form.Item>
           <Form.Item name="matKhau"
             label="Password"
